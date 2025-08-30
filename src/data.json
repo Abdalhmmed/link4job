@@ -1,0 +1,55 @@
+{
+  "users": [
+    { "id": 1, "name": "أحمد سعيد", "email": "ahmed1@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 2, "name": "Sara Ali", "email": "sara2@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 3, "name": "محمد خالد", "email": "mohammed3@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 4, "name": "Hind Youssef", "email": "hind4@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 5, "name": "Ali Hassan", "email": "ali5@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 6, "name": "ليلى محمود", "email": "laila6@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 7, "name": "Youssef Ahmed", "email": "youssef7@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 8, "name": "Mona Khaled", "email": "mona8@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 9, "name": "Khalid Samir", "email": "khalid9@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 10, "name": "Salma Ali", "email": "salma10@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 11, "name": "خالد محمود", "email": "khalid11@example.com", "password": "123456", "accountType": "hr" },
+    { "id": 12, "name": "Mona Youssef", "email": "mona12@example.com", "password": "123456", "accountType": "hr" },
+    { "id": 13, "name": "Ahmed Samir", "email": "ahmed13@example.com", "password": "123456", "accountType": "hr" },
+    { "id": 14, "name": "سارة محمود", "email": "sara14@example.com", "password": "123456", "accountType": "hr" },
+    { "id": 15, "name": "Ali Youssef", "email": "ali15@example.com", "password": "123456", "accountType": "hr" },
+    { "id": 16, "name": "Laila Khaled", "email": "laila16@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 17, "name": "يوسف سمير", "email": "youssef17@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 18, "name": "Salma Mahmoud", "email": "salma18@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 19, "name": "Khalid Ali", "email": "khalid19@example.com", "password": "123456", "accountType": "employee" },
+    { "id": 20, "name": "Mona Hassan", "email": "mona20@example.com", "password": "123456", "accountType": "employee" }
+  ],
+  "employeeAccounts": [
+    { "id": 1, "userId": 1, "gender": "Male", "age": 28, "nationality": "Yemeni", "description": "مبرمج ويب", "phone": "+967770000001", "address": "صنعاء" },
+    { "id": 2, "userId": 2, "gender": "Female", "age": 25, "nationality": "Egyptian", "description": "Graphic Designer", "phone": "+2010000002", "address": "Cairo" },
+    { "id": 3, "userId": 3, "gender": "Male", "age": 30, "nationality": "Saudi", "description": "Data Analyst", "phone": "+966500000003", "address": "Riyadh" },
+    { "id": 4, "userId": 4, "gender": "Female", "age": 27, "nationality": "French", "description": "Application Developer", "phone": "+3310000004", "address": "Paris" },
+    { "id": 5, "userId": 5, "gender": "Male", "age": 32, "nationality": "Yemeni", "description": "مهندس شبكات", "phone": "+967770000005", "address": "عدن" },
+    { "id": 6, "userId": 6, "gender": "Female", "age": 29, "nationality": "American", "description": "UX Designer", "phone": "+1202000006", "address": "New York" },
+    { "id": 7, "userId": 7, "gender": "Male", "age": 26, "nationality": "Yemeni", "description": "Python Developer", "phone": "+967770000007", "address": "تعز" },
+    { "id": 8, "userId": 8, "gender": "Female", "age": 31, "nationality": "British", "description": "Project Manager", "phone": "+4410000008", "address": "London" },
+    { "id": 9, "userId": 9, "gender": "Male", "age": 28, "nationality": "Yemeni", "description": "System Analyst", "phone": "+967770000009", "address": "صنعاء" },
+    { "id": 10, "userId": 10, "gender": "Female", "age": 27, "nationality": "Egyptian", "description": "مصممة جرافيك", "phone": "+2010000010", "address": "Alexandria" },
+    { "id": 11, "userId": 16, "gender": "Female", "age": 29, "nationality": "Yemeni", "description": "Software Engineer", "phone": "+967770000016", "address": "تعز" },
+    { "id": 12, "userId": 17, "gender": "Male", "age": 30, "nationality": "Saudi", "description": "Data Analyst", "phone": "+9665000017", "address": "Jeddah" }
+  ],
+  "adminAccounts": [
+    { "id": 1, "userId": 11, "companyType": "IT", "companyName": "Tech Solutions", "companyDescription": "شركة تطوير برمجيات", "personalDescription": "رئيس الفريق التقني", "phone": "+967770000011", "companyWebsite": "www.techsolutions.com" },
+    { "id": 2, "userId": 12, "companyType": "Design", "companyName": "Creative Studio", "companyDescription": "Design & Innovation Studio", "personalDescription": "Project Manager", "phone": "+967770000012", "companyWebsite": "www.creativestudio.com" },
+    { "id": 3, "userId": 13, "companyType": "Marketing", "companyName": "Market Hub", "companyDescription": "شركة تسويق رقمي", "personalDescription": "مدير التسويق", "phone": "+967770000013", "companyWebsite": "www.markethub.com" },
+    { "id": 4, "userId": 14, "companyType": "Consulting", "companyName": "Biz Consult", "companyDescription": "Business Consulting", "personalDescription": "Senior Consultant", "phone": "+967770000014", "companyWebsite": "www.bizconsult.com" },
+    { "id": 5, "userId": 15, "companyType": "HR", "companyName": "HR Solutions", "companyDescription": "حلول الموارد البشرية", "personalDescription": "HR Manager", "phone": "+967770000015", "companyWebsite": "www.hrsolutions.com" }
+  ],
+  "posts": [
+    { "id": 1, "adminId": 1, "title": "فرصة تدريب صيفية", "content": "We are looking for web development interns." },
+    { "id": 2, "adminId": 1, "title": "وظيفة شاغرة", "content": "Frontend Developer required with 2 years experience." },
+    { "id": 3, "adminId": 2, "title": "تدريب تصميم", "content": "Creative Studio offers Graphic Design training." },
+    { "id": 4, "adminId": 2, "title": "مسابقة تصميم", "content": "Submit your works and join the competition." },
+    { "id": 5, "adminId": 3, "title": "وظيفة مسوق", "content": "Looking for professional digital marketer." },
+    { "id": 6, "adminId": 3, "title": "فرصة تدريب", "content": "2-month free marketing internship." },
+    { "id": 7, "adminId": 4, "title": "استشارة مجانية", "content": "First free consultation for startups." },
+    { "id": 8, "adminId": 5, "title": "وظائف شاغرة HR", "content": "HR Solutions announces job openings." }
+  ]
+}
