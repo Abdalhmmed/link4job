@@ -13,6 +13,7 @@
                 <span class="badge bg-primary-subtle text-primary px-3 py-2 mb-3">منشور</span>
                 <h2 class="fw-bold mb-3 gradient-text">فرصة تدريب صيفية</h2>
                 <p class="text-muted mb-4 fs-5">We are looking for web development interns.</p>
+                <img src="https://picsum.photos/949/240" alt="صورة المنشور" class="img-fluid rounded-3 mb-3" />
                 <div class="d-flex align-items-center gap-2 text-secondary small">
                   <i class="bi bi-calendar-event"></i>
                   <span>تاريخ النشر: 2025-09-02</span>
@@ -34,6 +35,7 @@
             <div class="col-lg-4">
               <div class="bg-white rounded-2xl shadow-soft p-4 p-lg-5 h-100">
                 <h5 class="fw-bold mb-3 border-end pe-2 border-3 border-success">بيانات الشركة</h5>
+                <img src="https://picsum.photos/399/240" alt="صورة المنشور" class="img-fluid rounded-3 mb-3" />
                 <ul class="list-unstyled d-grid gap-3 text-secondary mb-4 fs-6">
                   <li><i class="bi bi-building ms-2 text-primary"></i> Tech Solutions</li>
                   <li><i class="bi bi-diagram-3 ms-2 text-success"></i> IT</li>

@@ -4,15 +4,20 @@ import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue';
 import PostsPageView from './view/PostsPageView.vue';
 import PostPageView from './view/PostPageView.vue';
+import ProfilePageView from './view/ProfilePageView.vue';
+import { ref } from 'vue';
+
+const user = ref('adminAccount');
 </script>
 
 <template>
   <div id="app" class="bg-light" dir="rtl">
-    <Navbar />
+    <Navbar :status= user />
     
     <!-- <HomePageView /> -->
     <!-- <PostsPageView /> -->
-    <PostPageView />
+    <!-- <PostPageView /> -->
+    <ProfilePageView :status= user />
 
     <Footer />
   </div>
@@ -55,5 +60,22 @@ import PostPageView from './view/PostPageView.vue';
 }
 a {
   text-decoration: none;
+}
+.profile-banner {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 1rem;
+}
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  margin-top: -60px;
+}
+.text-skin {
+  color: #e94dca;
 }
 </style>

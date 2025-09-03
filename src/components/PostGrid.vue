@@ -8,9 +8,9 @@
         <div class="card h-100 rounded-2xl shadow-sm border-0">
             <div class="card-body d-flex flex-column align-items-start">
             <h5 class="fw-bold mt-2 text-center">عنوان المنشور</h5>
-            <div class="text-center ">
+            <div class="text-center w-100 mt-4 mb-4">
                 <img
-                src="https://via.placeholder.com/250x150"
+                :src="'https://picsum.photos/350/150?'+n"
                 alt="صورة المنشور"
                 class="img-fluid rounded-3"
                 style="max-height: 180px; object-fit: cover"

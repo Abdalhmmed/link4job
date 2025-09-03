@@ -4,7 +4,7 @@ import { ref } from 'vue';
 const props = defineProps({
    status: {
     type: String,
-    default: "employe",
+    default: "guest",
    } 
 });
 </script>

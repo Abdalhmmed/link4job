@@ -11,7 +11,7 @@
           <!-- صورة -->
           <div class="me-3" style="width: 180px; flex-shrink: 0;">
             <img
-              src="https://via.placeholder.com/250x150"
+              :src="'https://picsum.photos/350/150?'+n"
               alt="صورة المنشور"
               class="img-fluid rounded-3"
               style="height: 120px; object-fit: cover; width: 100%;"

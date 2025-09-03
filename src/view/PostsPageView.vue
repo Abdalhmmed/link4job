@@ -1,6 +1,6 @@
 <script setup>
 import PostGrid from '@/components/PostGrid.vue';
-import Postlist from '@/components/Postlist.vue';
+import PostList from '@/components/PostList.vue';
 import { ref } from 'vue';
 
 const status = ref("grid");
@@ -23,8 +23,8 @@ const changeView = (mode) => {
         <h4 class="ps-1">منشورات التوظيف</h4>
       </div>
 
-      <PostGrid v-if="status === 'grid'" />
-      <Postlist v-if="status === 'list'" />
+      <PostGrid v-show="status === 'grid'" />
+      <PostList v-show="status === 'list'" />
 
     </div>
 
