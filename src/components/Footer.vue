@@ -12,7 +12,7 @@
             <h5 class="fw-bold mb-3">معلومات الشركة</h5>
             <ul class="list-unstyled gap-3 mb-4 text-secondary">
             <li><i class="bi bi-geo-alt ms-2"></i>عدن, اليمن</li>
-            <li><i class="bi bi-telephone ms-2"></i> 733-747-997</li>
+            <li><i class="bi bi-telephone ms-2"></i> 778-123-807</li>
             <li><i class="bi bi-envelope ms-2"></i> link4job@gmail.com</li>
             <li><i class="bi bi-clock ms-2"></i> الأحد - الخميس: 9ص - 5م</li>
             </ul>

@@ -1,15 +1,22 @@
 <script setup>
+import PostProfile from '@/components/PostProfile.vue';
 import { ref, defineProps } from 'vue';
 
 const gender = 'male'
-const projct = true
-const like = ref(false)
+const projct = ref(true);
+const post = ref(true);
+const follow = ref(false);
+const like = ref(false);
 
 const props = defineProps({
    status: {
     type: String,
     default: "guest",
-   } 
+   },
+   user: {
+    type: Boolean,
+    default: false,
+   }
 })
 
 </script>
@@ -32,13 +39,25 @@ const props = defineProps({
             </div>
 
             <div class="text-center">
-              <button class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 mx-auto" :class="{ active: like}" @click="like = !like ">
-                <i class="bi bi-hand-thumbs-up"></i>
-                <span>أعجبني</span>
-              </button>
-              <p class="mt-2 mb-0 text-muted">
-                <span >25</span> أعجابات
-              </p>
+              <div v-if="!user" class="d-flex gap-2 mt-3 mt-md-0">
+                <button @click="follow = !(follow)" class="btn btn-outline-success" :class="{ active: follow == true }">
+                  <i :class="follow ? 'bi bi-person-dash-fill' : 'bi bi-person-plus'"></i> {{ follow ? 'تمت المتابعة' : 'متابعة'}}
+                </button>
+                <button @click="like = !(like)" class="btn btn-outline-primary" :class="{ active: like == true }">
+                  <i class="bi bi-hand-thumbs-up"></i> {{ like ? ' الغاء الاعجاب' : 'اعجاب'}}
+                </button>
+              </div>
+              <div v-if="user" class="d-flex gap-2 mt-3 mt-md-0 ">             
+                <button class="btn btn-outline-success">
+                  <i class="bi bi-images"></i> قامة المشاريع
+                </button>
+                <button class="btn btn-outline-primary">
+                  <i class="bi bi-pencil-square"></i> قامة المنشورات
+                </button>
+                <button class="btn btn-gradient">
+                  <i class="bi bi-person"></i> تعديل الملف
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -55,6 +74,17 @@ const props = defineProps({
                 <li><i class="bi bi-person-badge text-warning ms-2"></i> نوع الحساب: موظف</li>
                 <li><i :class="{ 'bi bi-gender-male text-primary ms-2' : gender === 'male', 'bi bi-gender-female text-skin ms-2' : gender === 'female' }"></i> {{ gender }}</li>
               </ul>
+              <hr>
+              <div class="d-flex justify-content-between text-center">
+                <div>
+                  <h6 id="followersCount" class="fw-bold mb-0">120</h6>
+                  <small class="text-muted">متابعين</small>
+                </div>
+                <div>
+                  <h6 id="likesCount" class="fw-bold mb-0">85</h6>
+                  <small class="text-muted">إعجابات</small>
+                </div>
+              </div>
               <hr>
               <div v-if="status === 'adminAccount'">
                 <h5 class="fw-bold mb-3">بيانات الشركة</h5>
@@ -93,6 +123,21 @@ const props = defineProps({
                 <div class="col-6 col-md-4">
                   <img src="https://picsum.photos/300/200?3" class="img-fluid rounded-2xl shadow-sm" alt="project">
                 </div>
+              </div>
+
+              <div v-else class="row g-3">
+                <div class="col-6 col-md-4">
+                 <span class="text-muted">لا يوجد بيانات حاليا</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-soft p-4 mb-4">
+              <h5 class="fw-bold mb-4">منشورات</h5>
+              <div v-if="post" class="row g-3">
+                  <div class="col-12 col-md-6 col-lg-4" v-for="n in 4" :key="n">
+                    <PostProfile :n = n />
+                  </div>
               </div>
 
               <div v-else class="row g-3">

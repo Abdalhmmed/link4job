@@ -5,9 +5,16 @@ import Footer from './components/Footer.vue';
 import PostsPageView from './view/PostsPageView.vue';
 import PostPageView from './view/PostPageView.vue';
 import ProfilePageView from './view/ProfilePageView.vue';
+import EditProfilPageView from './view/EditProfilPageView.vue';
+import CompanyPageView from './view/CompanyPageView.vue'
 import { ref } from 'vue';
 
 const user = ref('adminAccount');
+const Owner = ref(true)
+
+// adminAccount
+// employe
+// guest
 </script>
 
 <template>
@@ -17,7 +24,9 @@ const user = ref('adminAccount');
     <!-- <HomePageView /> -->
     <!-- <PostsPageView /> -->
     <!-- <PostPageView /> -->
-    <ProfilePageView :status= user />
+    <ProfilePageView :status= user :user= Owner />
+    <!-- <EditProfilPageView :status= user /> -->
+    <!-- <CompanyPageView :user= Owner /> -->
 
     <Footer />
   </div>
@@ -78,4 +87,18 @@ a {
 .text-skin {
   color: #e94dca;
 }
+.btn-gradient {
+  background: linear-gradient(270deg, #4f46e5, #22c55e, #4f46e5);
+  background-size: 600% 600%;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transition: all 6s ease-in-out;
+}
+.btn-gradient:hover{
+  background: linear-gradient(120deg, #4f46e5, #22c55e, #4f46e5);
+}
+
 </style>
