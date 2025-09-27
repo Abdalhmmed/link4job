@@ -7,6 +7,7 @@ import PostPageView from './view/PostPageView.vue';
 import ProfilePageView from './view/ProfilePageView.vue';
 import EditProfilPageView from './view/EditProfilPageView.vue';
 import CompanyPageView from './view/CompanyPageView.vue'
+import EditCompanyPageView from './view/EditCompanyPageView.vue'
 import { ref } from 'vue';
 
 const user = ref('adminAccount');
@@ -26,7 +27,8 @@ const Owner = ref(true)
     <!-- <PostPageView /> -->
     <ProfilePageView :status= user :user= Owner />
     <!-- <EditProfilPageView :status= user /> -->
-    <!-- <CompanyPageView :user= Owner /> -->
+    <!-- <CompanyPageView :status= user :user= Owner /> -->
+    <!-- <EditCompanyPageView :status= user /> -->
 
     <Footer />
   </div>

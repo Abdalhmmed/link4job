@@ -8,14 +8,11 @@ const props = defineProps({
 </script>
 
 <template>
-      <!-- PROFILE SECTION -->
   <section class="py-5">
     <div class="container">
       <div class="bg-white rounded-2xl shadow-soft p-0 mb-4">
-        <!-- Banner -->
         <div class="profile-banner" style="background-image: url('https://picsum.photos/1200/400');"></div>
        
-        <!-- Profile Info -->
         <div class="p-4 text-center">
           <img src="https://picsum.photos/200" alt="Profile" class="profile-img">
           <h3 class="fw-bold gradient-text mb-1 mt-3">تعديل الحساب</h3>
@@ -23,7 +20,6 @@ const props = defineProps({
         </div>
       </div>
 
-      <!-- EDIT FORM -->
       <div class="bg-white rounded-2xl shadow-soft p-4">
         <form>
           <div class="row g-3">

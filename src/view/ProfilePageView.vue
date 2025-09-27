@@ -41,7 +41,7 @@ const props = defineProps({
             <div class="text-center">
               <div v-if="!user" class="d-flex gap-2 mt-3 mt-md-0">
                 <button @click="follow = !(follow)" class="btn btn-outline-success" :class="{ active: follow == true }">
-                  <i :class="follow ? 'bi bi-person-dash-fill' : 'bi bi-person-plus'"></i> {{ follow ? 'تمت المتابعة' : 'متابعة'}}
+                  <i :class="follow ? 'bi bi-person-dash-fill' : 'bi bi-person-plus'"></i> {{ follow ? 'الغاء المتابعة' : 'متابعة'}}
                 </button>
                 <button @click="like = !(like)" class="btn btn-outline-primary" :class="{ active: like == true }">
                   <i class="bi bi-hand-thumbs-up"></i> {{ like ? ' الغاء الاعجاب' : 'اعجاب'}}
@@ -114,39 +114,37 @@ const props = defineProps({
             <div class="bg-white rounded-2xl shadow-soft p-4 mb-4">
               <h5 class="fw-bold mb-4">المشاريع</h5>
               <div v-if="projct" class="row g-3">
-                <div class="col-6 col-md-4">
-                  <img src="https://picsum.photos/300/200?1" class="img-fluid rounded-2xl shadow-sm" alt="project">
-                </div>
-                <div class="col-6 col-md-4">
-                  <img src="https://picsum.photos/300/200?2" class="img-fluid rounded-2xl shadow-sm" alt="project">
-                </div>
-                <div class="col-6 col-md-4">
-                  <img src="https://picsum.photos/300/200?3" class="img-fluid rounded-2xl shadow-sm" alt="project">
+                <div v-for="n in 3" :key="n" class="col-12 col-md-6">
+                  <div class="project-card p-3 rounded-4 shadow-sm">
+                    <img :src="`https://picsum.photos/400/230?proj${n}`" class="img-fluid rounded-3 mb-2" alt="project">
+                    <h6 class="fw-bold text-truncate" title="مشروع تطوير تطبيق شامل لإدارة المتاجر الإلكترونية">
+                      مشروع تطوير تطبيق شامل لإدارة المتاجر الإلكترونية
+                    </h6>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                      <div class="text-muted small">
+                        <i class="bi bi-hand-thumbs-up"></i> 54
+                        <i class="bi bi-chat-left-text ms-2"></i> 12
+                      </div>
+                      <button class="btn btn-outline-projects btn-sm rounded-pill px-3">تفاصيل</button>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div v-else class="row g-3">
-                <div class="col-6 col-md-4">
-                 <span class="text-muted">لا يوجد بيانات حاليا</span>
-                </div>
-              </div>
+              <div v-else class="text-muted">لا يوجد بيانات حاليا</div>
             </div>
 
             <div class="bg-white rounded-2xl shadow-soft p-4 mb-4">
-              <h5 class="fw-bold mb-4">منشورات</h5>
+              <h5 class="fw-bold mb-4">المنشورات</h5>
               <div v-if="post" class="row g-3">
-                  <div class="col-12 col-md-6 col-lg-4" v-for="n in 4" :key="n">
-                    <PostProfile :n = n />
+                <div class="col-12 col-md-6 col-lg-4" v-for="n in 4" :key="n">
+                  <div class="post-card bg-light rounded-4 p-2 shadow-sm">
+                    <PostProfile :n="n" :user="user" />
                   </div>
-              </div>
-
-              <div v-else class="row g-3">
-                <div class="col-6 col-md-4">
-                 <span class="text-muted">لا يوجد بيانات حاليا</span>
                 </div>
               </div>
+              <div v-else class="text-muted">لا يوجد بيانات حاليا</div>
             </div>
-
+            
           </div>
         </div>
       </div>
