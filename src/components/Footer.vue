@@ -26,12 +26,12 @@
             <small class="text-secondary d-block mt-2">© <span id="year"></span> جميع الحقوق محفوظة. | <a href="#" class="link-secondary">الخصوصية</a> • <a href="#" class="link-secondary">الشروط</a></small>
           
 
-            <!-- <ul class="nav justify-content-md-end gap-3">
+            <ul class="nav justify-content-md-end gap-3">
               <li class="nav-item"><a class="nav-link px-0" href="#about">من نحن</a></li>
               <li class="nav-item"><a class="nav-link px-0" href="#goals">الأهداف</a></li>
               <li class="nav-item"><a class="nav-link px-0" href="#achievements">الإنجازات</a></li>
               <li class="nav-item"><a class="nav-link px-0" href="#contact">تواصل</a></li>
-            </ul> -->
+            </ul>
           </div>
         </div>
       </div>

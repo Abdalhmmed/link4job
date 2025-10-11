@@ -1,41 +1,66 @@
 <script setup>
+import { useCommentsStore } from '@/stores/CommentsStore'
+import { useLikesStore } from '@/stores/LikesStore'
+import { onMounted, ref } from 'vue'
+
 const props = defineProps({
   Post: {
     type: Object,
     required: true,
     default: () => ({
-      title: 'عنوان المنشور',
-      description: 'وصف قصير للمنشور يوضح محتواه بشكل مختصر ومفيد.'
+      id: 0,
+      title: 'خطاء ما',
+      description: 'ليس من المفترض ظهور هذا البيانات',
     })
-  },
-  user: {
-    type: Boolean,
-    default: false
-  },
-  n: {   
-    type: Number,
-    default: 1
   }
-});
+})
+
+const LikesStore = useLikesStore()
+const likeCount = ref(0)
+
+const CommentsStore = useCommentsStore()
+const CommentsCount = ref(0)
+
+onMounted(async () => {
+
+  const filteredlikes = await LikesStore.countLikesById(props.Post.id, 'post')
+  console.log("filtered:", filteredlikes.value)
+  likeCount.value = filteredlikes ?? 0
+
+  console.log('Post:', props.Post.id, 'Likes:', likeCount.value)
+
+  const filteredComments = await CommentsStore.countCommentsById(props.Post.id, 'post')
+  console.log("filtered:", filteredComments.value)
+  CommentsCount.value = filteredComments ?? 0
+
+  console.log('Post:', props.Post.id, 'Likes:', likeCount.value)
+  console.log('Post:', props.Post.id, 'Comments:', CommentsCount.value)
+
+})
+
 </script>
 
 <template>
   <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
     <div class="post-img-wrapper position-relative">
-      <img :src="'https://picsum.photos/350/200?'+n" class="card-img-top" alt="صورة المنشور">
+      <img src='https://picsum.photos/350/200' class="card-img-top" alt="صورة المنشور">
       <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
     </div>
 
     <div class="card-body d-flex flex-column text-center">
-      <h5 class="fw-bold gradient-text mb-2">{{ Post.title }}</h5>
-      <p class="text-muted small flex-grow-1">{{ Post.description }}</p>
+      <h5 class="fw-bold gradient-text mb-2" :title=" Post.title">{{ Post.title }}</h5>
+      <p class="text-muted small flex-grow-1">{{ Post.title }}</p>
 
       <div class="d-flex justify-content-between align-items-center px-2 mt-2">
         <div class="text-muted small">
-          <i class="bi bi-hand-thumbs-up"></i> 34
-          <i class="bi bi-chat-left-text ms-2"></i> 7
+          <i class="bi bi-hand-thumbs-up"></i> {{ likeCount }}
+          <i class="bi bi-chat-left-text ms-2"></i> {{ CommentsCount }}
         </div>
-        <button class="btn btn-outline-posts btn-sm rounded-pill px-3">تفاصيل</button>
+        <router-link :to="{name: 'PostPage',  params: { id: Post.id }}">
+          <button class="btn btn-outline-posts btn-sm rounded-pill px-3">
+            تفاصيل
+          </button>
+        </router-link>
       </div>
     </div>
   </div>

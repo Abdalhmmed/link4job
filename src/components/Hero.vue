@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router';
 
 </script>
 
@@ -17,7 +18,9 @@
               مجتمع متناسق وهيكل متكامل لبحث او عرض فرص للعم في كل مكان وكل زمان
             </p>
             <div class="d-flex gap-2">
-              <a href="#about" class="btn btn-primary btn-lg px-4"><i class="bi bi-rocket-takeoff ms-1"></i> ابدأ الآن</a>
+              <router-link :to="{ name: 'PostsPage' }">
+                <div href="#about" class="btn btn-primary btn-lg px-4"><i class="bi bi-rocket-takeoff ms-1"></i> ابدأ الآن</div>
+              </router-link>
               <a href="#features" class="btn btn-outline-secondary btn-lg">المزايا</a>
             </div>
           </div>

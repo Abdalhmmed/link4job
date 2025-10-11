@@ -1,0 +1,523 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "1mhmedy",
+      "account_type": "user",
+      "role": "freelancer",
+      "gender": "male",
+      "international_key": "+966",
+      "phone": "500500500",
+      "email": "omar.freelancer@example.com",
+      "password_hash": "$2b$10$samplehashomar456",
+      "avatar_url": "https://picsum.photos/200/200?1",
+      "banner_url": "https://picsum.photos/800/200?1",
+      "bio": "Freelance developer specialized in AI-driven fashion solutions.",
+      "industry": "Software Development",
+      "address": "Yemen",
+      "age": 25,
+      "created_at": "2025-10-07 11:00:00",
+      "updated_at": "2025-10-07 11:00:00",
+      "company_id_belongs": "1"
+    },
+    {
+      "id": "2",
+      "name": "2mhmedy",
+      "account_type": "user",
+      "role": "freelancer",
+      "gender": "male",
+      "international_key": "+966",
+      "phone": "500500500",
+      "email": "omar.freelancer@example.com",
+      "password_hash": "$2b$10$samplehashomar456",
+      "avatar_url": "https://picsum.photos/200/200?2",
+      "banner_url": "https://picsum.photos/800/200?2",
+      "bio": "Freelance developer specialized in AI-driven fashion solutions.",
+      "industry": "Software Development",
+      "address": "Yemen",
+      "age": 25,
+      "created_at": "2025-10-07 11:00:00",
+      "updated_at": "2025-10-07 11:00:00",
+      "company_id_belongs": "1"
+    },
+    {
+      "id": "3",
+      "name": "3mhmedy",
+      "account_type": "adminadminAccount",
+      "role": "owner",
+      "gender": "male",
+      "international_key": "966+",
+      "phone": "500500500",
+      "email": "omar.owner@example.com",
+      "password_hash": "$2b$10$samplehashomar456",
+      "avatar_url": "https://picsum.photos/200/200?3",
+      "banner_url": "https://picsum.photos/800/200?3",
+      "bio": "Company owner and administrator.",
+      "industry": "Software Development",
+      "address": "Yemen",
+      "age": 30,
+      "created_at": "2025-10-07 11:00:00",
+      "updated_at": "2025-10-07 11:00:00",
+      "company_id_belongs": null
+    }
+  ],
+
+  "companys": [
+    {
+      "id": "1",
+      "name": "StyleTech",
+      "account_type": "business",
+      "role": "Fashion Innovation",
+      "international_key": "966+",
+      "phone": "500500500",
+      "email": "styletech@example.com",
+      "avatar_url": "https://picsum.photos/200/200?company1",
+      "banner_url": "https://picsum.photos/800/200?company1",
+      "created_at": "2025-10-07 11:00:00",
+      "updated_at": "2025-10-07 11:00:00",
+      "industry": "Fashion & Technology",
+      "address": "Yemen",
+      "documented": false,
+      "owner_user_id": 3
+    },
+    {
+      "id": "2",
+      "name": "EcoWear",
+      "account_type": "business",
+      "role": "Green Clothing",
+      "international_key": "966+",
+      "phone": "500123456",
+      "email": "ecowear@example.com",
+      "avatar_url": "https://picsum.photos/200/200?company2",
+      "banner_url": "https://picsum.photos/800/200?company2",
+      "created_at": "2025-10-07 12:00:00",
+      "updated_at": "2025-10-07 12:00:00",
+      "industry": "Sustainable Fashion",
+      "address": "Yemen",
+      "documented": true,
+      "owner_user_id": 3
+    }
+  ],
+
+  "skills": [
+    { "id": "1", "name": "Vue.js", "created_at": "2025-10-07 12:00:00", "active": true },
+    { "id": "2", "name": "React.js", "created_at": "2025-10-07 12:01:00", "active": true },
+    { "id": "3", "name": "Node.js", "created_at": "2025-10-07 12:02:00", "active": true },
+    { "id": "4", "name": "Python", "created_at": "2025-10-07 12:03:00", "active": true },
+    { "id": "5", "name": "Django", "created_at": "2025-10-07 12:04:00", "active": true },
+    { "id": "6", "name": "JavaScript", "created_at": "2025-10-07 12:05:00", "active": true },
+    { "id": "7", "name": "HTML", "created_at": "2025-10-07 12:06:00", "active": true },
+    { "id": "8", "name": "CSS", "created_at": "2025-10-07 12:07:00", "active": true },
+    { "id": "9", "name": "Tailwind CSS", "created_at": "2025-10-07 12:08:00", "active": true },
+    { "id": "10", "name": "Bootstrap", "created_at": "2025-10-07 12:09:00", "active": true },
+    { "id": "11", "name": "Retail Management", "created_at": "2025-10-09 09:00:00", "active": true },
+    { "id": "12", "name": "Visual Merchandising", "created_at": "2025-10-09 09:00:00", "active": true },
+    { "id": "13", "name": "Marketing & Communications", "created_at": "2025-10-09 09:00:00", "active": true }
+  ],
+    
+  "user_skills": [
+    { "id": 1, "user_id": 1, "skill_id": "11", "years_experience": 5, "created_at": "2025-10-07 12:00:00" },
+    { "id": 2, "user_id": 2, "skill_id": "4", "years_experience": 3, "created_at": "2025-10-07 12:05:00" },
+    { "id": 3, "user_id": 3, "skill_id": "1", "years_experience": 5, "created_at": "2025-10-07 12:00:00" },
+    { "id": 4, "user_id": 1, "skill_id": "13", "years_experience": 3, "created_at": "2025-10-07 12:05:00" },
+    { "id": 5, "user_id": 2, "skill_id": "5", "years_experience": 5, "created_at": "2025-10-07 12:00:00" },
+    { "id": 6, "user_id": 3, "skill_id": "3", "years_experience": 3, "created_at": "2025-10-07 12:05:00" },
+    { "id": 7, "user_id": 1, "skill_id": "12", "years_experience": 5, "created_at": "2025-10-07 12:00:00" },
+    { "id": 8, "user_id": 2, "skill_id": "9", "years_experience": 3, "created_at": "2025-10-07 12:05:00" },
+    { "id": 9, "user_id": 3, "skill_id": "10", "years_experience": 3, "created_at": "2025-10-07 12:05:00" }
+  ],
+  
+  "posts": [
+    {
+      "id": "1",
+      "user_id": "1",
+      "user_type": "company",
+      "title": "AI Fashion Recommender",
+      "content": "New autumn fashion trends are arriving! 🍁✨",
+      "created_at": "2025-10-07 13:00:00"
+    },
+    {
+      "id": "2",
+      "user_id": "2",
+      "user_type": "user",
+      "title": "hi 2",
+      "content": "Building a tool to recommend fashion styles using AI 🤖👗",
+      "created_at": "2025-10-07 13:10:00"
+    },
+    {
+      "id": "3",
+      "user_id": "2",
+      "user_type": "user",
+      "title": "AI Fashion Recommender2",
+      "content": "Building a tool to recommend fashion styles using AI 🤖👗",
+      "created_at": "2025-10-07 13:10:00"
+    },
+    {
+      "id": "4",
+      "user_id": "1",
+      "user_type": "company",
+      "title": "AI Fashion Recommender3332",
+      "content": "Building a tool to recommend fashion styles using AI 🤖👗",
+      "created_at": "2025-10-07 13:10:00"
+    }
+  ],
+
+  "projects": [
+    {
+      "id": "1",
+      "user_id": "1",
+      "user_type": "company",
+      "title": "AI Fashion Recommender",
+      "content": "A web app that predicts ideal clothing combinations for users.",
+      "created_at": "2025-10-07 14:00:00"
+    },
+    {
+      "id": "2",
+      "user_id": "1",
+      "user_type": "company",
+      "title": "AI Fashion Recommender",
+      "content": "A web app that predicts ideal clothing combinations for users.",
+      "created_at": "2025-10-07 14:00:00"
+    },
+    {
+      "id": "3",
+      "user_id": "1",
+      "user_type": "company",
+      "title": "AI Fashion Recommender",
+      "content": "A web app that predicts ideal clothing combinations for users.",
+      "created_at": "2025-10-07 14:00:00"
+    }
+  ],
+  "attachments": [
+    {
+      "id": "1",
+      "parent_type": "project",
+      "parent_id": "1",
+      "url": "https://picsum.photos/400/400?project1",
+      "mime_type": "image/jpeg",
+      "created_at": "2025-10-07 14:15:00"
+    },
+    {
+      "id": "2",
+      "parent_type": "post",
+      "parent_id": "2",
+      "url": "https://picsum.photos/400/400?post2",
+      "mime_type": "image/jpeg",
+      "created_at": "2025-10-07 14:20:00"
+    },
+    {
+      "id": "3",
+      "parent_type": "project",
+      "parent_id": "1",
+      "url": "https://picsum.photos/400/400?project2",
+      "mime_type": "image/jpeg",
+      "created_at": "2025-10-07 14:20:00"
+    }
+  ],
+  "followers": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "user_type": "user",
+      "target_type": "user",
+      "target_id": "3",
+      "status": "active",
+      "created_at": "2025-10-07 15:05:00"
+    },
+    {
+      "id": 2,
+      "user_id": 3,
+      "user_type": "user",
+      "target_type": "user",
+      "target_id": "3",
+      "status": "active",
+      "created_at": "2025-10-07 15:05:00"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "user_type": "user",
+      "target_type": "company",
+      "target_id": "1",
+      "status": "active",
+      "created_at": "2025-10-07 15:05:00"
+    },
+    {
+      "id": 4,
+      "user_id": 3,
+      "user_type": "user",
+      "target_type": "company",
+      "target_id": "1",
+      "status": "active",
+      "created_at": "2025-10-07 15:05:00"
+    },
+    {
+      "id": 5,
+      "user_id": 2,
+      "user_type": "user",
+      "target_type": "company",
+      "target_id": "1",
+      "status": "active",
+      "created_at": "2025-10-07 15:05:00"
+    }
+  ],
+  "likes": [
+    {
+      "id": "1",
+      "target_type": "project",
+      "target_id": "3",
+      "user_id": "3",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "2",
+      "target_type": "post",
+      "target_id": "2",
+      "user_id": "1",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "3",
+      "target_type": "post",
+      "target_id": "2",
+      "user_id": "1",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "4",
+      "target_type": "post",
+      "target_id": "2",
+      "user_id": "1",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "5",
+      "target_type": "user",
+      "target_id": "2",
+      "user_id": "1",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "6",
+      "target_type": "user",
+      "target_id": "2",
+      "user_id": "3",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "7",
+      "target_type": "company",
+      "target_id": "1",
+      "user_id": "4",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "8",
+      "target_type": "post",
+      "target_id": "4",
+      "user_id": "4",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    },
+    {
+      "id": "9",
+      "target_type": "project",
+      "target_id": "1",
+      "user_id": "5",
+      "user_type": "company",
+      "value": "1",
+      "created_at": "2025-10-07 15:30:00"
+    }
+  ],
+
+  "comments": [
+    {
+      "id": "1",
+      "user_id": "2",
+      "user_type": "company",
+      "parent_type": "post",
+      "parent_id": "4",
+      "content": "3This collection looks amazing! 😍",
+      "created_at": "2025-10-07 15:40:00"
+    },
+    {
+      "id": "2",
+      "user_id": "1",
+      "user_type": "company",
+      "parent_type": "project",
+      "parent_id": "1",
+      "content": "3This collection looks amazing! 😍",
+      "created_at": "2025-10-07 15:40:00"
+    },
+    {
+      "id": "3",
+      "user_id": "1",
+      "user_type": "company",
+      "parent_type": "project",
+      "parent_id": "1",
+      "content": "3This collection looks amazing! 😍",
+      "created_at": "2025-10-07 15:40:00"
+    },
+    {
+      "id": "4",
+      "user_id": "1",
+      "user_type": "company",
+      "parent_type": "project",
+      "parent_id": "1",
+      "content": "3This collection looks amazing! 😍",
+      "created_at": "2025-10-07 15:40:00"
+    }
+  ],
+  
+  "companyEmployees": [
+    {
+      "id": 1,
+      "company_id": 1,
+      "user_id": 1,
+      "position": "AI Developer",
+      "salary": 7000.00,
+      "hired_at": "2025-10-08 09:15:00"
+    }, 
+    {
+      "id": 2,
+      "company_id": 1,
+      "user_id": 2,
+      "position": "AI Developer",
+      "salary": 7000.00,
+      "hired_at": "2025-10-08 09:15:00"
+    },
+    {
+      "id": 3,
+      "company_id": 1,
+      "user_id": 3,
+      "position": "AI Developer",
+      "salary": 7000.00,
+      "hired_at": "2025-10-08 09:15:00"
+    }
+  ],
+
+  "company_partners": [
+    {
+      "id": 1,
+      "company_id": 1,
+      "partner_type": "company",
+      "partner_id": 2,
+      "partnership_type": "Joint Fashion Line",
+      "start_date": "2025-10-08 10:00:00",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "company_id": 1,
+      "partner_type": "user",
+      "partner_id": 2,
+      "partnership_type": "AI Fashion Development",
+      "start_date": "2025-10-08 10:15:00",
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "company_id": 2,
+      "partner_type": "user",
+      "partner_id": 1,
+      "partnership_type": "Marketing Collaboration",
+      "start_date": "2025-10-08 10:30:00",
+      "status": "pending"
+    }
+  ],
+
+  "jobs": [
+    {
+      "id": 1,
+      "company_id": 1,
+      "title": "Store Manager — Fashion Retail",
+      "description": "Lead daily retail operations for StyleTech's flagship store. Responsibilities include staff management, visual merchandising, inventory control, customer experience oversight, and performance reporting. The ideal candidate demonstrates proven retail management experience in fashion and strong leadership skills.",
+      "publish_date": "2025-10-09 09:00:00",
+      "updated_date": "2025-10-09 09:00:00",
+      "status": "active",
+      "job_type": "full_time",
+      "work_mode": "hybrid",
+      "salary": 5000.00,
+      "currency": "SAR",
+      "hours_per_week": 48,
+      "country": "Yemen"
+    },
+    {
+      "id": 2,
+      "company_id": 1,
+      "title": "AI Fashion Developer",
+      "description": "Develop and maintain AI-driven recommendation systems for fashion products. Duties include model design, data processing, API development, and cross-functional collaboration with product and design teams. Candidates must be proficient in Python and machine learning libraries.",
+      "publish_date": "2025-10-09 10:00:00",
+      "updated_date": "2025-10-09 10:00:00",
+      "status": "active",
+      "job_type": "contract",
+      "work_mode": "remote",
+      "salary": 7000.00,
+      "currency": "SAR",
+      "hours_per_week": 40,
+      "country": "Saudi Arabia"
+    },
+    {
+      "id": 3,
+      "company_id": 2,
+      "title": "Marketing Lead — Sustainable Fashion",
+      "description": "Lead marketing strategy and campaigns for EcoWear's sustainable collections. Responsibilities include digital marketing, partnership development, content oversight, and sustainability-focused messaging.",
+      "publish_date": "2025-10-09 11:00:00",
+      "updated_date": "2025-10-09 11:00:00",
+      "status": "active",
+      "job_type": "flexible",
+      "work_mode": "on_site",
+      "salary": 6000.00,
+      "currency": "SAR",
+      "hours_per_week": 40,
+      "country": "Yemen"
+    }
+  ],
+
+  "job_skills": [
+    { "id": 1, "job_id": 1, "skill_id": 11, "required_level": "senior", "created_at": "2025-10-09 09:05:00" },
+    { "id": 2, "job_id": 1, "skill_id": 12, "required_level": "intermediate", "created_at": "2025-10-09 09:05:00" },
+    { "id": 3, "job_id": 1, "skill_id": 13, "required_level": "intermediate", "created_at": "2025-10-09 09:05:00" },
+
+    { "id": 4, "job_id": 2, "skill_id": 4, "required_level": "senior", "created_at": "2025-10-09 10:05:00" },
+    { "id": 5, "job_id": 2, "skill_id": 3, "required_level": "intermediate", "created_at": "2025-10-09 10:05:00" },
+    { "id": 6, "job_id": 2, "skill_id": 6, "required_level": "intermediate", "created_at": "2025-10-09 10:05:00" },
+
+    { "id": 7, "job_id": 3, "skill_id": 13, "required_level": "senior", "created_at": "2025-10-09 11:05:00" },
+    { "id": 8, "job_id": 3, "skill_id": 9, "required_level": "intermediate", "created_at": "2025-10-09 11:05:00" }
+  ],
+
+  "job_applications": [
+    {
+      "id": 1,
+      "job_id": 2,
+      "user_id": 2,
+      "message": "Dear hiring team, I am a Python developer with experience building machine learning models for recommendation systems. I would be happy to contribute to StyleTech's AI initiatives. Please find my portfolio attached.",
+      "status": "applied",
+      "applied_at": "2025-10-09 12:00:00"
+    },
+    {
+      "id": 2,
+      "job_id": 3,
+      "user_id": 1,
+      "message": "I have five years of experience in retail marketing and campaign management for sustainable product lines. I am interested in leading EcoWear's marketing strategy.",
+      "status": "applied",
+      "applied_at": "2025-10-09 12:30:00"
+    }
+  ]
+}

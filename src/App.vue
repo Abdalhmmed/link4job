@@ -1,14 +1,12 @@
 <script setup>
-import HomePageView from './view/HomePageView.vue'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue';
-import PostsPageView from './view/PostsPageView.vue';
-import PostPageView from './view/PostPageView.vue';
-import ProfilePageView from './view/ProfilePageView.vue';
-import EditProfilPageView from './view/EditProfilPageView.vue';
-import CompanyPageView from './view/CompanyPageView.vue'
-import EditCompanyPageView from './view/EditCompanyPageView.vue'
+import { RouterView } from 'vue-router';
+import { useRoute } from 'vue-router';
+
 import { ref } from 'vue';
+
+const route = useRoute();
 
 const user = ref('adminAccount');
 const Owner = ref(true)
@@ -21,14 +19,8 @@ const Owner = ref(true)
 <template>
   <div id="app" class="bg-light" dir="rtl">
     <Navbar :status= user />
-    
-    <!-- <HomePageView /> -->
-    <!-- <PostsPageView /> -->
-    <!-- <PostPageView /> -->
-    <ProfilePageView :status= user :user= Owner />
-    <!-- <EditProfilPageView :status= user /> -->
-    <!-- <CompanyPageView :status= user :user= Owner /> -->
-    <!-- <EditCompanyPageView :status= user /> -->
+
+    <RouterView/>
 
     <Footer />
   </div>
@@ -102,5 +94,7 @@ a {
 .btn-gradient:hover{
   background: linear-gradient(120deg, #4f46e5, #22c55e, #4f46e5);
 }
+
+
 
 </style>
