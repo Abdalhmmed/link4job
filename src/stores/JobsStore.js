@@ -59,16 +59,17 @@ export const useJobsStore = defineStore("JobsStore", () => {
       loading.value = true;
       let query = [];
 
-      if (filters.city) query.push(`city=${filters.city}`);
-      if (filters.remoteType) query.push(`remoteType=${filters.remoteType}`);
+      if (filters.country) query.push(`country=${filters.country}`);
+      if (filters.work_mode) query.push(`work_mode=${filters.work_mode}`);
       if (filters.type) query.push(`type=${filters.type}`);
-      if (filters.salary) query.push(`salary=${filters.salary}`);
+      if (filters.currency) query.push(`currency=${filters.currency}`);
 
       const res = await axios.get(`${apiURL}?${query.join("&")}`);
-      jobs.value = res.data;
       console.log("ok")
+      return res.data;
+      
     } catch (err) {
-      error.value = "تعذر تحميل الوظائف حسب الفلترة";
+        console.error(`Error count jobs `, err);
     } finally {
       loading.value = false;
     }

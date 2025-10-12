@@ -453,9 +453,9 @@
       "job_type": "full_time",
       "work_mode": "hybrid",
       "salary": 5000.00,
-      "currency": "SAR",
+      "currency": "USD",
       "hours_per_week": 48,
-      "country": "Yemen"
+      "country": "USA"
     },
     {
       "id": 2,
@@ -483,7 +483,7 @@
       "job_type": "flexible",
       "work_mode": "on_site",
       "salary": 6000.00,
-      "currency": "SAR",
+      "currency": "YR",
       "hours_per_week": 40,
       "country": "Yemen"
     }

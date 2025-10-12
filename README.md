@@ -19,7 +19,9 @@ npm install
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+npm run api #for api server
+
+npm run dev #for web server
 ```
 
 ### Compile and Minify for Production
