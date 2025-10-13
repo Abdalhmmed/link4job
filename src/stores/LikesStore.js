@@ -66,7 +66,6 @@ export const useLikesStore = defineStore("LikesStore", () => {
                 params: { target_type: 'post', target_id: postid }
             });
 
-            console.log('filterLikesByPostId:', res.data)
 
             return res.data; 
 
@@ -88,8 +87,6 @@ export const useLikesStore = defineStore("LikesStore", () => {
                 params: { target_type: 'project', target_id: projectid }
             });
 
-            console.log('filterLikesByProjectId:', res.data)
-
             return res.data; 
 
         } catch (err) {
@@ -109,8 +106,6 @@ export const useLikesStore = defineStore("LikesStore", () => {
             const res = await axios.get(apiURL, {
                 params: { target_type: 'company', target_id: companyId }
             });
-
-            console.log('filterLikesByCompanyId:', res.data)
 
             return res.data; 
 
@@ -164,19 +159,15 @@ export const useLikesStore = defineStore("LikesStore", () => {
         try {
             if (the === "user") {
                 const followersList = await filterLikesByUserId(theId);
-                console.log('likse: :',followersList.value)
                 return followersList.length;
             } else if (the === "post") {
                 const followersList = await filterLikesByPostId(theId);
-                console.log('likse: :',followersList.value)
                 return followersList.length;
             } else if (the === "project") {
                 const followersList = await filterLikesByProjectId(theId);
-                console.log('likse: :',followersList.value)
                 return followersList.length;
             } else if (the === "company") {
                 const followersList = await filterLikesByCompanyId(theId);
-                console.log('likse: :',followersList.value)
                 return followersList.length;
             } else {
                 return 0;

@@ -24,18 +24,11 @@ const CommentsCount = ref(0)
 onMounted(async () => {
 
   const filteredlikes = await LikesStore.countLikesById(props.Project.id, 'project')
-  console.log("filtered:", filteredlikes.value)
   likeCount.value = filteredlikes ?? 0
 
-  console.log('Project:', props.Project.id, 'Likes:', likeCount.value)
-
   const filteredComments = await CommentsStore.countCommentsById(props.Project.id, 'project')
-  console.log("filtered:", filteredComments.value)
   CommentsCount.value = filteredComments ?? 0
-
-  console.log('Project:', props.Project.id, 'Likes:', likeCount.value)
-  console.log('Project:', props.Project.id, 'Comments:', CommentsCount.value)
-
+  
 })
 </script>
 

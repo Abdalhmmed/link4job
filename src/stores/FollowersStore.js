@@ -53,7 +53,6 @@ export const useFollowersStore = defineStore("FollowersStore", () => {
 
         theuserFollowers.value = userFollowerRes.data;
 
-        console.log("user followers: ", theuserFollowers.value);
 
         return theuserFollowers.value;
         } catch (err) {
@@ -77,7 +76,6 @@ export const useFollowersStore = defineStore("FollowersStore", () => {
 
         theuserFollowers.value = userFollowerRes.data;
 
-        console.log("company followers: ", theuserFollowers.value);
 
         return theuserFollowers.value;
         } catch (err) {

@@ -11,7 +11,6 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
   const apiURL = "http://localhost:3000/skills";
   const USapiURL = "http://localhost:3000/user_skills";
 
-  // 🧠 جلب كل المهارات
   const fetchSkills = async () => {
     loading.value = true;
     error.value = null;
@@ -20,13 +19,12 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
       skills.value = res.data;
     } catch (err) {
       console.error("Error fetching skills:", err);
-      error.value = "حدث خطأ أثناء تحميل قائمة المهارات.";
+      error.value = "Error fetching skill";
     } finally {
       loading.value = false;
     }
   };
 
-  // 🧩 جلب مهارة واحدة حسب ID
   const fetchSkillById = async (skillId) => {
     try {
       const res = await axios.get(`${apiURL}/${skillId}`);
@@ -37,21 +35,18 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
     }
   };
 
-  // 👤 جلب مهارات مستخدم معيّن
   const filterSkillsByUserId = async (userId) => {
     loading.value = true;
     error.value = null;
     theuserSkills.value = [];
 
     try {
-      // ✅ تأكدنا أن الحقل مطابق لقواعد db.json => user_id
       const userSkillsRes = await axios.get(USapiURL, {
         params: { user_id: userId },
       });
 
       const userSkillsData = userSkillsRes.data;
 
-      // ✅ في قاعدة البيانات الحقل اسمه skill_id وليس skillsId
       const skillIds = userSkillsData.map((us) => us.skill_id);
 
       const skillPromises = skillIds.map((id) => fetchSkillById(id));
@@ -62,14 +57,13 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
       return theuserSkills.value;
     } catch (err) {
       console.error(`Error fetching user skills for user ${userId}:`, err);
-      error.value = "فشل تحميل مهارات المستخدم.";
+      error.value = "Error fetching skill";
       return [];
     } finally {
       loading.value = false;
     }
   };
 
-  // 🔢 عدّ المهارات الخاصة بالمستخدم
   const countSkillsByUserId = async (theId, the) => {
     try {
       let countSkills = [];
@@ -79,7 +73,6 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
       }
 
       if (the === "job") {
-        // يمكن لاحقًا إضافة عد مهارات الوظيفة
       }
 
       return countSkills.length;

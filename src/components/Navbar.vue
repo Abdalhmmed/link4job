@@ -12,7 +12,6 @@ onMounted( async () =>{
 
   user.value = await UserStore.fetchUserById(id.value);
 
-  console.log('user: ', user.value);
 } )
 </script> 
 

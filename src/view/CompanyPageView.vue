@@ -45,31 +45,18 @@ onMounted( async () =>{
 
   company.value = await CompanysStore.fetchCompanyById(id)
 
-  user.value = await UserStore.fetchUserById(company.value.owner_user_id)
-
-  MyFollowers.value = await FollowersStore.countFollowersById(id, "company");
-
-  MyLikes.value = await LikesStore.countLikesById(id, "company")
-
-  MyProject.value = await ProjectsStore.filterProjectsByCompanyId(id)
-
-  MyPost.value = await PostsStore.filterPostsByCompanyId(id)
-
-  MyJob.value = await JobsStore.fetchJobByCompanyId(id)
-
-  MyEmployee.value = await EmployeesStore.filterEmployeeByCompanyId(id)
-
-  console.log('id: ', id);
-  console.log('company: ', company.value);
-  console.log('user: ', user.value);
-  console.log('MyFollowers: ', MyFollowers.value);
-  console.log('MyLikes: ', MyLikes.value);
-  console.log('MySkills: ', MySkills.value);
-  console.log('MyProject: ', MyProject.value);
-  console.log('MyPost: ', MyPost.value);
-  console.log('MyJob: ', MyJob.value);
-
-} )
+  if (company.value) {
+    user.value = await UserStore.fetchUserById(company.value.owner_user_id)
+    MyFollowers.value = await FollowersStore.countFollowersById(id, "company");
+    MyLikes.value = await LikesStore.countLikesById(id, "company")
+    MyProject.value = await ProjectsStore.filterProjectsByCompanyId(id)
+    MyPost.value = await PostsStore.filterPostsByCompanyId(id)
+    MyJob.value = await JobsStore.fetchJobByCompanyId(id)
+    MyEmployee.value = await EmployeesStore.filterEmployeeByCompanyId(id)
+  } else {
+    route.path = {name: 'not-found'}
+  }
+})
 
 console.log('route.params.id:', route.params.id)
 
