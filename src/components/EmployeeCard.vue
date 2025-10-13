@@ -24,8 +24,6 @@ const theEmployee = ref({
 
 onMounted( async () => {
     theEmployee.value = await UserStore.fetchUserById(props.employee);
-    console.log('theEmployee', theEmployee.value)
-    console.log('props.employee', props.employee)
 });
 
 

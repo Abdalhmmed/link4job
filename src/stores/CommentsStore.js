@@ -84,8 +84,6 @@ export const useCommentsStore = defineStore("CommentsStore", () => {
                 params: { parent_type: 'post', parent_id: postid }
             });
 
-            console.log('filterCommentsBypostId:', res.data)
-
             return res.data; 
 
         } catch (err) {
@@ -106,8 +104,6 @@ export const useCommentsStore = defineStore("CommentsStore", () => {
                 params: { parent_type: 'project', parent_id: projectid }
             });
 
-            console.log('filterCommentsByProjectId:', res.data)
-
             return res.data; 
 
         } catch (err) {
@@ -124,22 +120,18 @@ export const useCommentsStore = defineStore("CommentsStore", () => {
         try {
             if (the === "user") {
                 const followersList = await filterCommentsByUserId(theId);
-                console.log('comment: :',followersList.value)
                 return followersList.length;
 
             } else if (the === "company") {
                 const followersList = await filterCommentsByCompanyId(theId);
-                console.log('comment: :',followersList.value)
                 return followersList.length;
 
             } else if (the === "post") {
                 const followersList = await filterCommentsByPostId(theId);
-                console.log('comment: :',followersList.value)
                 return followersList.length;
 
             } else if (the === "project") {
                 const followersList = await filterCommentsByProjectId(theId);
-                console.log('comment: :',followersList.value)
                 return followersList.length;
 
             } else {

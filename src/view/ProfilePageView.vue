@@ -52,17 +52,9 @@ onMounted(async () => {
         Myadmin.value = await UserStore.fetchUserById(MyCompany.value.owner_user_id);
       }
     }
+  } else {
+    route.path = {name: 'not-found'}
   }
-
-  console.log('id: ', id);
-  console.log('user: ', user.value);
-  console.log('MyFollowers: ', MyFollowers.value);
-  console.log('MyLikes: ', MyLikes.value);
-  console.log('MySkills: ', MySkills.value);
-  console.log('MyProject: ', MyProject.value);
-  console.log('MyPost: ', MyPost.value);
-  console.log('MyCompany: ', MyCompany.value);
-  console.log('Myadmin: ', Myadmin.value);
 });
 </script>
 
@@ -113,16 +105,16 @@ onMounted(async () => {
           <div class="bg-white rounded-2xl shadow-soft p-4" style="max-height: 900px;">
             <h5 class="fw-bold mb-3">بيانات الحساب</h5>
             <ul class="list-unstyled d-grid gap-3 text-secondary">
-              <li><i class="bi bi-envelope text-primary ms-2"></i>{{ user?.email }}</li>
-              <li><i class="bi bi-telephone text-success ms-2"></i>{{ user?.phone }} {{ user?.international_key }}</li>
-              <li><i class="bi bi-geo-alt text-danger ms-2"></i>{{ user?.address }}</li>
+              <li><i class="bi bi-envelope text-primary ms-2"></i> {{ user?.email }}</li>
+              <li><i class="bi bi-telephone text-success ms-2"></i> {{ user?.phone }} {{ user?.international_key }}</li>
+              <li><i class="bi bi-geo-alt text-danger ms-2"></i> {{ user?.address }}</li>
               <li><i class="bi bi-person-badge text-warning ms-2"></i> مجال العمل : {{ user?.role }}</li>
               <li>
                 <i :class="{ 
                   'bi bi-gender-male text-primary ms-2': user?.gender === 'male', 
                   'bi bi-gender-female text-skin ms-2': user?.gender === 'female' 
                 }"></i>
-                {{ user?.gender }}
+                 {{ user?.gender }}
               </li>
             </ul>
 

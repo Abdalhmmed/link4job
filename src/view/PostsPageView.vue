@@ -1,6 +1,5 @@
 <script setup>
-import PostGrid from '@/components/PostGrid.vue';
-import PostList from '@/components/PostList.vue';
+
 import { onMounted, ref } from 'vue';
 import { usePostsStore } from '@/stores/PostsStore';
 

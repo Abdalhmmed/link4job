@@ -62,7 +62,6 @@ export const useEmployeesStore = defineStore("EmployeesStore", () => {
             const companyEmployeeRes = await axios.get(apiURL, {
                 params: { company_id: companyId },
             });
-            console.log('companyEmployeeRes', companyEmployeeRes.data)
             return companyEmployeeRes.data;
         
         } catch (err) {

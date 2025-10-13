@@ -1,6 +1,7 @@
 <script setup>
-import PostGrid from '@/components/PostGrid.vue';
-import PostList from '@/components/PostList.vue';
+import JobsGridCard from '@/components/JobsGridCard.vue';
+import JobsListCard from '@/components/JobsListCard.vue';
+
 import { useJobsStore } from '@/stores/JobsStore';
 import { onMounted, ref } from 'vue';
 
@@ -8,21 +9,23 @@ const JobStore = useJobsStore();
 
 const status = ref("grid");
 
+const loading = ref(false)
+
 const country = ref('');
-const type = ref('');
+const job_type = ref('');
 const work_mode = ref('');
 const currency = ref('');
 
-const thejobs = ref([]);
+const jobs = ref([]);
 
 const changeView = (mode) => {
   status.value = mode;
 };
 
 const theFilter = async () => {
-  thejobs.value = await JobStore.filterJobs({
+  jobs.value = await JobStore.filterJobs({
     country: country.value,
-    job_type: type.value,  
+    job_type: job_type.value,  
     work_mode: work_mode.value,
     currency: currency.value,
   });
@@ -30,14 +33,18 @@ const theFilter = async () => {
 
 const resetFilter = async () => {
   country.value = '';
-  type.value = '';
+  job_type.value = '';
   work_mode.value = '';
   currency.value = '';
-  thejobs.value = await JobStore.fetchJobs();
+  jobs.value = await JobStore.fetchJobs();
 };
 
 onMounted(async () => {
-  thejobs.value = await JobStore.fetchJobs();
+  loading.value = true
+  jobs.value = await JobStore.fetchJobs(); 
+  if (jobs.value) {
+    loading.value = false
+  }
 });
 </script>
 
@@ -46,10 +53,17 @@ onMounted(async () => {
     <div>
       <div class="mb-4">
         <h4 class="ps-1">منشورات التوظيف</h4>
+        
       </div>
 
-      <PostGrid v-show="status === 'grid'" :jobs="thejobs" />
-      <PostList v-show="status === 'list'" :jobs="thejobs" />
+      <div class="row g-4 m-0" v-show="status === 'grid'">
+        <JobsGridCard v-for="job in jobs" :job="job" :key="job.id" />
+      </div>
+
+      <div class="row g-3 m-0" v-show="status === 'list'">
+        <JobsListCard v-for="job in jobs" :job="job" :key="job.id" />
+      </div>
+
     </div>
 
     <div>
@@ -68,7 +82,7 @@ onMounted(async () => {
             <!-- نوع الدوام -->
             <div class="col-12 w-100">
               <label class="form-label fw-semibold">نوع الدوام</label>
-              <select class="form-select" v-model="type">
+              <select class="form-select" v-model="job_type">
                 <option value="">الكل</option>
                 <option value="full_time">دوام كامل</option>
                 <option value="contract">دوام جزئي</option>

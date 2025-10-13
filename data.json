@@ -59,6 +59,26 @@
       "created_at": "2025-10-07 11:00:00",
       "updated_at": "2025-10-07 11:00:00",
       "company_id_belongs": null
+    },
+    {
+      "id": "4",
+      "name": "4mhmedy",
+      "account_type": "adminadminAccount",
+      "role": "owner",
+      "gender": "male",
+      "international_key": "966+",
+      "phone": "500500500",
+      "email": "omar.owner@example.com",
+      "password_hash": "$2b$10$samplehashomar456",
+      "avatar_url": "https://picsum.photos/200/200?3",
+      "banner_url": "https://picsum.photos/800/200?3",
+      "bio": "Company owner and administrator.",
+      "industry": "Software Development",
+      "address": "Yemen",
+      "age": 30,
+      "created_at": "2025-10-07 11:00:00",
+      "updated_at": "2025-10-07 11:00:00",
+      "company_id_belongs": null
     }
   ],
 
@@ -173,7 +193,7 @@
     },
     {
       "id": "2",
-      "user_id": "1",
+      "user_id": "2",
       "user_type": "company",
       "title": "AI Fashion Recommender",
       "content": "A web app that predicts ideal clothing combinations for users.",

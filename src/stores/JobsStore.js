@@ -61,11 +61,10 @@ export const useJobsStore = defineStore("JobsStore", () => {
 
       if (filters.country) query.push(`country=${filters.country}`);
       if (filters.work_mode) query.push(`work_mode=${filters.work_mode}`);
-      if (filters.type) query.push(`type=${filters.type}`);
+      if (filters.job_type) query.push(`job_type=${filters.job_type}`);
       if (filters.currency) query.push(`currency=${filters.currency}`);
 
       const res = await axios.get(`${apiURL}?${query.join("&")}`);
-      console.log("ok")
       return res.data;
       
     } catch (err) {
@@ -79,11 +78,9 @@ export const useJobsStore = defineStore("JobsStore", () => {
       try {
         if (the === "jops"){
           const followersList = await filterLikesByUserId(theId);
-          console.log('jobs: :',followersList.value)
           return followersList.length;
         } else if (the === "compony"){
           const followersList = await fetchJobByCompanyId(theId);
-          console.log('jobs: :',followersList.value)
           return followersList.length;
         }
       } catch (err) {
