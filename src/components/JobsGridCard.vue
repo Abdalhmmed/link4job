@@ -56,9 +56,9 @@ onMounted( async () => {
         </ul>
 
         <div class="text-center mt-auto">
-          <button class="btn btn-primary px-4 rounded-pill" @click="JobStore.fetchJobById(job.id)">
+          <router-link :to="{name: 'JobPage', params: { id: job.id }}" class="btn btn-primary px-4 rounded-pill">
             <i class="bi bi-info-circle me-1"></i>تفاصيل
-          </button>
+          </router-link>
         </div>
 
       </div>

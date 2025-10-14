@@ -97,7 +97,7 @@
       "updated_at": "2025-10-07 11:00:00",
       "industry": "Fashion & Technology",
       "address": "Yemen",
-      "documented": false,
+      "documented": true,
       "owner_user_id": 3
     },
     {
@@ -463,8 +463,8 @@
 
   "jobs": [
     {
-      "id": 1,
-      "company_id": 1,
+      "id": "1",
+      "company_id": "1",
       "title": "Store Manager — Fashion Retail",
       "description": "Lead daily retail operations for StyleTech's flagship store. Responsibilities include staff management, visual merchandising, inventory control, customer experience oversight, and performance reporting. The ideal candidate demonstrates proven retail management experience in fashion and strong leadership skills.",
       "publish_date": "2025-10-09 09:00:00",
@@ -475,11 +475,12 @@
       "salary": 5000.00,
       "currency": "USD",
       "hours_per_week": 48,
-      "country": "USA"
+      "country": "USA",
+      "img": null
     },
     {
-      "id": 2,
-      "company_id": 1,
+      "id": "2",
+      "company_id": "1",
       "title": "AI Fashion Developer",
       "description": "Develop and maintain AI-driven recommendation systems for fashion products. Duties include model design, data processing, API development, and cross-functional collaboration with product and design teams. Candidates must be proficient in Python and machine learning libraries.",
       "publish_date": "2025-10-09 10:00:00",
@@ -490,11 +491,12 @@
       "salary": 7000.00,
       "currency": "SAR",
       "hours_per_week": 40,
-      "country": "Saudi Arabia"
+      "country": "Saudi Arabia",
+      "img": "hi"
     },
     {
-      "id": 3,
-      "company_id": 2,
+      "id": "3",
+      "company_id": "2",
       "title": "Marketing Lead — Sustainable Fashion",
       "description": "Lead marketing strategy and campaigns for EcoWear's sustainable collections. Responsibilities include digital marketing, partnership development, content oversight, and sustainability-focused messaging.",
       "publish_date": "2025-10-09 11:00:00",
@@ -505,7 +507,8 @@
       "salary": 6000.00,
       "currency": "YR",
       "hours_per_week": 40,
-      "country": "Yemen"
+      "country": "Yemen",
+      "img": null
     }
   ],
 
