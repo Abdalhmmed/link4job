@@ -11,6 +11,7 @@ import JobPageView from "@/view/JobPageView.vue";
 import ProjectsPageView from "@/view/ProjectsPage.vue";
 import ProjectPageView from "@/view/ProjectPage.vue";
 import NotFoundView from "@/view/NotFoundView.vue";
+import MainPageView from "@/view/MainPageView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,6 +27,7 @@ const router = createRouter({
     { path: '/ProjectsPage', name: 'ProjectsPage', component: ProjectsPageView },
     { path: '/EditCompanyPage', name: 'EditCompanyPage', component: EditCompanyPageView },
     { path: '/EditProfilPage', name: 'EditProfilPage', component: EditProfilPageView },
+    { path: '/MainPage', name: 'MainPage', component: MainPageView },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundView }
   ]
 });

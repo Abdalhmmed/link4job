@@ -5,6 +5,9 @@ import { RouterView } from 'vue-router';
 import { useRoute } from 'vue-router';
 
 import { ref } from 'vue';
+import UserCard from './components/UserCard.vue';
+import FriendsCard from './components/FriendsCard.vue';
+import MainPosCard from './components/MainPosCard.vue';
 
 const route = useRoute();
 
@@ -20,7 +23,12 @@ const Owner = ref(true)
   <div id="app" class="bg-light" dir="rtl">
     <Navbar :status= user />
 
-    <RouterView/>
+    <!-- <RouterView/> -->
+    <div>
+      <UserCard />
+        <MainPosCard />
+      <FriendsCard />
+    </div>
 
     <Footer />
   </div>
