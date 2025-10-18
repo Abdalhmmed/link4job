@@ -50,7 +50,6 @@ const postsState = reactive(props.posts.map(p => ({
   detailsVisible: false
 })));
 
-// Functions
 const findPost = id => postsState.find(p => p.id === id);
 
 function toggleLike(id) {
@@ -88,7 +87,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 <template>
   <div class="feed-component" role="region" aria-label="منشورات الثوب الناعم">
 
-    <!-- 🖋 Composer -->
     <section class="composer" aria-label="منشئ المنشور (عرض)">
       <div class="composer-inner">
         <img class="composer-avatar"
@@ -106,7 +104,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
       </div>
     </section>
 
-    <!-- 💬 Feed -->
     <section class="feed-wrapper">
         <article
             v-for="post in postsState"
@@ -114,7 +111,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
             class="post"
             :aria-label="`منشور ${post.author}`"
         >
-            <!-- الخط الملون أعلى المنشور -->
             <div class="post-color-line"></div>
 
             <div class="meta">
@@ -150,7 +146,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
                     >
                     <i class="bi bi-heart"></i> <span>{{ post.likes }}</span>
                     </button>
-                    <button class="btn btn-sm btn-light" @click="toggleComments(post.id)">
+                    <button class="btn btn-sm btn-light s" @click="toggleComments(post.id)">
                     <i class="bi bi-chat"></i> <span>{{ post.comments.length }}</span>
                     </button>
                     <button class="btn btn-sm btn-light" @click="toggleDetails(post.id)">
@@ -182,12 +178,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 </template>
 
 <style scoped>
+.s{
+      margin: 0rem 1rem;
+}
 :root { --brand:#4f46e5; --accent:#22c55e; --muted:#6b7280; }
 .feed-component { display:flex; flex-direction:column; gap:18px; font-family:'Noto Sans Arabic',system-ui; color:#1f2937; }
 
 .feed-wrapper { width:100%; max-width:760px; margin:0 auto; }
 
-/* Composer */
 .composer {
   background:#fff; border-radius:12px; padding:14px;
   box-shadow:0 10px 30px rgba(18,24,40,.04);
@@ -202,11 +200,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 }
 .composer-actions { display:flex; gap:8px; align-items:center; }
 
-/* Post */
-.post {
-  background:#fff; border-radius:12px; padding:14px;
-  box-shadow:0 10px 30px rgba(18,24,40,.04); margin-bottom:18px;
-}
 .post-color-line { height:6px; border-radius:4px; margin:-14px -14px 10px; background:linear-gradient(90deg,var(--brand),var(--accent)); }
 .meta { display:flex; gap:12px; align-items:flex-start; }
 .meta img { width:56px; height:56px; border-radius:50%; object-fit:cover; }
@@ -216,7 +209,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 .actions { display:flex; align-items:center; gap:8px; margin-top:12px; }
 .btn-like.active { color:var(--accent); font-weight:700; }
 
-/* Comments */
 .comments-panel { margin-top:12px; border-top:1px solid #eef2f7; background:linear-gradient(180deg,#f5fffacc,#fff0); border-radius:0 0 12px 12px; padding-top:10px; }
 .comment-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:10px; }
 .comment-item img { width:36px; height:36px; border-radius:8px; object-fit:cover; }
@@ -228,12 +220,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
   .meta img, .composer-avatar{ width:48px; height:48px; }
 }
 
-:root {
-  --brand: #4f46e5;    /* أزرق ناعم */
-  --brand-2: #22c55e;  /* أخضر أنيق */
-}
-
-/* منشور */
 .post {
   background: #fff;
   border-radius: 12px;
@@ -244,19 +230,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
   overflow: hidden;
   transition: transform .18s ease, box-shadow .18s ease;
 }
-.post:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(18,24,40,.06);
-}
 
-/* الخط الملون */
 .post .post-color-line {
   height: 6px;
   border-radius: 4px;
   margin: -14px -14px 10px -14px;
 }
 
-/* جعل الألوان تتناوب بين الأزرق والأخضر */
 .post:nth-child(odd) .post-color-line {
   background: linear-gradient(90deg, var(--brand), var(--brand-2));
 }

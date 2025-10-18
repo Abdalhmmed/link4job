@@ -23,18 +23,15 @@ const Owner = ref(true)
   <div id="app" class="bg-light" dir="rtl">
     <Navbar :status= user />
 
-    <!-- <RouterView/> -->
-    <div>
-      <UserCard />
-        <MainPosCard />
-      <FriendsCard />
-    </div>
+    <RouterView/>
+
 
     <Footer />
   </div>
 </template>
 
 <style>
+
 :root {
   --brand: #4f46e5;
   --brand-2: #22c55e;

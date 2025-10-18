@@ -107,6 +107,50 @@ export const useFollowersStore = defineStore("FollowersStore", () => {
     };
 
 
+    const fetchFriendsByUserId = async (userId) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+        const myFollowsRes = await axios.get(apiURL, {
+        params: {
+            user_type: "user",
+            user_id: userId,
+            target_type: "user",
+            status: "active",
+        },
+        });
+        const iFollow = myFollowsRes.data;
+
+        const theyFollowMeRes = await axios.get(apiURL, {
+        params: {
+            target_type: "user",
+            target_id: userId,
+            user_type: "user",
+            status: "active",
+        },
+        });
+        const theyFollowMe = theyFollowMeRes.data;
+
+        const friends = iFollow.filter((follow) =>
+        theyFollowMe.some((theirFollow) => theirFollow.user_id == follow.target_id)
+        );
+
+        return friends.map((f) => ({
+            id: f.id,
+            friend_id: f.target_id,
+            created_at: f.created_at,
+        }));
+    } catch (err) {
+        console.error(`Error fetching friends for user ${userId}:`, err);
+        error.value = "فشل في تحميل الأصدقاء.";
+        return [];
+    } finally {
+        loading.value = false;
+    }
+    };
+
+
 
 
     return {
@@ -117,7 +161,8 @@ export const useFollowersStore = defineStore("FollowersStore", () => {
         fetchFollowerById,
         filterFollowersByUserId,
         countFollowersById,
-        filterFollowersByCompanyId
+        filterFollowersByCompanyId,
+        fetchFriendsByUserId
     };
 
 });

@@ -58,12 +58,10 @@
     *{box-sizing:border-box}
     body{ background:#f6f8fb; color:#1f2937; -webkit-font-smoothing:antialiased; display:flex; flex-direction:column; min-height:100vh; }
 
-    /* NAV kept simple and consistent */
     nav.navbar{ box-shadow:0 6px 18px rgba(18,24,40,.04); }
 
     main{ flex:1; display:flex; align-items:center; justify-content:center; padding:24px; }
 
-    /* PROFILE CARD (centered, self-contained) */
     .profile-card{ width:100%; max-width:317px; background:#fff; border-radius:16px; padding:0; overflow:visible; position:relative; box-shadow:0 12px 40px rgba(18,24,40,.06); }
     .profile-banner{ height:140px; border-top-left-radius:16px; border-top-right-radius:16px; background-size:cover; background-position:center; position:relative; }
     .avatar-wrap{ position:absolute; left:50%; transform:translateX(-50%); bottom:255px; width:112px; height:112px; display:flex; align-items:center; justify-content:center; }
@@ -84,5 +82,6 @@
         justify-content: space-around;
         align-items: flex-start;
         margin-top: 2rem;
+        margin-left: 3rem;
     }
 </style>

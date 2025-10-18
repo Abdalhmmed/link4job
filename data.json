@@ -249,7 +249,7 @@
       "user_id": 3,
       "user_type": "user",
       "target_type": "user",
-      "target_id": "3",
+      "target_id": "2",
       "status": "active",
       "created_at": "2025-10-07 15:05:00"
     },
@@ -257,16 +257,16 @@
       "id": 3,
       "user_id": 1,
       "user_type": "user",
-      "target_type": "company",
-      "target_id": "1",
+      "target_type": "user",
+      "target_id": "2",
       "status": "active",
       "created_at": "2025-10-07 15:05:00"
     },
     {
       "id": 4,
-      "user_id": 3,
+      "user_id": 2,
       "user_type": "user",
-      "target_type": "company",
+      "target_type": "user",
       "target_id": "1",
       "status": "active",
       "created_at": "2025-10-07 15:05:00"
