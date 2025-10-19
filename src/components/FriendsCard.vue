@@ -71,7 +71,7 @@ watch(
       <aside class="friends-card" aria-labelledby="friends-title">
         <div class="header d-flex justify-content-between align-items-center mb-2">
           <h6 id="friends-title" class="mb-0">أصدقاؤك</h6>
-          <small class="small-muted">{{ props.maxVisible }} كحد افتراضي</small>
+          <small class="small-muted">{{ props.friends.length }} عدد الأصدقاء </small>
         </div>
 
         <div id="friendsList" class="friends-list">
