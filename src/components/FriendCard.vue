@@ -26,9 +26,11 @@ const props = defineProps({
       </div>
     </router-link>
 
-    <button class="btn btn-sm btn-outline-primary rounded-circle ms-2" title="محادثة">
-      <i class="bi bi-chat-dots"></i>
-    </button>
+    <router-link :to="{ name: 'ChatPage' }">
+      <button class="btn btn-sm btn-outline-primary rounded-circle ms-2" title="محادثة">
+        <i class="bi bi-chat-dots"></i>
+      </button>
+    </router-link>
   </div>
 </template>
 

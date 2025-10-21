@@ -12,6 +12,8 @@ import ProjectsPageView from "@/view/ProjectsPage.vue";
 import ProjectPageView from "@/view/ProjectPage.vue";
 import NotFoundView from "@/view/NotFoundView.vue";
 import MainPageView from "@/view/MainPageView.vue";
+import ChatPageView from "@/view/ChatPageView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,13 +24,14 @@ const router = createRouter({
     { path: '/Profile/:id', name: 'ProfilePage', component: ProfilePageView },
     { path: '/Project/:id', name: 'ProjectPage', component: ProjectPageView },
     { path: '/CompanyPage/:id', name: 'CompanyPage', component: CompanyPageView },
+    { path: '/ChatPage', name: 'ChatPage', component: ChatPageView },
     { path: '/PostsPage', name: 'PostsPage', component: PostsPageView },
     { path: '/JobsPage', name: 'JobsPage', component: JobsPageView },
     { path: '/ProjectsPage', name: 'ProjectsPage', component: ProjectsPageView },
     { path: '/EditCompanyPage', name: 'EditCompanyPage', component: EditCompanyPageView },
     { path: '/EditProfilPage', name: 'EditProfilPage', component: EditProfilPageView },
     { path: '/MainPage', name: 'MainPage', component: MainPageView },
-    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundView }
+    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundView },
   ]
 });
 
