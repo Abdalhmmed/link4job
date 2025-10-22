@@ -3,30 +3,44 @@ import { useUserStore } from '@/stores/UserStore'
 import { inject, onMounted, ref, computed } from 'vue'
 
 const ChatId = inject('ChatId')
+
 const UsersStore = useUserStore()
+
+
+
 const user = ref(null)
-const loading = ref(false)
+const loading = ref(true) 
 
 const props = defineProps({
   user_id: {
     type: Object,
-    default: () => ({ id: 0 })
+    default: () => ({ target_id: 0 })
   }
 })
 
 function OpenChat(id) {
-  ChatId.value = id
+  if (ChatId && ChatId.value !== id) {
+    ChatId.value = id
+  }
 }
 
 onMounted(async () => {
-  if (props.user_id.id) {
-    loading.value = true
-    user.value = await UsersStore.fetchUserById(props.user_id.id)
+  if (props.user_id?.id) {
+    try {
+      loading.value = true
+      user.value = await UsersStore.fetchUserById(props.user_id.friend_id)
+      console.log("frind3: ",props.user_id)
+    } catch (err) {
+      console.error(" خطأ أثناء جلب بيانات المستخدم:", err)
+    } finally {
+      loading.value = false
+    }
+  } else {
     loading.value = false
   }
 })
 
-const isActive = computed(() => ChatId.value === user.value?.id)
+const isActive = computed(() => ChatId?.value === user.value?.id)
 </script>
 
 <template>
@@ -40,7 +54,7 @@ const isActive = computed(() => ChatId.value === user.value?.id)
 
     <div class="friend-info">
       <strong class="friend-name">{{ user.name }}</strong>
-      <span class="friend-status"> متصل الآن</span>
+      <span class="friend-status">متصل الآن</span>
     </div>
   </div>
 
@@ -92,7 +106,7 @@ const isActive = computed(() => ChatId.value === user.value?.id)
   color: #4a4a4a;
 }
 
-/* 🎨 تأثير التحميل (skeleton) */
+/* 🩶 تأثير التحميل */
 .friend-item.loading {
   opacity: 0.7;
   pointer-events: none;
@@ -102,7 +116,7 @@ const isActive = computed(() => ChatId.value === user.value?.id)
   height: 45px;
   border-radius: 50%;
   background: linear-gradient(90deg, #eee, #f8f8f8, #eee);
-  animation: pulse 1.2s infinite;
+  animation: pulse 1.2s infinite linear;
 }
 .skeleton-info {
   flex: 1;
@@ -112,7 +126,7 @@ const isActive = computed(() => ChatId.value === user.value?.id)
   background: linear-gradient(90deg, #eee, #f8f8f8, #eee);
   border-radius: 6px;
   margin-bottom: 6px;
-  animation: pulse 1.2s infinite;
+  animation: pulse 1.2s infinite linear;
 }
 .line.short {
   width: 60%;

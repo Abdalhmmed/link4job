@@ -246,10 +246,10 @@
     },
     {
       "id": 2,
-      "user_id": 3,
+      "user_id": 2,
       "user_type": "user",
       "target_type": "user",
-      "target_id": "2",
+      "target_id": "1",
       "status": "active",
       "created_at": "2025-10-07 15:05:00"
     },
@@ -264,19 +264,10 @@
     },
     {
       "id": 4,
-      "user_id": 2,
+      "user_id": 3,
       "user_type": "user",
       "target_type": "user",
-      "target_id": "1",
-      "status": "active",
-      "created_at": "2025-10-07 15:05:00"
-    },
-    {
-      "id": 5,
-      "user_id": 2,
-      "user_type": "user",
-      "target_type": "company",
-      "target_id": "1",
+      "target_id": "2",
       "status": "active",
       "created_at": "2025-10-07 15:05:00"
     }
@@ -563,14 +554,14 @@
     {
       "id": "3",
       "user_id": "2",
-      "the_target_id": "4",
+      "the_target_id": "3",
       "text": "hi2",
       "dete": "2025-10-09 12:00:00",
       "taim": "12:01:00"
     },
     {
       "id": "4",
-      "user_id": "4",
+      "user_id": "3",
       "the_target_id": "2",
       "text": "Hi bro2",
       "dete": "2025-10-09",

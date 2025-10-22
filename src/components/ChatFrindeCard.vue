@@ -13,9 +13,7 @@ const props = defineProps({
     }
 })
 
-onMounted( async () => {
 
-})
 
 </script>
 

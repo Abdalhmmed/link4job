@@ -94,5 +94,6 @@ export const useChatsStore = defineStore('ChatsStore', () => {
         fetchChatById,
         filterChteByUserId,
         filterChatBetweenUsers,
+        
     }
 })

@@ -15,7 +15,7 @@ provide('ChatId', ChatId)
 
 onMounted( async () => {
   frindes.value = await FollowersStore.fetchFriendsByUserId(2);
-  console.log('frindes: ', frindes.value)
+   console.log('friend1: ', frindes.value);
 })
 
 </script>
