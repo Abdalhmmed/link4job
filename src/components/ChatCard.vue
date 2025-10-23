@@ -48,11 +48,15 @@ onMounted(loadChatData)
 
     <div v-else class="p-3 text-center text-muted">جاري تحميل البيانات...</div>
 
-    <div v-for="chat in chats" :key="chat.id" class="chat-messages" id="chatMessages">
-      <div  :class="['message', chat.user_id == myId ? 'me' : 'user']">
-        {{ chat.text }}
+    <div class="h-100 overflow-auto">
+
+      <div v-for="chat in chats" :key="chat.id" class="chat-messages" id="chatMessages">
+        <div  :class="['message', chat.user_id == myId ? 'me' : 'user']">
+          {{ chat.text }}
+        </div>
+        <small :class="['tiem', chat.user_id == myId ? 'me' : 'user']">{{ chat.taim }}</small>
       </div>
-      <small :class="['tiem', chat.user_id == myId ? 'me' : 'user']">{{ chat.taim }}</small>
+
     </div>
 
     <div class="chat-input">
@@ -75,7 +79,7 @@ onMounted(loadChatData)
 :root {
   --msg-me-bg: linear-gradient(135deg, #2e5cb8, #1e3a8a);
   --msg-me-text: #ffffff;
-  --msg-user-bg: linear-gradient(135deg, #fdf3f4, #fae8e8);
+  --msg-user-bg: linear-gradient(135deg, #ffffff, #ffffff);
   --msg-user-text: #4b5563;
   --chat-bg: #faf9f7;
 }
@@ -96,8 +100,8 @@ onMounted(loadChatData)
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  border-bottom: 1px solid #eee;
-  background: #fffafc;
+  border-bottom: 1px solid #ffffff;
+  background: #ffffff;
 }
 
 .chat-header img {

@@ -36,37 +36,4 @@ const router = createRouter({
 });
 
 export default router;
-
-
-
-// createdAt
-// : 
-// "2025-08-26T04:47:40Z"
-// email
-// : 
-// "info1@datastudio1.com"
-// followersCount
-// : 
-// 13124
-// id
-// : 
-// "c1"
-// jobs
-// : 
-// []
-// location
-// : 
-// "مسقط"
-// managerId
-// : 
-// "u2"
-// name
-// : 
-// "DataStudio 1"
-// phone
-// : 
-// "+966545570755"
-// workField
-// : 
-// "التجارة الإلكترونية"
   

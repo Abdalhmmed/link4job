@@ -40,8 +40,6 @@ const props = defineProps({
       background: #fff;
       box-shadow: 0 0 12px rgba(0,0,0,0.05);
       overflow-y: auto;
-      position: sticky;
-      top: 0;
       height: 90vh; 
       border-radius: 12px;
       transition: transform .3s ease;

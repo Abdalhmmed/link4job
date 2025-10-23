@@ -1,8 +1,14 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 import { useUserStore } from '@/stores/UserStore';
+import NotificationsCard from './NotificationsCard.vue';
 
 const UserStore = useUserStore();
+
+const Notification = ref(false);
+provide("Notification", Notification);
+
+const myNotifications = ref('')
 
 const users = ref(null)
 const user = ref(null)
@@ -11,8 +17,13 @@ const id = ref(2)
 onMounted( async () =>{
 
   user.value = await UserStore.fetchUserById(id.value);
+  
+})
 
-} )
+function  ObenNotification() {
+  Notification.value = true
+}
+
 </script> 
 
 <template>
@@ -48,6 +59,15 @@ onMounted( async () =>{
           </div>
 
           <div v-else-if="user.account_type === 'user'" class="d-flex gap-2">
+            <button @click="ObenNotification()" class="btn btn-outline-secondary position-relative" type="button"   >
+              <i class="bi bi-bell "></i>
+              <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                5
+              </span> -->
+            </button>
+
+            <NotificationsCard v-if="Notification"/>
+
             <router-link :to="{name: 'ProfilePage',  params: { id: user.id }}">
               <button class="btn btn-primary">
                   {{ user.name }}  <i class="bi bi-person-circle ms-1"></i>
@@ -56,6 +76,12 @@ onMounted( async () =>{
           </div>
 
           <div v-else-if="user.account_type === 'adminAccount'" class="d-flex gap-2">
+            <button class="btn btn-outline-secondary position-relative" type="button">
+              <i class="bi bi-bell fs-5"></i>
+              <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                5
+              </span> -->
+            </button>
             <router-link :to="{name: 'CompaniePage' , params: { id: user.id } }">
               <button class="btn btn-outline-primary"> 
                 {{ user.name }} <i class="bi bi-building ms-1"></i>

@@ -6,8 +6,6 @@ const ChatId = inject('ChatId')
 
 const UsersStore = useUserStore()
 
-
-
 const user = ref(null)
 const loading = ref(true) 
 

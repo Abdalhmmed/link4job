@@ -566,6 +566,82 @@
       "text": "Hi bro2",
       "dete": "2025-10-09",
       "taim": "12:01:00"
+    },
+    {
+      "id": "5",
+      "user_id": "3",
+      "the_target_id": "2",
+      "text": "Hi bro2",
+      "dete": "2025-10-09",
+      "taim": "12:01:00"
+    },
+    {
+      "id": "6",
+      "user_id": "3",
+      "the_target_id": "2",
+      "text": "Hi bro2",
+      "dete": "2025-10-09",
+      "taim": "12:01:00"
+    },
+    {
+      "id": "7",
+      "user_id": "3",
+      "the_target_id": "2",
+      "text": "Hi bro2",
+      "dete": "2025-10-09",
+      "taim": "12:01:00"
+    },
+    {
+      "id": "8",
+      "user_id": "3",
+      "the_target_id": "2",
+      "text": "Hi bro2",
+      "dete": "2025-10-09",
+      "taim": "12:01:00"
+    },
+    {
+      "id": "9",
+      "user_id": "3",
+      "the_target_id": "2",
+      "text": "Hi bro2",
+      "dete": "2025-10-09",
+      "taim": "12:01:00"
+    },
+    {
+      "id": "10",
+      "user_id": "3",
+      "the_target_id": "2",
+      "text": "Hi bro2",
+      "dete": "2025-10-09",
+      "taim": "12:01:00"
+    }
+  ],
+  "notification":[
+    {
+      "id": 1,
+      "user_id": "2",
+      "user_type": "user",
+      "reactant_id": "2004",
+      "reactant_type": "security",
+      "interaction_type": "post",
+      "interaction_id": "1",
+      "title": "انذار",
+      "message": "تم حذف منشور بسبب انتهاك سياسيات ",
+      "date": "22 أكتوبر 2025",
+      "icon": "bi-x-octagon"
+    },
+    {
+      "id": 2,
+      "user_id": "2",
+      "type": "user",
+      "reactant_id": "1",
+      "reactant_type": "user",
+      "interaction_type": "post",
+      "interaction_id": "1",
+      "title": "مستخدم: 1mhmedy ",
+      "message": "hi 2 أعجب بمنشورك",
+      "date": "22 أكتوبر 2025",
+      "icon": "bi-heart-fill"
     }
   ]
 
