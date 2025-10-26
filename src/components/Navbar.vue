@@ -1,30 +1,60 @@
 <script setup>
-import { onMounted, provide, ref } from 'vue';
+import { onMounted, onBeforeUnmount, provide, ref } from 'vue';
 import { useUserStore } from '@/stores/UserStore';
 import NotificationsCard from './NotificationsCard.vue';
+import AuthModal from './AuthModal.vue';
 
 const UserStore = useUserStore();
 
 const Notification = ref(false);
 provide("Notification", Notification);
 
-const myNotifications = ref('')
+const theAuthModal = ref(false);
+provide("theAuthModal", theAuthModal);
 
-const users = ref(null)
-const user = ref(null)
+const user = ref(null);
 
-const id = ref(2)
-onMounted( async () =>{
+const loadUser = async () => {
+  const id = localStorage.getItem("userId");
+  if (id) {
+    user.value = await UserStore.fetchUserById(id);
+  } else {
+    user.value = null;
+  }
+};
 
-  user.value = await UserStore.fetchUserById(id.value);
-  
-})
+let lastUserId = localStorage.getItem("userId");
 
-function  ObenNotification() {
-  Notification.value = true
+const checkUserIdChange = async () => {
+  const currentId = localStorage.getItem("userId");
+  if (currentId !== lastUserId) {
+    lastUserId = currentId;
+    await loadUser();
+  }
+};
+
+let intervalId;
+
+onMounted(async () => {
+  await loadUser();
+  window.addEventListener("storage", loadUser);
+  intervalId = setInterval(checkUserIdChange, 1000);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("storage", loadUser);
+  clearInterval(intervalId);
+});
+
+function ObenNotification() {
+  Notification.value = true;
 }
 
-</script> 
+function ObenAuthModal() {
+  theAuthModal.value = true;
+}
+</script>
+
 
 <template>
 <nav class="navbar navbar-expand-lg bg-white sticky-top shadow-sm">
@@ -54,7 +84,7 @@ function  ObenNotification() {
           <div v-if="!user" class="d-flex gap-2">
             <a href="#contact" class="btn btn-outline-primary">تواصل معنا</a>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
-              <i class="bi bi-person-circle ms-1"></i> دخول / حساب جديد
+              <i class="bi bi-person-circle ms-1" @click="ObenAuthModal()"></i> دخول / حساب جديد
             </button>
           </div>
 
@@ -93,6 +123,8 @@ function  ObenNotification() {
               </button>
             </router-link>
           </div>
+
+          <AuthModal v-if="theAuthModal"/>
           
 
         </div>

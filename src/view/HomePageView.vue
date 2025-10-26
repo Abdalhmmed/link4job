@@ -5,7 +5,6 @@
     import Achievements from "@/components/Achievements.vue";
     import Features from "@/components/Features.vue";
     import Contact from "@/components/Contact.vue";
-    import AuthModal from "@/components/AuthModal.vue";
 </script>
 
 <template>
@@ -15,5 +14,4 @@
     <Achievements />
     <Features />
     <Contact />
-    <AuthModal />
 </template>
