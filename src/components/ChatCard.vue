@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/UserStore'
 import { inject, onMounted, ref, watch } from 'vue'
 
 const ChatId = inject('ChatId')
-const myId = ref("2")
+const myId = localStorage.getItem("userId") 
 
 const UsersStore = useUserStore()
 const ChatsStore = useChatsStore()
@@ -16,7 +16,7 @@ async function loadChatData() {
   if (!ChatId?.value) return
   try {
     friend.value = await UsersStore.fetchUserById(ChatId.value)
-    chats.value = await ChatsStore.filterChatBetweenUsers(myId.value, ChatId.value)
+    chats.value = await ChatsStore.filterChatBetweenUsers(myId, ChatId.value)
     console.log("تم تحميل بيانات المحادثة:", ChatId.value)
   } catch (err) {
     console.error("خطأ أثناء تحميل البيانات:", err)

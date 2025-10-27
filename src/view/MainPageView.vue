@@ -16,11 +16,13 @@ const user = ref('');
 const like = ref(0);
 const follow = ref(0);
 
+const id = localStorage.getItem("userId")
+
 onMounted(async () => {
-  friend.value = await FollowersStore.fetchFriendsByUserId(2);
-  user.value = await UsersStore.fetchUserById(2);
-  like.value = await LikesStore.countLikesById(2,'user');
-  follow.value = await FollowersStore.countFollowersById(2,'user')
+  friend.value = await FollowersStore.fetchFriendsByUserId(id);
+  user.value = await UsersStore.fetchUserById(id);
+  like.value = await LikesStore.countLikesById(id,'user');
+  follow.value = await FollowersStore.countFollowersById(id,'user')
   console.log('friend: ', friend.value);
   console.log('like: ', like.value);
   console.log('follow: ', follow.value);

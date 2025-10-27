@@ -1,26 +1,29 @@
 <script setup>
+import { useRouter } from 'vue-router';
 import FrindesChat from './FrindesChat.vue';
-import { onMounted } from 'vue';
+
+const router = useRouter();
 
 const props = defineProps({
     frindesId: {
         type: Object,
-        default: {
+        default: () => ({
             id: 0,
             frinde_id: 0,
             type: 'user'
-        }
+        })
     }
 })
 
-
-
+function goBack() {
+  router.back(); 
+}
 </script>
 
 <template>
  <div class="friends-list">
     <div class="friends-header">
-      <button class="btn btn-light" onclick="togglePanel('friends')"><i class="bi bi-arrow-left"></i></button>
+      <button class="btn btn-light" @click="goBack()"><i class="bi bi-arrow-left"></i></button>
       <h6 class="m-0">الأصدقاء</h6>
     </div>
     <div class="friend-search-wrapper">

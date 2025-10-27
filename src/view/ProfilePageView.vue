@@ -33,8 +33,16 @@ const Myadmin = ref(null);
 const follow = ref(false);
 const like = ref(false);
 
+const theuser = ref(false);
+
 onMounted(async () => {
   const id = Number(route.params.id);
+
+  if (id == localStorage.getItem("userId")) {
+    theuser.value = true
+  } else {
+    theuser.value = false
+  }
 
   user.value = await UserStore.fetchUserById(id);
 
@@ -74,7 +82,7 @@ onMounted(async () => {
           </div>
 
           <div class="text-center">
-            <div v-if="!UserStore.theuser" class="d-flex gap-2 mt-3 mt-md-0">
+            <div v-if="!theuser" class="d-flex gap-2 mt-3 mt-md-0">
               <button @click="follow = !follow" class="btn btn-outline-success" :class="{ active: follow }">
                 <i :class="follow ? 'bi bi-person-dash-fill' : 'bi bi-person-plus'"></i>
                 {{ follow ? 'الغاء المتابعة' : 'متابعة' }}

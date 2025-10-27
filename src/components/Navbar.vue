@@ -81,10 +81,10 @@ function ObenAuthModal() {
             <li v-if="user.account_type === 'user'" class="nav-item"><router-link :to="{ name: 'HomePage' }" class="nav-link"> الاشعراة</router-link></li>
           </ul>
 
-          <div v-if="!user" class="d-flex gap-2">
+          <div v-if="!user" class="d-flex gap-2"  @click="ObenAuthModal()">
             <a href="#contact" class="btn btn-outline-primary">تواصل معنا</a>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
-              <i class="bi bi-person-circle ms-1" @click="ObenAuthModal()"></i> دخول / حساب جديد
+              <i class="bi bi-person-circle ms-1"></i> دخول / حساب جديد
             </button>
           </div>
 

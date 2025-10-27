@@ -46,7 +46,6 @@ function onKeyDown(e) {
   if (e.key === "Escape") closeAllPanels();
 }
 
-// تحميل البيانات من API
 onMounted(async () => {
   window.addEventListener("keydown", onKeyDown);
   try {
@@ -95,7 +94,7 @@ onMounted(async () => {
     loading.value = false;
   }
 
-  user.value = await userStore.fetchUserById(2) 
+  user.value = await userStore.fetchUserById(localStorage.getItem("userId")) 
 });
 
 onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
@@ -365,7 +364,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-/* 🎨 خط علوي متدرّج مثل النموذج */
 .post-color-line {
   height: 6px;
   border-radius: 4px;
@@ -373,16 +371,14 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   background: linear-gradient(90deg, var(--brand), var(--accent));
 }
 
-/* 🌈 تدرّج متناوب بين الأزرق والأخضر لكل منشور */
 .post:nth-child(odd) .post-color-line {
-  background: linear-gradient(90deg, #4f46e5, #22c55e); /* بنفسجـي → أخضر */
+  background: linear-gradient(90deg, #4e46e53c, #22c55e35);
 }
 
 .post:nth-child(even) .post-color-line {
-  background: linear-gradient(90deg, #22c55e, #4f46e5); /* أخضر → بنفسجـي */
+  background: linear-gradient(90deg, #22c55e35, #4e46e53c); 
 }
 
-/* ✨ تأثير ناعم عند المرور */
 .post:hover .post-color-line {
   filter: brightness(1.15);
   transition: filter 0.3s ease;

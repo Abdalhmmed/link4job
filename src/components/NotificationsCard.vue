@@ -19,7 +19,7 @@ function removeNotification(n) {
 
 
 onMounted( async () => {
-    notifications.value = await NotificationsStore.fetchNotificationByUserId(2)
+    notifications.value = await NotificationsStore.fetchNotificationByUserId(localStorage.getItem("userId"))
     console.log("notifications: ", notifications.value)
 })
 
