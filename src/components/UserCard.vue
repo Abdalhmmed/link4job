@@ -135,19 +135,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.notifications-count-badge {
-  background-color: #ff3b30;
-  color: white;
-  font-size: 0.8rem;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 @keyframes pulse {
   from {
     transform: scale(1);

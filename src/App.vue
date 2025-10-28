@@ -2,17 +2,10 @@
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue';
 import { RouterView } from 'vue-router';
-import { useRoute } from 'vue-router';
+import { provide, ref } from 'vue';
 
-import { ref } from 'vue';
-import UserCard from './components/UserCard.vue';
-import FriendsCard from './components/FriendsCard.vue';
-import MainPosCard from './components/MainPosCard.vue';
-
-const route = useRoute();
-
-const user = ref('adminAccount');
-const Owner = ref(true)
+const ChatId = ref(null)
+provide('ChatId', ChatId)
 
 // adminAccount
 // employe
@@ -21,7 +14,7 @@ const Owner = ref(true)
 
 <template>
   <div id="app" class="bg-light" dir="rtl">
-    <Navbar :status= user />
+    <Navbar />
 
     <RouterView/>
 

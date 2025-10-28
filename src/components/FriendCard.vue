@@ -1,16 +1,31 @@
 <script setup>
+import { inject } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const ChatId = inject('ChatId');
+
 const props = defineProps({
   friend: {
     type: Object,
     default: () => ({
       id: '0',
       name: 'غير معروف',
-      img: 'https://cdn-icons-png.flaticon.com/512/847/847969.png', 
+      img: 'https://cdn-icons-png.flaticon.com/512/847/847969.png',
       status: 'غير متصل'
     })
   }
 });
+
+function OpenChat() {
+  if (ChatId && typeof ChatId === 'object' && 'value' in ChatId) {
+    ChatId.value = props.friend.id;
+  }
+  router.push({ name: 'ChatPage' });
+}
 </script>
+
 
 <template>
   <div class="friend-item">
@@ -26,11 +41,11 @@ const props = defineProps({
       </div>
     </router-link>
 
-    <router-link :to="{ name: 'ChatPage' }">
+    <div @click="OpenChat()">
       <button class="btn btn-sm btn-outline-primary rounded-circle ms-2" title="محادثة">
         <i class="bi bi-chat-dots"></i>
       </button>
-    </router-link>
+    </div>
   </div>
 </template>
 

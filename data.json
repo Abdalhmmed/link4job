@@ -43,7 +43,7 @@
     {
       "id": "3",
       "name": "3mhmedy",
-      "account_type": "adminadminAccount",
+      "account_type": "adminAccount",
       "role": "owner",
       "gender": "male",
       "international_key": "966+",
@@ -63,7 +63,7 @@
     {
       "id": "4",
       "name": "4mhmedy",
-      "account_type": "adminadminAccount",
+      "account_type": "adminAccount",
       "role": "owner",
       "gender": "male",
       "international_key": "966+",
@@ -86,7 +86,7 @@
     {
       "id": "1",
       "name": "StyleTech",
-      "account_type": "business",
+      "account_type": "companys",
       "role": "Fashion Innovation",
       "international_key": "966+",
       "phone": "500500500",
@@ -103,7 +103,7 @@
     {
       "id": "2",
       "name": "EcoWear",
-      "account_type": "business",
+      "account_type": "companys",
       "role": "Green Clothing",
       "international_key": "966+",
       "phone": "500123456",

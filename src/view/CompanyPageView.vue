@@ -39,6 +39,9 @@ const follow = ref(false);
 const like = ref(false);
 const showAllEmployees = ref(false)
 
+const owner = localStorage.getItem("userid")
+
+
 
 onMounted( async () =>{
   const id = Number(route.params.id);
@@ -82,7 +85,7 @@ console.log('route.params.id:', route.params.id)
         </div>
 
          <div class="text-center">
-            <div v-if="!user" class="d-flex gap-2 mt-3 mt-md-0">
+            <div v-if="owner != user.id" class="d-flex gap-2 mt-3 mt-md-0">
               <button @click="follow = !(follow)" class="btn btn-outline-success" :class="{ active: follow == true }">
                 <i :class="follow ? 'bi bi-person-dash-fill' : 'bi bi-person-plus'"></i> {{ follow ? 'الغاء المتابعة' : 'متابعة'}}
               </button>
@@ -90,7 +93,7 @@ console.log('route.params.id:', route.params.id)
                 <i class="bi bi-hand-thumbs-up"></i> {{ like ? ' الغاء الاعجاب' : 'اعجاب'}}
               </button>
             </div>
-            <div v-if="user" class="d-flex gap-2 mt-3 mt-md-0">
+            <div v-else-if="owner == user.id" class="d-flex gap-2 mt-3 mt-md-0">
               <button class="btn btn-outline-projects rounded-pill btn-sm"><i class="bi bi-images"></i> المشاريع</button>
               <button class="btn btn-outline-posts rounded-pill btn-sm"><i class="bi bi-pencil-square"></i> المنشورات</button>
               <button class="btn btn-outline-jobs rounded-pill btn-sm"><i class="bi bi-briefcase"></i> الوظائف</button>

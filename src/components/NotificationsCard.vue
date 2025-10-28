@@ -55,12 +55,35 @@ onMounted( async () => {
     </div>
 
     <div class="footer">
-        <button class="btn btn-outline-primary w-100"><i class="bi bi-list-check"></i> عرض المزيد</button>
+        <button class="btn btn-outline-primary w-100">
+          <div
+          v-if="notifications && notifications.length > 3"
+          class="notifications-count-badge"
+          >
+            {{ notifications.length > 99 ? '99+' : notifications.length }}
+          </div>
+          <i class="bi bi-list-check"></i> عرض جميع الإشعارات 
+        </button>
     </div>
   </div>
 </template>
 
 <style scoped>
+.notifications-count-badge {
+  position: absolute;
+  background-color: #ff3b30;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
 .dropdown-notification {
   display: flex;
   flex-direction: column;
