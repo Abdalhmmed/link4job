@@ -78,7 +78,7 @@ function ObenAuthModal() {
             <li class="nav-item"><router-link :to="{ name: 'MainPage' }" class="nav-link active"> الصفحة العامة </router-link></li>
             <li class="nav-item"><router-link :to="{ name: 'JobsPage' }" class="nav-link">الوظاف</router-link></li>
             <li v-if="user.account_type === 'adminAccount'" class="nav-item"><router-link :to="{ name: 'HomePage' }" class="nav-link"> الشركاء</router-link></li>
-            <li v-if="user.account_type === 'user'" class="nav-item"><router-link :to="{ name: 'HomePage' }" class="nav-link"> الاشعراة</router-link></li>
+            <li v-if="user.account_type === 'user'" class="nav-item"><router-link :to="{ name: 'ChatPage' }" class="nav-link"> الدردشة</router-link></li>
           </ul>
 
           <div v-if="!user" class="d-flex gap-2"  @click="ObenAuthModal()">

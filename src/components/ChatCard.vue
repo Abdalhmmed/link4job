@@ -23,22 +23,33 @@ async function loadChatData() {
   }
 }
 
-watch(
-  ChatId,
-  async (newVal, oldVal) => {
-    if (newVal && newVal !== oldVal) {
-      await loadChatData()
-    }
-  },
-  { immediate: true }
-)
+watch(ChatId, async (newVal, oldVal) => {
+  if (newVal && newVal !== oldVal) await loadChatData()
+}, { immediate: true })
 
 onMounted(loadChatData)
+
 </script>
 
 <template>
-  <div class="chat-window">
-    <div class="chat-header" v-if="friend">
+
+  <div class="chat-window" v-if="UsersStore.loading && ChatsStore.loading">
+
+    <div class="chat-header">
+      <div class="img-loading shimmer"></div>
+      <div class="text shimmer" style="width: 100px; height: 14px; border-radius: 8px;"></div>
+    </div>
+
+    <div class="h-100 overflow-auto chat-loading">
+      <div v-for="n in 6" :key="n" class="chat-messages" id="chatMessages">
+        <div class="message-loading shimmer" :class="n % 2 === 0 ? 'me' : 'user'"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="chat-window" v-else-if="friend">
+    <div class="chat-header">
       <img :src="`https://picsum.photos/seed/${friend.id}/45/45`" :alt="friend.name" />
       <div>
         <strong>{{ friend.name }}</strong>
@@ -46,17 +57,13 @@ onMounted(loadChatData)
       </div>
     </div>
 
-    <div v-else class="p-3 text-center text-muted">جاري تحميل البيانات...</div>
-
-    <div class="h-100 overflow-auto">
-
+    <div class="h-100 overflow-auto p-3">
       <div v-for="chat in chats" :key="chat.id" class="chat-messages" id="chatMessages">
-        <div  :class="['message', chat.user_id == myId ? 'me' : 'user']">
+        <div :class="['message', chat.user_id == myId ? 'me' : 'user']">
           {{ chat.text }}
         </div>
         <small :class="['tiem', chat.user_id == myId ? 'me' : 'user']">{{ chat.taim }}</small>
       </div>
-
     </div>
 
     <div class="chat-input">
@@ -67,20 +74,152 @@ onMounted(loadChatData)
         class="form-control"
         id="chatMessageInput"
         placeholder="اكتب رسالتك..."
+        disabled
       />
       <button class="btn btn-primary" id="sendMessageBtn">
         <i class="bi bi-send-fill"></i>
       </button>
     </div>
   </div>
+
+  <div class="chat-window" v-else>
+  <div class="chat-header">
+    <div>
+      <strong></strong>
+      <div class="text-secondary small"></div>
+    </div>
+  </div>
+
+  <div class="empty-chat">
+    <div class="empty-card">
+      <i class="bi bi-chat-dots-fill"></i>
+      <h5>ابدأ محادثة جديدة 💬</h5>
+      <p>يمكنك الآن التواصل مع أصدقائك ومشاركة اللحظات الجميلة ✨</p>
+    </div>
+  </div>
+</div>
+
+
 </template>
 
 <style scoped>
+.tiem.user{
+  align-self: flex-start;
+}
+.tiem.me{
+  align-self: flex-end;
+}
+
+.empty-chat {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, #f9fafb, #f3f4f6);
+  padding: 24px;
+}
+
+.empty-card {
+  text-align: center;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  padding: 40px 30px;
+  max-width: 380px;
+  animation: fadeIn 0.8s ease;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.empty-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.empty-card i {
+  font-size: 2.8rem;
+  color: #4f46e5;
+  margin-bottom: 10px;
+}
+
+.empty-card h5 {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 6px;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.empty-card p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  font-family: 'Tajawal', sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #d1d5db;
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 1.6s infinite;
+}
+@keyframes shimmer {
+  100% { left: 100%; }
+}
+
+.img-loading {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.message-loading {
+  max-width: 70%;
+  border-radius: 20px;
+  position: relative;
+  margin: 8px 0;
+  height: 2.8rem;
+  width: 7rem;
+}
+
+.message-loading.me {
+  align-self: flex-end;
+  border-radius: 4px 18px 18px 18px;
+}
+
+.message-loading.user {
+  align-self: flex-start;
+  border-radius: 18px 4px 18px 18px;
+}
+
+.chat-loading {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f8fafc;
+}
+
 :root {
-  --msg-me-bg: linear-gradient(135deg, #2e5cb8, #1e3a8a);
-  --msg-me-text: #ffffff;
-  --msg-user-bg: linear-gradient(135deg, #ffffff, #ffffff);
-  --msg-user-text: #4b5563;
   --chat-bg: #faf9f7;
 }
 
@@ -100,7 +239,7 @@ onMounted(loadChatData)
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid #eee;
   background: #ffffff;
 }
 
@@ -113,86 +252,31 @@ onMounted(loadChatData)
 }
 
 .chat-messages {
-  overflow-y: auto;
-  padding: 18px;
   display: flex;
   flex-direction: column;
-  background: #f8fafc;
 }
 
 .message {
   max-width: 70%;
   padding: 12px 16px;
   border-radius: 20px;
-  word-break: break-word;
-  position: relative;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.message:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.message.me {
-  align-self: flex-end;
-  background: linear-gradient(135deg, #4f46e5, #6366f1);
-  color: #fff;
-  border-radius: 4px 18px 18px 18px;
-  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
-  padding: 10px 14px;
-  max-width: 75%;
-  font-size: 15px;
-  line-height: 1.4;
-  transition: transform 0.2s ease;
-}
-
-.message.me:hover {
-  transform: translateY(-2px);
-}
-
-.message.user {
-  align-self: flex-start;
-  background: linear-gradient(135deg, #10b981, #34d399);
-  color: #fff;
-  border-radius: 18px 4px 18px 18px;
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
-  padding: 10px 14px;
-  max-width: 75%;
-  font-size: 15px;
-  line-height: 1.4;
-  transition: transform 0.2s ease;
-}
-
-.message.user:hover {
-  transform: translateY(-2px);
-}
-
-.message {
-  display: inline-block;
   margin: 6px 0;
   word-wrap: break-word;
   font-family: 'Tajawal', sans-serif;
 }
 
-.message small {
-  display: block;
-  font-size: 0.75rem;
-  color: #9ca3af;
-  margin-top: 4px;
-  text-align: right;
-}
-.message.user small {
-  text-align: left;
-}
-
-.tiem.me{
+.message.me {
   align-self: flex-end;
+  border-radius: 4px 20px 20px 20px;;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #fff;
 }
 
-.tiem.user{
+.message.user {
   align-self: flex-start;
+  border-radius: 20px 4px 20px 20px;;
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #fff;
 }
 
 .chat-input {
@@ -203,42 +287,31 @@ onMounted(loadChatData)
   background: #fff;
   align-items: center;
 }
-
 .chat-input input[type="text"] {
   flex-grow: 1;
   border-radius: 25px;
   padding: 12px 16px;
   border: 1px solid #ddd;
-  transition: all 0.2s ease;
 }
-
-.chat-input input[type="text"]:focus {
-  outline: none;
-  border-color: #2e5cb8;
-  box-shadow: 0 0 4px rgba(46, 92, 184, 0.3);
-}
-
 .chat-input button {
   border-radius: 50%;
   width: 45px;
   height: 45px;
-  background: linear-gradient(135deg, #2e5cb8, #1e3a8a);
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   border: none;
+  color: white;
 }
-
 .chat-input label {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 45px;
   height: 45px;
   background: #f3f4f6;
   border-radius: 50%;
   border: 1px solid #ddd;
-  transition: background 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
-
 .chat-input label:hover {
   background: #e5e7eb;
 }

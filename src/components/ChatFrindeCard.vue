@@ -1,8 +1,11 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import FrindesChat from './FrindesChat.vue';
+import { inject } from 'vue';
 
 const router = useRouter();
+const ChatId = inject('ChatId');
+
 
 const props = defineProps({
     frindesId: {
@@ -16,6 +19,7 @@ const props = defineProps({
 })
 
 function goBack() {
+  ChatId.value = null
   router.back(); 
 }
 </script>

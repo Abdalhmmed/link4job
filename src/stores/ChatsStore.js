@@ -68,7 +68,6 @@ export const useChatsStore = defineStore('ChatsStore', () => {
             const usersChatRes = await axios.get(apiURL);
             const allChats = usersChatRes.data;
 
-            // تصفية الرسائل بين المستخدمين في الاتجاهين
             const filtered = allChats.filter(
             msg =>
                 (msg.user_id === user1 && msg.the_target_id === user2) ||
