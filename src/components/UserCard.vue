@@ -122,7 +122,7 @@ onMounted(async () => {
           <div class="footer mt-2">
             <button class="btn btn-outline-primary w-100 position-relative">
               <span
-                v-if="notifications && notifications.length > 0"
+                v-if="notifications && notifications.length > 3"
                 class="notifications-count-badge">
                 {{ notifications.length > 99 ? '99+' : notifications.length }}
               </span>

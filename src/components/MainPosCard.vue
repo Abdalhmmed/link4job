@@ -6,7 +6,7 @@ import { useLikesStore } from "@/stores/LikesStore";
 import { useCommentsStore } from "@/stores/CommentsStore";
 
 const postsStore = usePostsStore();
-const userStore = useUserStore();
+const UserStore = useUserStore();
 const likesStore = useLikesStore();
 const commentsStore = useCommentsStore();
 
@@ -55,7 +55,7 @@ onMounted(async () => {
     const enrichedPosts = await Promise.all(
       posts.map(async (post) => {
         const [user, likes, comments] = await Promise.all([
-          userStore.fetchUserById(post.user_id),
+          UserStore.fetchUserById(post.user_id),
           likesStore.filterLikesByPostId(post.id),
           commentsStore.filterCommentsByPostId(post.id),
         ]);
@@ -94,22 +94,44 @@ onMounted(async () => {
     loading.value = false;
   }
 
-  user.value = await userStore.fetchUserById(localStorage.getItem("userId")) 
+  user.value = await UserStore.fetchUserById(localStorage.getItem("userId")) 
 });
 
 onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
 </script>
 
 <template>
-  <div class="feed-component" role="region" aria-label="منشورات الثوب الناعم">
-    <section v-if="loading" class="text-center py-4 text-secondary">⏳ جاري تحميل المنشورات...</section>
+  <div class="feed-component" role="region">
     <section v-if="error" class="text-center py-4 text-danger">{{ error }}</section>
 
-    <section class="composer" aria-label="منشئ المنشور (عرض)">
+    <section v-if="UserStore.loading" class="composer">
+      <div class="composer-inner">
+        <div class="img-loading"></div>
+        <div class="composer-body">
+          <strong></strong>
+          <div class="small text-secondary">جاري التحميل الرجاء الانتظار </div>
+          <textarea
+            class="form-control mt-2 composer-textarea"
+            rows="3"
+            placeholder=" تحميل . . ."
+          ></textarea>
+          <div class="composer-actions mt-2">
+            <button class="btn btn-sm btn-outline-secondary">
+               تحميل
+            </button>
+            <button class="btn btn-sm btn-primary ms-auto">
+               انتظر
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section v-else class="composer">
       <div class="composer-inner">
         <img
           class="composer-avatar"
-          src="https://picsum.photos/40/40?1"
+          :src="`https://picsum.photos/40/40?${user.id}`"
           alt="`صورة`"
           loading="lazy"
         />
@@ -133,7 +155,27 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
       </div>
     </section>
 
-    <section class="feed-wrapper" v-if="!loading && !error">
+
+    <section v-if="loading" class="feed-wrapper">
+      <article v-for="n in 4" :key="n" class="post skeleton">
+        <div class="skeleton-line shimmer"></div>
+
+        <div class="meta">
+          <div class="skeleton-avatar shimmer"></div>
+          <div class="meta-body">
+            <div class="skeleton-text shimmer" style="width: 40%; height: 14px"></div>
+            <div class="skeleton-text shimmer" style="width: 60%; height: 12px"></div>
+          </div>
+        </div>
+
+        <div class="skeleton-text shimmer" style="width: 90%; height: 12px; margin-top: 14px"></div>
+        <div class="skeleton-text shimmer" style="width: 80%; height: 12px"></div>
+        <div class="skeleton-image shimmer" style="margin-top: 14px"></div>
+      </article>
+    </section>
+
+
+    <section class="feed-wrapper" v-else-if="!loading && !error">
       <article
         v-for="post in postsState"
         :key="post.id"
@@ -145,7 +187,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
         <div class="meta">
           <img :src="post.avatar" :alt="`صورة ${post.author}`" loading="lazy" />
           <div class="meta-body">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between" style="width: 40rem;">
               <div>
                 <strong>{{ post.author }}</strong>
                 <div class="text-secondary small">{{ post.date }}</div>
@@ -175,7 +217,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
                 >
                   <i class="bi bi-heart"></i> <span>{{ post.likes }}</span>
                 </button>
-                <button class="btn btn-sm btn-light s" @click="toggleComments(post.id)">
+                <button class="btn btn-sm btn-light" style="margin: 0px 6px;" @click="toggleComments(post.id)">
                   <i class="bi bi-chat"></i> <span>{{ post.comments.length }}</span>
                 </button>
                 <button class="btn btn-sm btn-light" @click="toggleDetails(post.id)">
@@ -208,9 +250,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
 </template>
 
 <style scoped>
-.s {
-  margin: 0rem 1rem;
-}
 :root {
   --brand: #4f46e5;
   --accent: #22c55e;
@@ -225,8 +264,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   color: #1f2937;
 }
 .feed-wrapper {
-  width: 100%;
-  max-width: 760px;
+  width: 47rem;
   margin: 0 auto;
 }
 
@@ -234,11 +272,9 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   background: #fff;
   border-radius: 12px;
   padding: 14px;
-  box-shadow: 0 10px 30px rgba(18, 24, 40, 0.04);
-  width: 100%;
+  box-shadow: 0 8px 24px rgba(18, 24, 40, 0.04);
   max-width: 760px;
   margin: 0 auto 18px;
-  box-sizing: border-box;
 }
 .composer-inner {
   display: flex;
@@ -250,9 +286,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   height: 56px;
   border-radius: 50%;
   object-fit: cover;
-}
-.composer-body {
-  flex: 1;
 }
 .composer-textarea {
   resize: none;
@@ -267,8 +300,19 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   gap: 8px;
   align-items: center;
 }
+.composer-body{
+  width: 41rem;
+}
 
-/* 📰 post style */
+.post {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(18, 24, 40, 0.04);
+  margin-bottom: 18px;
+  overflow: hidden;
+  transition: box-shadow 0.18s ease;
+}
 .post-color-line {
   height: 6px;
   border-radius: 4px;
@@ -317,14 +361,11 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
 .comments-panel {
   margin-top: 12px;
   border-top: 1px solid #eef2f7;
-  background: linear-gradient(180deg, #f5fffacc, #fff0);
-  border-radius: 0 0 12px 12px;
   padding-top: 10px;
 }
 .comment-item {
   display: flex;
   gap: 10px;
-  align-items: flex-start;
   margin-bottom: 10px;
 }
 .comment-item img {
@@ -337,8 +378,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   background: #fbfffd;
   padding: 8px 12px;
   border-radius: 10px;
-}
-.comment-meta {
   color: var(--muted);
 }
 
@@ -353,36 +392,58 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   }
 }
 
-.post {
-  background: #fff;
+.skeleton {
+  background: #f4f4f4;
   border-radius: 12px;
   padding: 14px;
-  box-shadow: 0 8px 24px rgba(18, 24, 40, 0.04);
+  box-shadow: 0 6px 18px rgba(18, 24, 40, 0.04);
   margin-bottom: 18px;
+  overflow: hidden;
+}
+.skeleton-avatar,
+.skeleton-text,
+.skeleton-line,
+.skeleton-image {
+  background: #e3e3e3;
+  border-radius: 6px;
+}
+.skeleton-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+.skeleton-text {
+  height: 12px;
+  margin: 6px 0;
+}
+.skeleton-image {
+  width: 100%;
+  height: 140px;
+  border-radius: 8px;
+  margin-top: 14px;
+}
+.shimmer {
   position: relative;
   overflow: hidden;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-
-.post-color-line {
-  height: 6px;
-  border-radius: 4px;
-  margin: -14px -14px 10px -14px;
-  background: linear-gradient(90deg, var(--brand), var(--accent));
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
 }
-
-.post:nth-child(odd) .post-color-line {
-  background: linear-gradient(90deg, #4e46e53c, #22c55e35);
+@keyframes shimmer {
+  100% {
+    transform: translateX(250%);
+  }
 }
-
-.post:nth-child(even) .post-color-line {
-  background: linear-gradient(90deg, #22c55e35, #4e46e53c); 
-}
-
-.post:hover .post-color-line {
-  filter: brightness(1.15);
-  transition: filter 0.3s ease;
-}
-
 </style>
-

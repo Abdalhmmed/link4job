@@ -21,7 +21,7 @@ onMounted(async () => {
 <template>
   <div class="o">
     <UserCard/>
-    <MainPosCard :user="user" />
+    <MainPosCard/>
     <FriendsCard :friends="friend" />
   </div>
 </template>
