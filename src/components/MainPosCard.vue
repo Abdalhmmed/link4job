@@ -233,13 +233,19 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
 
             <div v-if="post.commentsVisible" class="comments-panel mt-2">
               <ul class="comments-list">
-                <li v-for="(c, i) in post.comments" :key="i" class="comment-item">
+
+                <li v-if="post.comments.length > 0" v-for="(c, i) in post.comments" :key="i" class="comment-item">
                   <img :src="c.avatar" :alt="c.author" />
                   <div class="comment-body">
                     <strong>{{ c.author }}</strong>
                     <div class="comment-meta">{{ c.text }}</div>
                   </div>
                 </li>
+
+                <li v-else class="comment-item">
+                  لا يوجد تعليقات
+                </li>
+
               </ul>
             </div>
           </div>
@@ -443,7 +449,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
 }
 @keyframes shimmer {
   100% {
-    transform: translateX(250%);
+    transform: translateX(900%);
   }
 }
 </style>
