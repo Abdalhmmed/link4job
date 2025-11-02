@@ -23,13 +23,11 @@ const user = ref('')
 onMounted( async () => {
   const id = String(route.params.id)
   job.value = await JobsStore.fetchJobById(id);
-  skills.value = await SkillsStore.filterSkillsByJobId(id)
-  company.value = await CompanysStore.fetchCompanyById(job.value.company_id)
-  user.value = await UserStore.fetchUserById(company.value.owner_user_id)
-
-
-  console.log('job: ', job.value.company_id)
-  console.log('job: ', job.value)
+  if (job.value){
+    skills.value = await SkillsStore.filterSkillsByJobId(id)
+    company.value = await CompanysStore.fetchCompanyById(job.value.company_id)
+    user.value = await UserStore.fetchUserById(company.value.owner_user_id)
+  }
 })
 
 </script>
@@ -40,8 +38,16 @@ onMounted( async () => {
       <section>
         <div class="container">
           <div class="row g-4">
+
+            <div class="col-lg-8" v-if="JobsStore.loading">
+              <div class=" rounded-2xl shadow-soft p-4 p-lg-5 mb-4 jobcard-loading shimmer" style="width: 830px; height: 300px;">
+              </div>
+
+              <div class=" rounded-2xl shadow-soft p-4 p-lg-5 mb-4 jobcard-loading shimmer" style="width: 830px; height: 300px;">
+              </div>
+            </div>
             
-            <div class="col-lg-8">
+            <div class="col-lg-8" v-else>
               <div class="bg-white rounded-2xl shadow-soft p-4 p-lg-5 mb-4">
                 <span class="badge bg-primary-subtle text-primary px-3 py-2 mb-3">وظيفة</span>
                 <h2 class="fw-bold mb-3 gradient-text">{{ job.title }}</h2>
@@ -79,7 +85,14 @@ onMounted( async () => {
               </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4" v-if="CompanysStore.loading">
+              <div class="rounded-2xl shadow-soft overflow-hidden p-0 position-relative company-loading shimmer" style="width: 415px; height: 568px;">
+
+                
+              </div>
+            </div>
+
+            <div class="col-lg-4" v-else>
               <div class="bg-white rounded-2xl shadow-soft overflow-hidden p-0 position-relative">
 
                 <div class="position-relative">
@@ -147,12 +160,13 @@ onMounted( async () => {
             </div>
 
 
+
           </div>
         </div>
       </section>
     </div>
     
-    <div class="container py-5">
+    <div class="container py-5" v-if="!JobsStore.loading">
       <div class="bg-white rounded-2xl shadow-soft p-4 p-lg-5">
         <h4 class="fw-bold mb-4 gradient-text">أرسل خطاب التقديم</h4>
         <form>
@@ -168,6 +182,35 @@ onMounted( async () => {
 
 </template>
 <style scoped>
+.jobcard-loading, .company-loading{
+  background: #d6d6d6;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(1000%);
+  }
+}
+
 .badge {
   transition: all 0.2s ease-in-out;
 }

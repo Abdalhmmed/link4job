@@ -89,9 +89,6 @@ watch(
             <FriendCard :friend="friend" />
           </template>
 
-          
-
-
         </div>
         
 

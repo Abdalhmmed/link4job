@@ -9,14 +9,13 @@ const JobStore = useJobsStore();
 
 const status = ref("grid");
 
-const loading = ref(false)
-
 const country = ref('');
 const job_type = ref('');
 const work_mode = ref('');
 const currency = ref('');
 
-const jobs = ref([]);
+const jobs = ref('');
+const jobslength = ref(false)
 
 const changeView = (mode) => {
   status.value = mode;
@@ -25,7 +24,7 @@ const changeView = (mode) => {
 const theFilter = async () => {
   jobs.value = await JobStore.filterJobs({
     country: country.value,
-    job_type: job_type.value,  
+    job_type: job_type.value,
     work_mode: work_mode.value,
     currency: currency.value,
   });
@@ -37,20 +36,67 @@ const resetFilter = async () => {
   work_mode.value = '';
   currency.value = '';
   jobs.value = await JobStore.fetchJobs();
+  if (jobs.value.length > 0){
+    jobslength.value = false
+  } else{
+    jobslength.value = true
+  }
 };
 
+  
+
 onMounted(async () => {
-  loading.value = true
   jobs.value = await JobStore.fetchJobs(); 
-  if (jobs.value) {
-    loading.value = false
+  if (jobs.value.length > 0){
+    jobslength.value = false
+  } else{
+    jobslength.value = true
   }
 });
 </script>
 
 <template>
-  <div class="hero py-5 py-lg-6 d-flex">
-    <div>
+  <div class="hero py-5 py-lg-6 d-flex" style="justify-content: space-between;">
+
+    <div v-if="JobStore.loading">
+      <div class="mb-4">
+        <h4 class="ps-1">منشورات التوظيف</h4>
+        
+      </div>
+
+      <div class="row g-4 m-0" v-show="status === 'grid'">
+          <div class="col-12 col-md-6 col-lg-4 mb-4" style="width: 360px; height: 312px;" v-for="n in 3" :key="n">
+            <div class="card h-100 rounded-3 shadow-sm border-0 jobcard-loading shimmer">
+              <div class="card-body d-flex flex-column">
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="row g-3 m-0" v-show="status === 'list'">
+        <div class="col-12 mb-3" v-for="n in 3" :key="n" style="width: 1136px; height: 192px;">
+          <div class="card h-100 rounded-3 shadow-sm border-0 jobcard-loading shimmer">
+            <div class="card-body d-flex align-items-center">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div v-else-if="jobslength == true && !JobStore.loading">
+      <div class="mb-4">
+        <h4 class="ps-1">منشورات التوظيف</h4>
+        
+      </div>
+
+      <div class="fs-1" style="color: #747575;">
+        لا توجد اي وظاف في الوقت الحالي
+      </div>
+
+    </div>
+
+    <div v-else>
       <div class="mb-4">
         <h4 class="ps-1">منشورات التوظيف</h4>
         
@@ -79,7 +125,6 @@ onMounted(async () => {
           <h4 class="fw-bold mb-4">تصفية</h4>
 
           <div class="row g-3 d-flex flex-column">
-            <!-- نوع الدوام -->
             <div class="col-12 w-100">
               <label class="form-label fw-semibold">نوع الدوام</label>
               <select class="form-select" v-model="job_type">
@@ -90,7 +135,6 @@ onMounted(async () => {
               </select>
             </div>
 
-            <!-- الدولة -->
             <div class="col-12 w-100">
               <label class="form-label fw-semibold">المدينة</label>
               <select class="form-select" v-model="country">
@@ -101,7 +145,6 @@ onMounted(async () => {
               </select>
             </div>
 
-            <!-- وضع العمل -->
             <div class="col-12 w-100">
               <label class="form-label fw-semibold">فترة العمل</label>
               <select class="form-select" v-model="work_mode">
@@ -112,7 +155,6 @@ onMounted(async () => {
               </select>
             </div>
 
-            <!-- العملة -->
             <div class="col-12 w-100">
               <label class="form-label fw-semibold">الراتب</label>
               <select class="form-select" v-model="currency">
@@ -158,3 +200,35 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+
+<style scoped>
+.jobcard-loading{
+  background: #d6d6d6;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(500%);
+  }
+}
+</style>
