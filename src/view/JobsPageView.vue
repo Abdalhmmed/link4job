@@ -15,7 +15,7 @@ const work_mode = ref('');
 const currency = ref('');
 
 const jobs = ref('');
-const jobslength = ref(false)
+const jobsNon = ref(false)
 
 const changeView = (mode) => {
   status.value = mode;
@@ -28,6 +28,11 @@ const theFilter = async () => {
     work_mode: work_mode.value,
     currency: currency.value,
   });
+  if (jobs.value.length > 0){
+    jobsNon.value = false
+  } else{
+    jobsNon.value = true
+  }
 };
 
 const resetFilter = async () => {
@@ -37,20 +42,18 @@ const resetFilter = async () => {
   currency.value = '';
   jobs.value = await JobStore.fetchJobs();
   if (jobs.value.length > 0){
-    jobslength.value = false
+    jobsNon.value = false
   } else{
-    jobslength.value = true
+    jobsNon.value = true
   }
 };
-
-  
 
 onMounted(async () => {
   jobs.value = await JobStore.fetchJobs(); 
   if (jobs.value.length > 0){
-    jobslength.value = false
+    jobsNon.value = false
   } else{
-    jobslength.value = true
+    jobsNon.value = true
   }
 });
 </script>
@@ -74,8 +77,8 @@ onMounted(async () => {
       </div>
 
       <div class="row g-3 m-0" v-show="status === 'list'">
-        <div class="col-12 mb-3" v-for="n in 3" :key="n" style="width: 1136px; height: 192px;">
-          <div class="card h-100 rounded-3 shadow-sm border-0 jobcard-loading shimmer">
+        <div class="col-12 mb-3" v-for="n in 3" :key="n">
+          <div class="card h-100 rounded-3 shadow-sm border-0 jobcard-loading shimmer" style="width: 1136px; height: 192px;">
             <div class="card-body d-flex align-items-center">
             </div>
           </div>
@@ -84,7 +87,7 @@ onMounted(async () => {
 
     </div>
 
-    <div v-else-if="jobslength == true && !JobStore.loading">
+    <div v-else-if="jobsNon == true && !JobStore.loading">
       <div class="mb-4">
         <h4 class="ps-1">منشورات التوظيف</h4>
         

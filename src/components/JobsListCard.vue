@@ -33,10 +33,9 @@ onMounted( async () => {
 
 <template>
   <div class="col-12 mb-3">
-    <div class="card h-100 rounded-3 shadow-sm border-0">
+    <div class="card h-100 rounded-3 shadow-sm border-0 jobListCard">
       <div class="card-body d-flex align-items-center">
 
-        <!-- صورة الشركه -->
         <div class="ms-3" style="width: 180px; flex-shrink: 0;">
           <img
             :src="company.avatar_url"
@@ -76,3 +75,10 @@ onMounted( async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.jobListCard{
+  width: 1136px;
+  height: 192px;
+}
+</style>

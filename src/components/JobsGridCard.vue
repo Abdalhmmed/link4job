@@ -34,7 +34,7 @@ onMounted( async () => {
 
 <template>
   <div class="col-12 col-md-6 col-lg-4 mb-4">
-    <div class="card h-100 rounded-3 shadow-sm border-0">
+    <div class="card h-100 rounded-3 shadow-sm border-0 jobGridCard">
       <div class="card-body d-flex flex-column">
 
         <h5 class="fw-bold text-center mb-2">
@@ -65,3 +65,10 @@ onMounted( async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.jobGridCard{
+  width: 360px; 
+  height: 312px;
+}
+</style>
