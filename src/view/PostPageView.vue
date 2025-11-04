@@ -3,12 +3,13 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import FriendsCard from "@/components/FriendsCard.vue";
 import UserCard from "@/components/UserCard.vue";
+import CommentCard from "@/components/CommentCard.vue";
 import { usePostsStore } from "@/stores/PostsStore";
 import { useLikesStore } from "@/stores/LikesStore";
 import { useCommentsStore } from "@/stores/CommentsStore";
 import { useUserStore } from "@/stores/UserStore";
 
-const router = useRouter()
+const router = useRouter();
 const route = useRoute();
 const PostStore = usePostsStore();
 const LikesStore = useLikesStore();
@@ -17,10 +18,11 @@ const UserStore = useUserStore();
 
 const post = ref(null);
 const likes = ref([]);
-const comments = ref([]);
+const commentsCount = ref(0);
 const author = ref(null);
 const loading = ref(true);
 const newComment = ref("");
+const sending = ref(false);
 
 async function fetchPostData() {
   const id = Number(route.params.id);
@@ -31,36 +33,44 @@ async function fetchPostData() {
     post.value = await PostStore.fetchPostById(id);
     if (!post.value) return;
 
-    const [user, likeData, commentData] = await Promise.all([
+    const [user, likeData, count] = await Promise.all([
       UserStore.fetchUserById(post.value.user_id),
       LikesStore.filterLikesByPostId(id),
-      CommentsStore.filterCommentsByPostId(id),
+      CommentsStore.countCommentsById(id, "post"),
     ]);
 
     author.value = user;
     likes.value = likeData || [];
-    comments.value = commentData || [];
+    commentsCount.value = count;
   } finally {
     loading.value = false;
   }
 }
 
-function addComment() {
+async function sendComment() {
   if (!newComment.value.trim()) return;
+  if (!UserStore.currentUser) {
+    alert("الرجاء تسجيل الدخول لإضافة تعليق");
+    return;
+  }
 
-  comments.value.unshift({
-    id: Date.now(),
-    user_id: author.value.id,
-    content: newComment.value,
-    created_at: new Date().toISOString(),
-  });
-
-  newComment.value = "";
+  sending.value = true;
+  try {
+    await CommentsStore.addComment({
+      post_id: post.value.id,
+      user_id: UserStore.currentUser.id,
+      content: newComment.value.trim(),
+    });
+    newComment.value = "";
+    commentsCount.value++;
+  } finally {
+    sending.value = false;
+  }
 }
 
-function goBack(){
-  router.back(); 
-} 
+function goBack() {
+  router.back();
+}
 
 onMounted(fetchPostData);
 </script>
@@ -68,21 +78,21 @@ onMounted(fetchPostData);
 <template>
   <div class="post-page">
     <UserCard />
-    
 
     <div style="width: 45%; margin-top: 1.6rem;">
-
-      <button class="beak-arrow" @click="goBack()">
-        <i class="bi bi-arrow-90deg-right"></i>
-      </button>
-
-      <div   v-if="loading"class="post shimmer postCard">
-        <div class="post-header mb-3" style="width: 680px; height: 417px;">
-
-        </div>
+      <div class="d-flex justify-content-between">
+        <button class="beak-arrow" @click="goBack()">
+          <i class="bi bi-arrow-90deg-right"></i>
+        </button>
+            
+        <button class="beak-arrow">
+          <i class="bi bi-share-fill"></i>
+        </button>
       </div>
 
-
+      <div v-if="loading" class="post shimmer postCard">
+        <div class="post-header mb-3" style="width: 680px; height: 417px;"></div>
+      </div>
 
       <div v-else-if="post" class="post">
         <router-link :to="{ name: 'ProfilePage', params: { id: author?.id } }" class="post-header mb-3">
@@ -114,13 +124,13 @@ onMounted(fetchPostData);
           </div>
           <div>
             <i class="bi bi-chat text-secondary me-1"></i>
-            <strong>{{ comments.length }}</strong> تعليقات
+            <strong>{{ commentsCount }}</strong> تعليقات
           </div>
         </div>
 
         <div class="comment-input mt-3">
           <img
-            :src="author?.avatar_url || 'https://picsum.photos/40'"
+            :src="UserStore.currentUser?.avatar_url || 'https://picsum.photos/40'"
             alt="avatar"
             class="avatar"
           />
@@ -132,34 +142,12 @@ onMounted(fetchPostData);
               placeholder="اكتب تعليقك هنا..."
             ></textarea>
           </div>
-          <button
-            @click="addComment"
-            :disabled="!newComment.trim()"
-            class="send-btn"
-            :class="{ disabled: !newComment.trim() }"
-          >
+          <button class="send-btn">
             <i class="bi bi-send"></i>
           </button>
         </div>
 
-        <div class="mt-3 comments-list">
-          <div
-            v-for="(comment, i) in comments"
-            :key="comment.id"
-            class="comment"
-          >
-            <img
-              :src="`https://picsum.photos/44/44?${comment.user_id}`"
-              alt="avatar"
-              class="avatar"
-            />
-            <div class="comment-content">
-              <strong>{{ comment.user_id }}</strong>
-              <div class="small-muted">عضو</div>
-              <p class="mb-0">{{ comment.content }}</p>
-            </div>
-          </div>
-        </div>
+        <CommentCard :post="post" />
       </div>
     </div>
 
@@ -260,7 +248,7 @@ onMounted(fetchPostData);
 .send-btn:hover {
   background-color: #4338ca;
 }
-.send-btn.disabled {
+.send-btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
@@ -284,8 +272,8 @@ onMounted(fetchPostData);
   font-size: 0.85rem;
 }
 
-.postCard{
- background-color: #cdcccc;
+.postCard {
+  background-color: #cdcccc;
 }
 
 .shimmer {
@@ -319,12 +307,12 @@ a:focus,
 a:active,
 .router-link-active,
 .router-link-exact-active {
-  text-decoration: none !important; 
-  color: inherit !important;        
-  outline: none !important;       
+  text-decoration: none !important;
+  color: inherit !important;
+  outline: none !important;
 }
 
-.beak-arrow{
+.beak-arrow {
   border: none;
   border-radius: 11px;
   width: 3rem;
@@ -336,6 +324,4 @@ a:active,
   margin-bottom: 1rem;
   box-shadow: 0 8px 24px rgba(18, 24, 40, 0.08);
 }
-
 </style>
-
