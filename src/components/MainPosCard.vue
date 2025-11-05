@@ -4,6 +4,7 @@ import { usePostsStore } from "@/stores/PostsStore";
 import { useUserStore } from "@/stores/UserStore";
 import { useLikesStore } from "@/stores/LikesStore";
 import { useCommentsStore } from "@/stores/CommentsStore";
+import CommentCard from "./CommentCard.vue";
 
 const postsStore = usePostsStore();
 const UserStore = useUserStore();
@@ -28,11 +29,6 @@ function toggleLike(id) {
 function toggleComments(id) {
   const p = findPost(id);
   if (p) p.commentsVisible = !p.commentsVisible;
-}
-
-function toggleDetails(id) {
-  const p = findPost(id);
-  if (p) p.detailsVisible = !p.detailsVisible;
 }
 
 function closeAllPanels() {
@@ -220,34 +216,15 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
                 <button class="btn btn-sm btn-light" style="margin: 0px 6px;" @click="toggleComments(post.id)">
                   <i class="bi bi-chat"></i> <span>{{ post.comments.length }}</span>
                 </button>
-                <button class="btn btn-sm btn-light" @click="toggleDetails(post.id)">
+                <router-link :to="{ name: 'PostPage', params: { id: post.id}}" class="btn btn-sm btn-light">
                   <i class="bi bi-info-circle"></i> تفاصيل
-                </button>
+                </router-link>
               </div>
               <div class="ms-auto small text-secondary">شارك · حفظ</div>
             </div>
 
-            <div v-if="post.detailsVisible" class="details small text-secondary mt-2">
-              {{ post.details }}
-            </div>
+            <CommentCard  v-if="post.commentsVisible" :post="post.id" />
 
-            <div v-if="post.commentsVisible" class="comments-panel mt-2">
-              <ul class="comments-list">
-
-                <li v-if="post.comments.length > 0" v-for="(c, i) in post.comments" :key="i" class="comment-item">
-                  <img :src="c.avatar" :alt="c.author" />
-                  <div class="comment-body">
-                    <strong>{{ c.author }}</strong>
-                    <div class="comment-meta">{{ c.text }}</div>
-                  </div>
-                </li>
-
-                <li v-else class="comment-item">
-                  لا يوجد تعليقات
-                </li>
-
-              </ul>
-            </div>
           </div>
         </div>
       </article>

@@ -24,7 +24,6 @@ async function loadComments() {
 
     comments.value = await CommentsStore.filterCommentsByPostId(postId);
 
-    // تحميل بيانات المستخدمين بشكل متوازي لتسريع العملية
     const uniqueUserIds = [...new Set(comments.value.map(c => c.user_id))];
     const userPromises = uniqueUserIds.map(async (id) => {
       const user = await UserStore.fetchUserById(id);
@@ -47,7 +46,7 @@ onMounted(loadComments);
     </div>
 
     <div v-else-if="comments.length === 0" class="text-center text-muted py-3">
-      لا توجد تعليقات بعد، كن أول من يشارك رأيه 🌿
+      لا توجد تعليقات بعد، كن أول من يشارك رأيه 
     </div>
 
     <div v-else>
