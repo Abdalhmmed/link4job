@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const useSkillsStore = defineStore("SkillsStore", () => {
   const skills = ref([]);
-  const theuserSkills = ref([]);
+  const filteredSkills = ref([]);
   const loading = ref(false);
   const error = ref(null);
 
@@ -12,16 +12,18 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
   const USapiURL = "http://localhost:3000/user_skills";
   const JSapiURL = "http://localhost:3000/job_skills";
 
+  const skillCache = {};
 
   const fetchSkills = async () => {
     loading.value = true;
     error.value = null;
+
     try {
       const res = await axios.get(apiURL);
       skills.value = res.data;
     } catch (err) {
       console.error("Error fetching skills:", err);
-      error.value = "Error fetching skill";
+      error.value = "Error fetching skill list";
     } finally {
       loading.value = false;
     }
@@ -29,8 +31,12 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
 
   const fetchSkillById = async (skillId) => {
     try {
+      if (skillCache[skillId]) return skillCache[skillId];
+
       const res = await axios.get(`${apiURL}/${skillId}`);
+      skillCache[skillId] = res.data;
       return res.data;
+
     } catch (err) {
       console.error(`Error fetching skill ${skillId}:`, err);
       return null;
@@ -40,26 +46,25 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
   const filterSkillsByUserId = async (userId) => {
     loading.value = true;
     error.value = null;
-    theuserSkills.value = [];
+    filteredSkills.value = [];
 
     try {
       const userSkillsRes = await axios.get(USapiURL, {
         params: { user_id: userId },
       });
 
-      const userSkillsData = userSkillsRes.data;
+      const skillIds = userSkillsRes.data.map((us) => us.skill_id);
 
-      const skillIds = userSkillsData.map((us) => us.skill_id);
+      const skillResults = await Promise.all(
+        skillIds.map((id) => fetchSkillById(id))
+      );
 
-      const skillPromises = skillIds.map((id) => fetchSkillById(id));
-      const skillResults = await Promise.all(skillPromises);
+      filteredSkills.value = skillResults.filter((s) => s !== null);
+      return filteredSkills.value;
 
-      theuserSkills.value = skillResults.filter((s) => s !== null);
-
-      return theuserSkills.value;
     } catch (err) {
-      console.error(`Error fetching user skills for user ${userId}:`, err);
-      error.value = "Error fetching skill";
+      console.error(`Error fetching user skills for ${userId}:`, err);
+      error.value = "Error fetching user skills";
       return [];
     } finally {
       loading.value = false;
@@ -69,26 +74,25 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
   const filterSkillsByJobId = async (jobId) => {
     loading.value = true;
     error.value = null;
-    theuserSkills.value = [];
+    filteredSkills.value = [];
 
     try {
-      const jobSkillsRes = await axios.get(USapiURL, {
+      const jobSkillsRes = await axios.get(JSapiURL, {
         params: { job_id: jobId },
       });
 
-      const jobSkillsData = jobSkillsRes.data;
+      const skillIds = jobSkillsRes.data.map((js) => js.skill_id);
 
-      const skillIds = jobSkillsData.map((us) => us.skill_id);
+      const skillResults = await Promise.all(
+        skillIds.map((id) => fetchSkillById(id))
+      );
 
-      const skillPromises = skillIds.map((id) => fetchSkillById(id));
-      const skillResults = await Promise.all(skillPromises);
+      filteredSkills.value = skillResults.filter((s) => s !== null);
+      return filteredSkills.value;
 
-      theuserSkills.value = skillResults.filter((s) => s !== null);
-
-      return theuserSkills.value;
     } catch (err) {
-      console.error(`Error fetching job skills for job ${jobId}:`, err);
-      error.value = "Error fetching skill";
+      console.error(`Error fetching job skills for ${jobId}:`, err);
+      error.value = "Error fetching job skills";
       return [];
     } finally {
       loading.value = false;
@@ -97,25 +101,27 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
 
   const countSkillsById = async (theId, the) => {
     try {
-      let countSkills = [];
-
       if (the === "user") {
-        countSkills = await filterSkillsByUserId(theId);
+        const list = await filterSkillsByUserId(theId);
+        return list.length;
       }
 
       if (the === "job") {
+        const list = await filterSkillsByJobId(theId);
+        return list.length;
       }
 
-      return countSkills.length;
+      return 0;
+
     } catch (err) {
-      console.error(`Error counting user skills for ${theId}:`, err);
+      console.error(`Error counting skills for ${the} ${theId}:`, err);
       return 0;
     }
   };
 
   return {
     skills,
-    theuserSkills,
+    filteredSkills,
     loading,
     error,
     fetchSkills,

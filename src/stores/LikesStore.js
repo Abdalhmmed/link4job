@@ -1,194 +1,221 @@
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-import axios from "axios";
+import { ref } from "vue";
 
 export const useLikesStore = defineStore("LikesStore", () => {
 
-    const loading = ref(false);
-    const error = ref(null);
+  const loading = ref(false);
+  const error = ref(null);
 
-    const apiURL = "http://localhost:3000/likes";
+  let _cache = null;
 
-    const fetchLikes = async () => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await axios.get(apiURL);
-            return res.data;
+  const _loadJSON = async () => {
+    if (_cache) return _cache;
 
-        } catch (err) {
-            console.error("Error fetching likes:", err);
-            error.value = " Failed to load likes list.";
-        } finally {
-            loading.value = false;
-        }
-    };
+    const res = await fetch("/data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load data.json");
 
-    const fetchLikeById = async (likeId) => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await axios.get(`${apiURL}/${likeId}`);
-            return res.data;
+    const data = await res.json();
+    _cache = data;
+    return data;
+  };
 
-        } catch (err) {
-            console.error("Error fetching like:", err);
-            error.value = " Failed to load like details.";
-        } finally {
-            loading.value = false;
-        }
-    };
+  const fetchLikes = async () => {
+    loading.value = true;
+    error.value = null;
 
-    const filterLikesByUserId = async (userid) => {
-        loading.value = true;
-        error.value = null;
+    try {
+      const data = await _loadJSON();
+      return data.likes ?? [];
+    } catch (err) {
+      console.error("Error fetching likes:", err);
+      error.value = "Failed to load likes.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
 
-        try {
-            const res = await axios.get(apiURL, {
-                params: { target_type: 'user', target_id: userid }
-            });
+  const fetchLikeById = async (likeId) => {
+    loading.value = true;
+    error.value = null;
 
-            return res.data;
-        } catch (err) {
-            console.error(`Error fetching likes for the user ${userid} :`, err);
-            error.value = "Failed to load likes list.";
-        } finally {
-            loading.value = false;
-        }
-    };
+    try {
+      const data = await _loadJSON();
+      const likes = data.likes ?? [];
+      return likes.find(l => String(l.id) === String(likeId)) || null;
+    } catch (err) {
+      console.error("Error fetching like by ID:", err);
+      error.value = "Failed to load like.";
+      return null;
+    } finally {
+      loading.value = false;
+    }
+  };
 
-    const filterLikesByPostId = async (postid) => {
-        loading.value = true;
-        error.value = null;
+  const filterLikesByUserId = async (userId) => {
+    loading.value = true;
+    error.value = null;
 
-        try {
-            const res = await axios.get(apiURL, {
-                params: { target_type: 'post', target_id: postid }
-            });
+    try {
+      const data = await _loadJSON();
+      return (data.likes ?? []).filter(
+        l =>
+          String(l.target_type) === "user" &&
+          String(l.target_id) === String(userId)
+      );
+    } catch (err) {
+      console.error("Error filtering user likes:", err);
+      error.value = "Failed to load likes.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
 
+  const filterLikesByPostId = async (postId) => {
+    loading.value = true;
+    error.value = null;
 
-            return res.data; 
+    try {
+      const data = await _loadJSON();
+      return (data.likes ?? []).filter(
+        l =>
+          String(l.target_type) === "post" &&
+          String(l.target_id) === String(postId)
+      );
+    } catch (err) {
+      console.error("Error filtering post likes:", err);
+      error.value = "Failed to load likes.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
 
-        } catch (err) {
-            console.error(`Error fetching likes for the post ${postid} :`, err);
-            error.value = "Failed to load likes list.";
-            return 0; 
-        } finally {
-            loading.value = false;
-        }
-    };
+  const filterLikesByProjectId = async (projectId) => {
+    loading.value = true;
+    error.value = null;
 
-    const filterLikesByProjectId = async (projectid) => {
-        loading.value = true;
-        error.value = null;
+    try {
+      const data = await _loadJSON();
+      return (data.likes ?? []).filter(
+        l =>
+          String(l.target_type) === "project" &&
+          String(l.target_id) === String(projectId)
+      );
+    } catch (err) {
+      console.error("Error filtering project likes:", err);
+      error.value = "Failed to load likes.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
 
-        try {
-            const res = await axios.get(apiURL, {
-                params: { target_type: 'project', target_id: projectid }
-            });
+  const filterLikesByCompanyId = async (companyId) => {
+    loading.value = true;
+    error.value = null;
 
-            return res.data; 
-
-        } catch (err) {
-            console.error(`Error fetching likes for the project ${projectid} :`, err);
-            error.value = "Failed to load likes list.";
-            return 0; 
-        } finally {
-            loading.value = false;
-        }
-    };
-
-    const filterLikesByCompanyId = async (companyId) => {
-        loading.value = true;
-        error.value = null;
-
-        try {
-            const res = await axios.get(apiURL, {
-                params: { target_type: 'company', target_id: companyId }
-            });
-
-            return res.data; 
-
-        } catch (err) {
-            console.error(`Error fetching likes for the company ${companyId} :`, err);
-            error.value = "Failed to load likes list.";
-            return 0; 
-        } finally {
-            loading.value = false;
-        }
-    };
-
-    const filterLikesByTheUserId = async (userid) => {
-        loading.value = true;
-        error.value = null;
-
-        try {
-            const res = await axios.get(apiURL, {
-                params: { user_type: 'user', user_id: userid }
-            });
-
-            return res.data;
-        } catch (err) {
-            console.error(`Error fetching likes for the user ${userid} :`, err);
-            error.value = "Failed to load likes list.";
-        } finally {
-            loading.value = false;
-        }
-    };
-
-    const filterLikesByTheCompanyId = async (companyId) => {
-        loading.value = true;
-        error.value = null;
-
-        try {
-            const res = await axios.get(apiURL, {
-                params: { user_type: 'company', user_id: companyId }
-            });
-
-            return res.data;
-        } catch (err) {
-            console.error(`Error fetching likes for the company ${companyId} :`, err);
-            error.value = "Failed to load likes list.";
-        } finally {
-            loading.value = false;
-        }
-    };
+    try {
+      const data = await _loadJSON();
+      return (data.likes ?? []).filter(
+        l =>
+          String(l.target_type) === "company" &&
+          String(l.target_id) === String(companyId)
+      );
+    } catch (err) {
+      console.error("Error filtering company likes:", err);
+      error.value = "Failed to load likes.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
 
 
-    const countLikesById = async (theId, the) => {
-        try {
-            if (the === "user") {
-                const followersList = await filterLikesByUserId(theId);
-                return followersList.length;
-            } else if (the === "post") {
-                const followersList = await filterLikesByPostId(theId);
-                return followersList.length;
-            } else if (the === "project") {
-                const followersList = await filterLikesByProjectId(theId);
-                return followersList.length;
-            } else if (the === "company") {
-                const followersList = await filterLikesByCompanyId(theId);
-                return followersList.length;
-            } else {
-                return 0;
-            }
-        } catch (err) {
-            console.error(`Error count likes ${the} ${theId}:`, err);
-            return 0;
-        }
-    };
+  const filterLikesByTheUserId = async (userId) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const data = await _loadJSON();
+      return (data.likes ?? []).filter(
+        l =>
+          String(l.user_type) === "user" &&
+          String(l.user_id) === String(userId)
+      );
+    } catch (err) {
+      console.error("Error filtering likes by user:", err);
+      error.value = "Failed to load likes.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const filterLikesByTheCompanyId = async (companyId) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const data = await _loadJSON();
+      return (data.likes ?? []).filter(
+        l =>
+          String(l.user_type) === "company" &&
+          String(l.user_id) === String(companyId)
+      );
+    } catch (err) {
+      console.error("Error filtering likes by company:", err);
+      error.value = "Failed to load likes.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
 
 
+  const countLikesById = async (theId, the) => {
+    try {
+      if (the === "user") {
+        return (await filterLikesByUserId(theId)).length;
+      } else if (the === "post") {
+        return (await filterLikesByPostId(theId)).length;
+      } else if (the === "project") {
+        return (await filterLikesByProjectId(theId)).length;
+      } else if (the === "company") {
+        return (await filterLikesByCompanyId(theId)).length;
+      }
+      return 0;
+    } catch (err) {
+      console.error(`Error counting likes for ${the} ${theId}:`, err);
+      return 0;
+    }
+  };
 
-    return {
-        loading,
-        error,
-        fetchLikes,
-        fetchLikeById,
-        countLikesById,
-        filterLikesByUserId,
-        filterLikesByProjectId,
-        filterLikesByCompanyId,
-        filterLikesByPostId,
-    };
+  const clearCache = () => { _cache = null; };
+  const forceReloadJSON = async () => {
+    _cache = null;
+    return await _loadJSON();
+  };
+
+  return {
+    loading,
+    error,
+
+    fetchLikes,
+    fetchLikeById,
+
+    filterLikesByUserId,
+    filterLikesByPostId,
+    filterLikesByProjectId,
+    filterLikesByCompanyId,
+
+    filterLikesByTheUserId,
+    filterLikesByTheCompanyId,
+
+    countLikesById,
+
+    clearCache,
+    forceReloadJSON
+  };
 });

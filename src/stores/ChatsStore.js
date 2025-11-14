@@ -1,98 +1,112 @@
-import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-   
-export const useChatsStore = defineStore('ChatsStore', () => {
+export const useChatsStore = defineStore("ChatsStore", () => {
+  const loading = ref(false);
+  const error = ref(null);
 
-    const loading = ref(false);
-    const error = ref(null);
+  let _cache = null; 
 
-    const apiURL = "http://localhost:3000/chats";
+  const _loadJSON = async () => {
+    if (_cache) return _cache;
 
-    const fetchChats = async () => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await axios.get(apiURL);
-            return res.data;
-        } catch (err) {
-            console.error("Error fetching chats:", err);
-            error.value = " Failed to load chats list.";
-        } finally {
-            loading.value = false;
-        }
+    const res = await fetch("/data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load data.json");
+
+    const data = await res.json();
+    _cache = data; 
+    return data;
+  };
+
+  const fetchChats = async () => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const data = await _loadJSON();
+      return data.chats ?? [];
+    } catch (err) {
+      console.error("Error fetching chats:", err);
+      error.value = "Failed to load chats list.";
+      return [];
+    } finally {
+      loading.value = false;
     }
+  };
 
-    const fetchChatById = async (ChatID) => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await axios.get(`${apiURL}/${ChatID}`);
-            console.log("value1 ",res.data)
-            return res.data;
+  const fetchChatById = async (ChatID) => {
+    loading.value = true;
+    error.value = null;
 
-        } catch (err) {
-            console.error("Error fetching chat:", err);
-            error.value = " Failed to load chats details.";
-        } finally {
-            loading.value = false;
-        }
-    };
-
-    const filterChteByUserId = async (userId) => {
-        loading.value = true;
-        error.value = null;
-
-        try {
-            const userChatRes = await axios.get(apiURL, {
-            params: { user_id: userId },
-        });
-
-        return userChatRes.data;
-
-        } catch (err) {
-            console.error(`Error fetching user Chat ${userId}:`, err);
-            error.value = "Failed to load Chat details.";
-            return [];
-        } finally {
-            loading.value = false;
-        }
-    };
-
-    const filterChatBetweenUsers = async (user1, user2) => {
-        loading.value = true;
-        error.value = null;
-
-        try {
-            const usersChatRes = await axios.get(apiURL);
-            const allChats = usersChatRes.data;
-
-            const filtered = allChats.filter(
-            msg =>
-                (msg.user_id === user1 && msg.the_target_id === user2) ||
-                (msg.user_id === user2 && msg.the_target_id === user1)
-            );
-
-            return filtered;
-
-        } catch (err) {
-            console.error("Error fetching user Chat:", err);
-            error.value = "Failed to load Chat details.";
-            return [];
-        } finally {
-            loading.value = false;
-        }
-    };
-
-
-    return{
-        loading,
-        error,
-        fetchChats,
-        fetchChatById,
-        filterChteByUserId,
-        filterChatBetweenUsers,
-        
+    try {
+      const data = await _loadJSON();
+      const chats = data.chats ?? [];
+      return chats.find(c => String(c.id) === String(ChatID)) || null;
+    } catch (err) {
+      console.error("Error fetching chat:", err);
+      error.value = "Failed to load chat details.";
+      return null;
+    } finally {
+      loading.value = false;
     }
-})
+  };
+
+  const filterChteByUserId = async (userId) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const data = await _loadJSON();
+      return (data.chats ?? []).filter(
+        c => String(c.user_id) === String(userId)
+      );
+    } catch (err) {
+      console.error(`Error fetching user chats ${userId}:`, err);
+      error.value = "Failed to load chats.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const filterChatBetweenUsers = async (user1, user2) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const data = await _loadJSON();
+      const chats = data.chats ?? [];
+
+      return chats.filter(
+        msg =>
+          (String(msg.user_id) === String(user1) &&
+           String(msg.the_target_id) === String(user2)) ||
+          (String(msg.user_id) === String(user2) &&
+           String(msg.the_target_id) === String(user1))
+      );
+    } catch (err) {
+      console.error("Error filtering chat between users:", err);
+      error.value = "Failed to load chat details.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const clearCache = () => { _cache = null; };
+  const forceReloadJSON = async () => {
+    _cache = null;
+    return await _loadJSON();
+  };
+
+  return {
+    loading,
+    error,
+    fetchChats,
+    fetchChatById,
+    filterChteByUserId,
+    filterChatBetweenUsers,
+    clearCache,
+    forceReloadJSON
+  };
+});

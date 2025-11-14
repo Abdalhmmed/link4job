@@ -60,6 +60,13 @@ onMounted(async () => {
         Myadmin.value = await UserStore.fetchUserById(MyCompany.value.owner_user_id);
       }
     }
+    else if(user.value.account_type == "adminAccount")  {
+      MyCompany.value = await CompanyStore.fetchCompanyByOwnerId(user.value,id)
+
+      if (MyCompany.value?.owner_user_id == user.value.id) {
+        Myadmin.value = user.value
+      }
+    }
   } else {
     route.path = {name: 'not-found'}
   }

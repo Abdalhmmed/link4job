@@ -1,4 +1,3 @@
-# Logs
 logs
 *.log
 npm-debug.log*
@@ -7,17 +6,24 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-coverage
-*.local
+node_modules/
+dist/
+dist-ssr/
+coverage/
+
+.env
+.env.local
+.env.*.local
 
 /cypress/videos/
 /cypress/screenshots/
 
-# Editor directories and files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+.Trash-*
+
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -28,3 +34,17 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+.vite/
+.cache/
+.temp/
+.jest-cache/
+jest-cache/
+*.spec.ts.snap
+
+.nuxt/
+.next/
+
+!data.json
+
+*.local

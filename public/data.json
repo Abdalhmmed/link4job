@@ -1,0 +1,352 @@
+{
+  "users": [
+    { "id": "1", "name": "1fatima", "account_type": "user", "role": "software_engineer", "gender": "female", "international_key": "+967", "phone": "771000001", "email": "user1@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?1", "banner_url": "https://picsum.photos/800/200?1", "bio": "مهندسة برمجيات متخصصة في واجهات المستخدم وتحسين الأداء.", "industry": "Software Development", "address": "Yemen", "age": 28, "created_at": "2025-11-14 20:00:00", "updated_at": "2025-11-14 20:00:00", "company_id_belongs": "1" },
+    { "id": "2", "name": "2ali", "account_type": "user", "role": "sales_manager", "gender": "male", "international_key": "+967", "phone": "771000002", "email": "user2@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?2", "banner_url": "https://picsum.photos/800/200?2", "bio": "مدير مبيعات يتمتع بخبرة في التفاوض وبناء العلاقات.", "industry": "Sales & Business", "address": "Yemen", "age": 34, "created_at": "2025-11-14 20:05:00", "updated_at": "2025-11-14 20:05:00", "company_id_belongs": null },
+    { "id": "3", "name": "3reem", "account_type": "user", "role": "graphic_designer", "gender": "female", "international_key": "+967", "phone": "771000003", "email": "user3@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?3", "banner_url": "https://picsum.photos/800/200?3", "bio": "مصممة جرافيك متخصصة بالهوية البصرية وتصميم واجهات بسيطة وجذابة.", "industry": "Design & UX", "address": "Yemen", "age": 22, "created_at": "2025-11-14 20:10:00", "updated_at": "2025-11-14 20:10:00", "company_id_belongs": "2" },
+    { "id": "4", "name": "4sultan", "account_type": "user", "role": "accountant", "gender": "male", "international_key": "+967", "phone": "771000004", "email": "user4@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?4", "banner_url": "https://picsum.photos/800/200?4", "bio": "محاسب خبرة في التقارير المالية وإدارة الميزانيات للمؤسسات الصغيرة.", "industry": "Accounting", "address": "Yemen", "age": 41, "created_at": "2025-11-14 20:15:00", "updated_at": "2025-11-14 20:15:00", "company_id_belongs": "3" },
+    { "id": "5", "name": "5hoda", "account_type": "user", "role": "teacher", "gender": "female", "international_key": "+967", "phone": "771000005", "email": "user5@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?5", "banner_url": "https://picsum.photos/800/200?5", "bio": "معلمة ابتدائي تبتكر طرقًا تعليمية ممتعة للأطفال.", "industry": "Education", "address": "Yemen", "age": 30, "created_at": "2025-11-14 20:20:00", "updated_at": "2025-11-14 20:20:00", "company_id_belongs": null },
+    { "id": "6", "name": "6majid", "account_type": "user", "role": "chef_restaurant_owner", "gender": "male", "international_key": "+967", "phone": "771000006", "email": "user6@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?6", "banner_url": "https://picsum.photos/800/200?6", "bio": "طباخ وصاحب مطعم متخصص في النكهات التقليدية وقوائم الطعام العملية.", "industry": "Food & Beverage", "address": "Yemen", "age": 50, "created_at": "2025-11-14 20:25:00", "updated_at": "2025-11-14 20:25:00", "company_id_belongs": "4" },
+    { "id": "7", "name": "7leila", "account_type": "user", "role": "data_scientist", "gender": "female", "international_key": "+967", "phone": "771000007", "email": "user7@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?7", "banner_url": "https://picsum.photos/800/200?7", "bio": "باحثة بيانات متمرسة في تحليل البيانات وبناء لوحات القيادة.", "industry": "Data Science", "address": "Yemen", "age": 27, "created_at": "2025-11-14 20:30:00", "updated_at": "2025-11-14 20:30:00", "company_id_belongs": "1" },
+    { "id": "8", "name": "8khalid", "account_type": "user", "role": "student_delivery", "gender": "male", "international_key": "+967", "phone": "771000008", "email": "user8@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?8", "banner_url": "https://picsum.photos/800/200?8", "bio": "طالب مغامر يعمل كسائق توصيل جزئي ويهوى التصوير بالموبايل.", "industry": "Logistics", "address": "Yemen", "age": 19, "created_at": "2025-11-14 20:35:00", "updated_at": "2025-11-14 20:35:00", "company_id_belongs": null },
+    { "id": "9", "name": "9nora", "account_type": "user", "role": "nurse", "gender": "female", "international_key": "+967", "phone": "771000009", "email": "user9@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?9", "banner_url": "https://picsum.photos/800/200?9", "bio": "ممرضة متخصصة في الإسعافات الأولية والرعاية تحت الضغط.", "industry": "Healthcare", "address": "Yemen", "age": 37, "created_at": "2025-11-14 20:40:00", "updated_at": "2025-11-14 20:40:00", "company_id_belongs": null },
+    { "id": "10", "name": "10yousef", "account_type": "user", "role": "retired_civil_engineer", "gender": "male", "international_key": "+967", "phone": "771000010", "email": "user10@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?10", "banner_url": "https://picsum.photos/800/200?10", "bio": "مهندس مدني متقاعد يحب البستنة ومشاركة الخبرة مع الشباب.", "industry": "Civil Engineering", "address": "Yemen", "age": 65, "created_at": "2025-11-14 20:45:00", "updated_at": "2025-11-14 20:45:00", "company_id_belongs": null },
+    { "id": "11", "name": "11sahar", "account_type": "adminAccount", "role": "owner", "gender": "female", "international_key": "+967", "phone": "771000011", "email": "user11@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?11", "banner_url": "https://picsum.photos/800/200?11", "bio": "مديرة تقنية ومؤسسة شركة تقنتو — تقود الفرق وتضع البصمة الفنية.", "industry": "Software Development", "address": "Yemen", "age": 38, "created_at": "2025-11-14 20:50:00", "updated_at": "2025-11-14 20:50:00", "company_id_belongs": null },
+    { "id": "12", "name": "12murad", "account_type": "adminAccount", "role": "owner", "gender": "male", "international_key": "+967", "phone": "771000012", "email": "user12@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?12", "banner_url": "https://picsum.photos/800/200?12", "bio": "مخرج إبداعي ومؤسس Norva Design — شغوف بالهوية البصرية.", "industry": "Design", "address": "Yemen", "age": 33, "created_at": "2025-11-14 20:55:00", "updated_at": "2025-11-14 20:55:00", "company_id_belongs": null },
+    { "id": "13", "name": "13abdul", "account_type": "adminAccount", "role": "owner", "gender": "male", "international_key": "+967", "phone": "771000013", "email": "user13@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?13", "banner_url": "https://picsum.photos/800/200?13", "bio": "مستشار مالي ومؤسس Mizan+، مختص بإدارة المخاطر والميزانيات.", "industry": "Finance", "address": "Yemen", "age": 45, "created_at": "2025-11-14 21:00:00", "updated_at": "2025-11-14 21:00:00", "company_id_belongs": null },
+    { "id": "14", "name": "14haitham", "account_type": "adminAccount", "role": "owner", "gender": "male", "international_key": "+967", "phone": "771000014", "email": "user14@gmail.com", "password_hash": "000000000000", "avatar_url": "https://picsum.photos/200/200?14", "banner_url": "https://picsum.photos/800/200?14", "bio": "خبير تشغيل مطاعم ومؤسس سلسلة مذاق الشرق.", "industry": "Food & Beverage", "address": "Yemen", "age": 50, "created_at": "2025-11-14 21:05:00", "updated_at": "2025-11-14 21:05:00", "company_id_belongs": null }
+  ],
+  "companys": [
+    { "id": "1", "name": "TecnoTwo", "account_type": "companys", "role": "SaaS & Software", "international_key": "+967", "phone": "771100001", "email": "tecnotwo@example.com", "avatar_url": "https://picsum.photos/200/200?company1", "banner_url": "https://picsum.photos/800/200?company1", "created_at": "2025-11-14 21:10:00", "updated_at": "2025-11-14 21:10:00", "industry": "Software Development", "address": "Yemen", "documented": true, "owner_user_id": 11 },
+    { "id": "2", "name": "Norva Design", "account_type": "companys", "role": "Graphic & UI/UX", "international_key": "+967", "phone": "771100002", "email": "norva@example.com", "avatar_url": "https://picsum.photos/200/200?company2", "banner_url": "https://picsum.photos/800/200?company2", "created_at": "2025-11-14 21:15:00", "updated_at": "2025-11-14 21:15:00", "industry": "Design & Experience", "address": "Yemen", "documented": true, "owner_user_id": 12 },
+    { "id": "3", "name": "Mizan+", "account_type": "companys", "role": "Accounting Services", "international_key": "+967", "phone": "771100003", "email": "mizan@example.com", "avatar_url": "https://picsum.photos/200/200?company3", "banner_url": "https://picsum.photos/800/200?company3", "created_at": "2025-11-14 21:20:00", "updated_at": "2025-11-14 21:20:00", "industry": "Accounting & Finance", "address": "Yemen", "documented": true, "owner_user_id": 13 },
+    { "id": "4", "name": "Eastern Taste Group", "account_type": "companys", "role": "Restaurant & F&B Management", "international_key": "+967", "phone": "771100004", "email": "easterntaste@example.com", "avatar_url": "https://picsum.photos/200/200?company4", "banner_url": "https://picsum.photos/800/200?company4", "created_at": "2025-11-14 21:25:00", "updated_at": "2025-11-14 21:25:00", "industry": "Food & Beverage", "address": "Yemen", "documented": true, "owner_user_id": 14 }
+  ],
+  "skills": [
+    { "id": "1", "name": "Frontend Development (Vue.js)", "created_at": "2025-11-14 21:30:00", "active": true },
+    { "id": "2", "name": "Frontend Development (React.js)", "created_at": "2025-11-14 21:30:00", "active": true },
+    { "id": "3", "name": "Backend Development (Node.js)", "created_at": "2025-11-14 21:31:00", "active": true },
+    { "id": "4", "name": "Backend Development (Python)", "created_at": "2025-11-14 21:31:00", "active": true },
+    { "id": "5", "name": "Data Analysis & Pandas", "created_at": "2025-11-14 21:32:00", "active": true },
+    { "id": "6", "name": "Machine Learning (scikit-learn)", "created_at": "2025-11-14 21:32:00", "active": true },
+    { "id": "7", "name": "UI/UX Design", "created_at": "2025-11-14 21:33:00", "active": true },
+    { "id": "8", "name": "Graphic Design (Adobe Suite)", "created_at": "2025-11-14 21:33:00", "active": true },
+    { "id": "9", "name": "Data Visualization & Dashboards", "created_at": "2025-11-14 21:34:00", "active": true },
+    { "id": "10", "name": "Software Testing & Unit Tests", "created_at": "2025-11-14 21:34:00", "active": true },
+    { "id": "11", "name": "Financial Reporting & Excel", "created_at": "2025-11-14 21:35:00", "active": true },
+    { "id": "12", "name": "Budgeting & Cost Control", "created_at": "2025-11-14 21:35:00", "active": true },
+    { "id": "13", "name": "Retail Operations & Visual Merchandising", "created_at": "2025-11-14 21:36:00", "active": true },
+    { "id": "14", "name": "Culinary Arts & Menu Development", "created_at": "2025-11-14 21:36:00", "active": true },
+    { "id": "15", "name": "Restaurant Management & HACCP", "created_at": "2025-11-14 21:37:00", "active": true },
+    { "id": "16", "name": "Teaching & Curriculum Design", "created_at": "2025-11-14 21:37:00", "active": true },
+    { "id": "17", "name": "Early Childhood Education", "created_at": "2025-11-14 21:38:00", "active": true },
+    { "id": "18", "name": "Emergency Nursing & First Aid", "created_at": "2025-11-14 21:38:00", "active": true },
+    { "id": "19", "name": "Civil Engineering & Site Supervision", "created_at": "2025-11-14 21:39:00", "active": true },
+    { "id": "20", "name": "Mentoring & Technical Training", "created_at": "2025-11-14 21:39:00", "active": true }
+  ],
+  "user_skills": [
+    { "id": 1, "user_id": 1, "skill_id": "1", "years_experience": 4, "created_at": "2025-11-14 21:40:00" },
+    { "id": 2, "user_id": 1, "skill_id": "10", "years_experience": 3, "created_at": "2025-11-14 21:40:00" },
+    { "id": 3, "user_id": 1, "skill_id": "3", "years_experience": 2, "created_at": "2025-11-14 21:40:00" },
+
+    { "id": 4, "user_id": 2, "skill_id": "13", "years_experience": 8, "created_at": "2025-11-14 21:41:00" },
+    { "id": 5, "user_id": 2, "skill_id": "12", "years_experience": 5, "created_at": "2025-11-14 21:41:00" },
+
+    { "id": 6, "user_id": 3, "skill_id": "8", "years_experience": 3, "created_at": "2025-11-14 21:42:00" },
+    { "id": 7, "user_id": 3, "skill_id": "7", "years_experience": 2, "created_at": "2025-11-14 21:42:00" },
+
+    { "id": 8, "user_id": 4, "skill_id": "11", "years_experience": 12, "created_at": "2025-11-14 21:43:00" },
+    { "id": 9, "user_id": 4, "skill_id": "12", "years_experience": 10, "created_at": "2025-11-14 21:43:00" },
+
+    { "id": 10, "user_id": 5, "skill_id": "16", "years_experience": 7, "created_at": "2025-11-14 21:44:00" },
+    { "id": 11, "user_id": 5, "skill_id": "17", "years_experience": 5, "created_at": "2025-11-14 21:44:00" },
+
+    { "id": 12, "user_id": 6, "skill_id": "14", "years_experience": 25, "created_at": "2025-11-14 21:45:00" },
+    { "id": 13, "user_id": 6, "skill_id": "15", "years_experience": 20, "created_at": "2025-11-14 21:45:00" },
+
+    { "id": 14, "user_id": 7, "skill_id": "5", "years_experience": 4, "created_at": "2025-11-14 21:46:00" },
+    { "id": 15, "user_id": 7, "skill_id": "9", "years_experience": 3, "created_at": "2025-11-14 21:46:00" },
+
+    { "id": 16, "user_id": 8, "skill_id": "20", "years_experience": 1, "created_at": "2025-11-14 21:47:00" },
+
+    { "id": 17, "user_id": 9, "skill_id": "18", "years_experience": 10, "created_at": "2025-11-14 21:48:00" },
+
+    { "id": 18, "user_id": 10, "skill_id": "19", "years_experience": 40, "created_at": "2025-11-14 21:49:00" },
+
+    { "id": 19, "user_id": 11, "skill_id": "3", "years_experience": 12, "created_at": "2025-11-14 21:50:00" },
+    { "id": 20, "user_id": 11, "skill_id": "1", "years_experience": 10, "created_at": "2025-11-14 21:50:00" },
+
+    { "id": 21, "user_id": 12, "skill_id": "8", "years_experience": 11, "created_at": "2025-11-14 21:51:00" },
+
+    { "id": 22, "user_id": 13, "skill_id": "11", "years_experience": 18, "created_at": "2025-11-14 21:52:00" },
+    { "id": 23, "user_id": 13, "skill_id": "12", "years_experience": 15, "created_at": "2025-11-14 21:52:00" },
+
+    { "id": 24, "user_id": 14, "skill_id": "15", "years_experience": 22, "created_at": "2025-11-14 21:53:00" },
+    { "id": 25, "user_id": 14, "skill_id": "14", "years_experience": 20, "created_at": "2025-11-14 21:53:00" }
+  ],
+  "posts": [
+    { "id": "1", "user_id": "1", "user_type": "user", "title": "تحسين أداء التطبيق في المتصفح", "content": "نصائح لتقليل وقت التحميل وتحسين الأداء على الموبايل.", "created_at": "2025-11-14 22:00:00" },
+    { "id": "2", "user_id": "1", "user_type": "user", "title": "تقنيات lazy-loading مفيدة", "content": "استخدم lazy-loading للصور وتقسيم الكود لتحسين First Paint.", "created_at": "2025-11-14 22:03:00" },
+
+    { "id": "3", "user_id": "2", "user_type": "user", "title": "قصة بيع ناجحة", "content": "أغلقت صفقة اليوم عبر فهم احتياج العميل بدقة.", "created_at": "2025-11-14 22:05:00" },
+    { "id": "4", "user_id": "2", "user_type": "user", "title": "نصيحة للتفاوض", "content": "اسأل أولًا، اقترح ثانيًا، واغلق بعرض واضح.", "created_at": "2025-11-14 22:07:00" },
+
+    { "id": "5", "user_id": "3", "user_type": "user", "title": "هوية بصرية لمقهى محلي", "content": "عرضت تصميم شعار جديد؛ الألوان دافئة وبسيطة.", "created_at": "2025-11-14 22:10:00" },
+    { "id": "6", "user_id": "3", "user_type": "company", "title": "تصميم جديد من Norva", "content": "Norva Design أطلقت حملة هوية لعميل في قطاع التعليم.", "created_at": "2025-11-14 22:12:00" },
+
+    { "id": "7", "user_id": "4", "user_type": "user", "title": "تقارير نهاية الشهر", "content": "نموذج تقرير مالي مبسط للشركات الصغيرة.", "created_at": "2025-11-14 22:20:00" },
+    { "id": "8", "user_id": "4", "user_type": "user", "title": "نصائح للتدقيق الداخلي", "content": "قواعد بسيطة لتقليل الأخطاء المحاسبية.", "created_at": "2025-11-14 22:22:00" },
+
+    { "id": "9", "user_id": "5", "user_type": "user", "title": "نشاط تعليمي ممتع", "content": "نشاط لجعل الأطفال يحبون الحساب.", "created_at": "2025-11-14 22:25:00" },
+    { "id": "10", "user_id": "5", "user_type": "user", "title": "قصة من الصف", "content": "كيف غيّر لعبة بسيطة فهم طالب للكسور.", "created_at": "2025-11-14 22:27:00" },
+
+    { "id": "11", "user_id": "6", "user_type": "company", "title": "قائمة خاصة بمذاق الشرق", "content": "طبق أسبوعي جديد بنكهة تقليدية بطابع عصري.", "created_at": "2025-11-14 22:30:00" },
+    { "id": "12", "user_id": "6", "user_type": "company", "title": "تجربة طبق جديد", "content": "نبحث عن آراء الزبائن لتعديل بهارات الطبق.", "created_at": "2025-11-14 22:33:00" },
+
+    { "id": "13", "user_id": "7", "user_type": "user", "title": "لوحة تحكم لمشروع داخلي", "content": "بنيت لوحة تبين أداء المبيعات والتفاعل.", "created_at": "2025-11-14 22:35:00" },
+    { "id": "14", "user_id": "7", "user_type": "user", "title": "نتائج تحليل التجربة", "content": "ملاحظات حول زيادة التحويل بعد تعديل الواجهة.", "created_at": "2025-11-14 22:37:00" },
+
+    { "id": "15", "user_id": "8", "user_type": "user", "title": "مجموعة صور من التوصيل", "content": "صور لزوايا المدينة من عملي اليومي.", "created_at": "2025-11-14 22:40:00" },
+    { "id": "16", "user_id": "8", "user_type": "user", "title": "نصيحة لتصوير الموبايل", "content": "زاوية و إضاءة بسيطة تصنع صورة قوية.", "created_at": "2025-11-14 22:42:00" },
+
+    { "id": "17", "user_id": "9", "user_type": "user", "title": "نصيحة إسعافية", "content": "كيف تتصرف عند نزف أنفي بسيط — خطوات سريعة.", "created_at": "2025-11-14 22:40:00" },
+    { "id": "18", "user_id": "9", "user_type": "user", "title": "تعامل مع الحمى المنزلية", "content": "متى تكفي إسعافات منزلية ومتى تتجه للطبيب.", "created_at": "2025-11-14 22:44:00" },
+
+    { "id": "19", "user_id": "10", "user_type": "user", "title": "صيانة منزلية بسيطة", "content": "نصائح لصيانة صغيرة للمنزل باستخدام أدوات بسيطة.", "created_at": "2025-11-14 22:45:00" },
+    { "id": "20", "user_id": "10", "user_type": "user", "title": "البستنة للمبتدئين", "content": "اختيار التربة والري للنباتات المنزلية.", "created_at": "2025-11-14 22:48:00" },
+
+    { "id": "21", "user_id": "11", "user_type": "company", "title": "ميزة جديدة في TecnoTwo", "content": "أطلقنا نسخة تجريبية لتحسين اقتراحات المنتجات.", "created_at": "2025-11-14 22:45:00" },
+    { "id": "22", "user_id": "11", "user_type": "company", "title": "تقنتو — تحديث داخلي", "content": "تم تحسين CI/CD لتقليل وقت النشر.", "created_at": "2025-11-14 22:50:00" },
+
+    { "id": "23", "user_id": "12", "user_type": "company", "title": "Norva — قالب تعليمي", "content": "نشرنا مواد جاهزة للاستخدام في المدارس.", "created_at": "2025-11-14 22:55:00" },
+    { "id": "24", "user_id": "12", "user_type": "company", "title": "مشروع هوية لعميل", "content": "أتممنا مشروع هوية لعميل قطاع التعليم.", "created_at": "2025-11-14 22:57:00" },
+
+    { "id": "25", "user_id": "13", "user_type": "company", "title": "Mizan+ — نصائح ضريبية", "content": "مقالات قصيرة لرواد الأعمال بخصوص التزامات الضريبة.", "created_at": "2025-11-14 23:00:00" },
+    { "id": "26", "user_id": "13", "user_type": "company", "title": "خدمة الرواتب المبسطة", "content": "اطلاق خدمة إدارة الرواتب للشركات الصغيرة.", "created_at": "2025-11-14 23:02:00" },
+
+    { "id": "27", "user_id": "14", "user_type": "company", "title": "قوائم سريعة للغداء", "content": "قوائم عملية لتقديم أسرع أثناء الذروة.", "created_at": "2025-11-14 23:05:00" },
+    { "id": "28", "user_id": "14", "user_type": "company", "title": "تجربة طبق جديد", "content": "نطلب آراء العملاء لتطوير قائمة رمضان.", "created_at": "2025-11-14 23:08:00" }
+  ],
+  "projects": [
+    { "id": "1", "user_id": "1", "user_type": "company", "title": "Recommender Engine v1", "content": "محرك توصية مبدئي يعتمد على سلوك المستخدم وتاريخ الشراء.", "created_at": "2025-11-14 23:00:00" },
+    { "id": "2", "user_id": "1", "user_type": "company", "title": "Frontend Revamp", "content": "إعادة كتابة الواجهة باستخدام Vue 3 مع تحسينات أداء.", "created_at": "2025-11-14 23:10:00" },
+
+    { "id": "3", "user_id": "2", "user_type": "user", "title": "حملة مبيعات Q4", "content": "خطة حملات وخصومات مستهدفة لزيادة معدل التحويل.", "created_at": "2025-11-14 23:15:00" },
+    { "id": "4", "user_id": "2", "user_type": "company", "title": "Norva Education Kit", "content": "مجموعة موارد تعليمية مصممة لمدارس صغيرة.", "created_at": "2025-11-14 23:20:00" },
+
+    { "id": "5", "user_id": "3", "user_type": "user", "title": "مجموعات قوالب UI", "content": "قوالب واجهة جاهزة تساعد المشاريع الصغيرة.", "created_at": "2025-11-14 23:22:00" },
+    { "id": "6", "user_id": "3", "user_type": "company", "title": "هوية بصرية لمركز تعليم", "content": "هوية بصرية متكاملة لعميل قطاع التعليم.", "created_at": "2025-11-14 23:25:00" },
+
+    { "id": "7", "user_id": "4", "user_type": "user", "title": "نظام محاسبي مبسط", "content": "قالب محاسبي يساعد أصحاب المشاريع الصغيرة.", "created_at": "2025-11-14 23:25:00" },
+    { "id": "8", "user_id": "4", "user_type": "company", "title": "Mizan+ — خدمات الرواتب", "content": "خدمة جديدة لإدارة الرواتب والامتثال الضريبي.", "created_at": "2025-11-14 23:30:00" },
+
+    { "id": "9", "user_id": "5", "user_type": "user", "title": "أدوات تعليمية مرئية", "content": "بطاقات وأنشطة لتعليم المهارات الأساسية للأطفال.", "created_at": "2025-11-14 23:32:00" },
+    { "id": "10", "user_id": "5", "user_type": "user", "title": "ورشة اسعافات للمدرسة", "content": "تنظيم ورشة إسعاف أولي للمدرسين والطلاب.", "created_at": "2025-11-14 23:34:00" },
+
+    { "id": "11", "user_id": "6", "user_type": "company", "title": "قائمة رمضان التجريبية", "content": "تجربة أطباق جديدة قائمة على وصفات تراثية.", "created_at": "2025-11-14 23:35:00" },
+    { "id": "12", "user_id": "6", "user_type": "company", "title": "تحسين زمن الخدمة", "content": "تعديل إجراءات المطبخ لتقليل زمن التحضير.", "created_at": "2025-11-14 23:37:00" },
+
+    { "id": "13", "user_id": "7", "user_type": "user", "title": "لوحة أداء المبيعات", "content": "Dashboard تفاعلي يقيس مؤشرات الأداء.", "created_at": "2025-11-14 23:40:00" },
+    { "id": "14", "user_id": "7", "user_type": "company", "title": "نماذج تنبؤية للمبيعات", "content": "نماذج تساعد في توقع الطلب الشهري.", "created_at": "2025-11-14 23:42:00" },
+
+    { "id": "15", "user_id": "8", "user_type": "user", "title": "مصوغات المدينة", "content": "مشروع تصوير بسيط لزوايا المدينة.", "created_at": "2025-11-14 23:44:00" },
+    { "id": "16", "user_id": "8", "user_type": "user", "title": "خدمة توصيل فعّالة", "content": "اقتراحات لتحسين مسارات التوصيل.", "created_at": "2025-11-14 23:46:00" },
+
+    { "id": "17", "user_id": "9", "user_type": "user", "title": "دليل إسعافات أولية منزلي", "content": "دليل مبسط للعائلة للتعامل مع الإصابات اليومية.", "created_at": "2025-11-14 23:48:00" },
+    { "id": "18", "user_id": "9", "user_type": "user", "title": "ورشة إسعافات للمجتمع", "content": "تنظيم ورشة توعية وإسعافات أولية.", "created_at": "2025-11-14 23:50:00" },
+
+    { "id": "19", "user_id": "10", "user_type": "user", "title": "دليل صيانة منزلية", "content": "قواعد أساسية لصيانة منزلية آمنة.", "created_at": "2025-11-14 23:52:00" },
+    { "id": "20", "user_id": "10", "user_type": "user", "title": "مشروع بستان الحي", "content": "اقتراح لإنشاء حديقة صغيرة للمجتمع.", "created_at": "2025-11-14 23:54:00" },
+
+    { "id": "21", "user_id": "11", "user_type": "company", "title": "تقنتو — نظام اختبار جديد", "content": "إضافة اختبارات تلقائية جديدة لواجهات الخدمة.", "created_at": "2025-11-14 23:56:00" },
+    { "id": "22", "user_id": "11", "user_type": "company", "title": "دليل أمان داخلي", "content": "توصيات للأمن التطبيقي وCI/CD.", "created_at": "2025-11-14 23:58:00" },
+
+    { "id": "23", "user_id": "12", "user_type": "company", "title": "قوالب تعليمية Norva", "content": "قوالب قابلة للتخصيص للمدارس الصغيرة.", "created_at": "2025-11-15 00:00:00" },
+    { "id": "24", "user_id": "12", "user_type": "company", "title": "حملة Norva لقطاع التعليم", "content": "حملة رقمية لتعزيز الوعي بالهوية البصرية.", "created_at": "2025-11-15 00:02:00" },
+
+    { "id": "25", "user_id": "13", "user_type": "company", "title": "Mizan+ — أدوات مالية", "content": "قالب لتدقيق المصروفات وتتبّع الفواتير.", "created_at": "2025-11-15 00:04:00" },
+    { "id": "26", "user_id": "13", "user_type": "company", "title": "ورشة مبسطة للقوائم المالية", "content": "ورشة لرواد الأعمال عن أساسيات المحاسبة.", "created_at": "2025-11-15 00:06:00" },
+
+    { "id": "27", "user_id": "14", "user_type": "company", "title": "تجربة طبق جديد — مراجعات", "content": "نجمع آراء العملاء لتعديل وصفة الطبق.", "created_at": "2025-11-15 00:08:00" },
+    { "id": "28", "user_id": "14", "user_type": "company", "title": "تحسين سير العمل في المطبخ", "content": "إجراءات تشغيل تقصر زمن التجهيز في الذروة.", "created_at": "2025-11-15 00:10:00" }
+  ],
+  "attachments": [
+    { "id": "1", "parent_type": "project", "parent_id": "1", "url": "https://picsum.photos/400/400?project1", "mime_type": "image/jpeg", "created_at": "2025-11-14 23:45:00" },
+    { "id": "2", "parent_type": "post", "parent_id": "5", "url": "https://picsum.photos/400/400?post5", "mime_type": "image/jpeg", "created_at": "2025-11-14 23:50:00" },
+    { "id": "3", "parent_type": "project", "parent_id": "11", "url": "https://picsum.photos/400/400?project11", "mime_type": "image/jpeg", "created_at": "2025-11-14 23:55:00" }
+  ],
+  "followers": [
+    { "id": 1, "user_id": 7, "user_type": "user", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-14 23:56:00" },
+    { "id": 2, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "7", "status": "active", "created_at": "2025-11-14 23:57:00" },
+
+    { "id": 3, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "3", "status": "active", "created_at": "2025-11-14 23:58:00" },
+    { "id": 4, "user_id": 3, "user_type": "user", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-14 23:58:30" },
+
+    { "id": 5, "user_id": 2, "user_type": "user", "target_type": "user", "target_id": "6", "status": "active", "created_at": "2025-11-14 23:59:00" },
+    { "id": 6, "user_id": 6, "user_type": "user", "target_type": "user", "target_id": "2", "status": "active", "created_at": "2025-11-14 23:59:30" },
+
+    { "id": 7, "user_id": 2, "user_type": "user", "target_type": "user", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:00:00" },
+    { "id": 8, "user_id": 4, "user_type": "user", "target_type": "user", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:00:30" },
+
+    { "id": 9, "user_id": 5, "user_type": "user", "target_type": "user", "target_id": "9", "status": "active", "created_at": "2025-11-15 00:01:00" },
+    { "id": 10, "user_id": 9, "user_type": "user", "target_type": "user", "target_id": "5", "status": "active", "created_at": "2025-11-15 00:01:30" },
+
+    { "id": 11, "user_id": 8, "user_type": "user", "target_type": "user", "target_id": "10", "status": "active", "created_at": "2025-11-15 00:02:00" },
+    { "id": 12, "user_id": 10, "user_type": "user", "target_type": "user", "target_id": "8", "status": "active", "created_at": "2025-11-15 00:02:30" },
+
+    { "id": 13, "user_id": 3, "user_type": "user", "target_type": "company", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:03:00" },
+    { "id": 14, "user_id": 1, "user_type": "user", "target_type": "company", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:03:30" },
+
+    { "id": 15, "user_id": 2, "user_type": "user", "target_type": "company", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:04:00" },
+    { "id": 16, "user_id": 6, "user_type": "user", "target_type": "company", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:04:30" },
+
+    { "id": 17, "user_id": 7, "user_type": "user", "target_type": "company", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:05:00" },
+    { "id": 18, "user_id": 11, "user_type": "company", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:05:30" },
+
+    { "id": 19, "user_id": 13, "user_type": "company", "target_type": "user", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:06:00" },
+    { "id": 20, "user_id": 14, "user_type": "company", "target_type": "user", "target_id": "6", "status": "active", "created_at": "2025-11-15 00:06:30" },
+
+    { "id": 21, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "11", "status": "active", "created_at": "2025-11-15 00:07:00" },
+    { "id": 22, "user_id": 11, "user_type": "company", "target_type": "user", "target_id": "7", "status": "active", "created_at": "2025-11-15 00:07:30" },
+
+    { "id": 23, "user_id": 3, "user_type": "user", "target_type": "user", "target_id": "5", "status": "active", "created_at": "2025-11-15 00:08:00" },
+    { "id": 24, "user_id": 5, "user_type": "user", "target_type": "user", "target_id": "3", "status": "active", "created_at": "2025-11-15 00:08:30" },
+
+    { "id": 25, "user_id": 2, "user_type": "user", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:09:00" },
+    { "id": 26, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:09:30" },
+
+    { "id": 27, "user_id": 9, "user_type": "user", "target_type": "company", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:10:00" },
+    { "id": 28, "user_id": 5, "user_type": "user", "target_type": "company", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:10:30" }
+  ],
+  "likes": [
+    { "id": "1", "target_type": "post", "target_id": "1", "user_id": "7", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:05:00" },
+    { "id": "2", "target_type": "project", "target_id": "1", "user_id": "11", "user_type": "company", "value": "1", "created_at": "2025-11-15 00:06:00" },
+    { "id": "3", "target_type": "post", "target_id": "5", "user_id": "1", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:07:00" },
+    { "id": "4", "target_type": "company", "target_id": "4", "user_id": "2", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:08:00" },
+
+    { "id": "5", "target_type": "post", "target_id": "3", "user_id": "1", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:08:30" },
+    { "id": "6", "target_type": "post", "target_id": "11", "user_id": "7", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:09:00" },
+    { "id": "7", "target_type": "project", "target_id": "13", "user_id": "1", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:09:30" },
+
+    { "id": "8", "target_type": "post", "target_id": "8", "user_id": "6", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:10:00" },
+    { "id": "9", "target_type": "post", "target_id": "12", "user_id": "2", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:10:30" },
+
+    { "id": "10", "target_type": "post", "target_id": "15", "user_id": "10", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:11:00" },
+    { "id": "11", "target_type": "project", "target_id": "19", "user_id": "10", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:11:30" },
+
+    { "id": "12", "target_type": "post", "target_id": "21", "user_id": "7", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:12:00" },
+    { "id": "13", "target_type": "project", "target_id": "2", "user_id": "7", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:12:30" },
+
+    { "id": "14", "target_type": "post", "target_id": "23", "user_id": "3", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:13:00" },
+    { "id": "15", "target_type": "project", "target_id": "6", "user_id": "4", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:13:30" },
+
+    { "id": "16", "target_type": "post", "target_id": "9", "user_id": "1", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:14:00" },
+    { "id": "17", "target_type": "project", "target_id": "7", "user_id": "4", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:14:30" },
+
+    { "id": "18", "target_type": "post", "target_id": "17", "user_id": "5", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:15:00" },
+    { "id": "19", "target_type": "post", "target_id": "27", "user_id": "6", "user_type": "company", "value": "1", "created_at": "2025-11-15 00:15:30" }
+  ],
+  "comments": [
+    { "id": "1", "user_id": "7", "user_type": "user", "parent_type": "project", "parent_id": "1", "content": "شغل ممتاز — الشارتات واضحة وتساعد كثيرًا.", "created_at": "2025-11-15 00:10:00" },
+    { "id": "2", "user_id": "3", "user_type": "user", "parent_type": "post", "parent_id": "1", "content": "نقطة مهمة عن تقليل reflows — ممتاز يا فاطمة!", "created_at": "2025-11-15 00:12:00" },
+    { "id": "3", "user_id": "6", "user_type": "company", "parent_type": "post", "parent_id": "11", "content": "نجرب الطبق الأسبوع القادم ونعطي رأينا.", "created_at": "2025-11-15 00:15:00" },
+    { "id": "4", "user_id": "4", "user_type": "user", "parent_type": "project", "parent_id": "8", "content": "أقترح تبويب للتقارير الشهرية قابل للطباعة.", "created_at": "2025-11-15 00:20:00" },
+    { "id": "5", "user_id": "5", "user_type": "user", "parent_type": "post", "parent_id": "9", "content": "جربت النشاط مع طلّابي وكانت النتيجة رائعة!", "created_at": "2025-11-15 00:25:00" },
+
+    { "id": "6", "user_id": "2", "user_type": "user", "parent_type": "post", "parent_id": "3", "content": "جميل — هل استهدفت شريحة معينة؟", "created_at": "2025-11-15 00:26:00" },
+    { "id": "7", "user_id": "1", "user_type": "user", "parent_type": "project", "parent_id": "2", "content": "أضفت اختبارات وحدة للواجهات.", "created_at": "2025-11-15 00:27:00" },
+    { "id": "8", "user_id": "3", "user_type": "user", "parent_type": "post", "parent_id": "23", "content": "جميل، أظن القالب مناسب للمدرسة X.", "created_at": "2025-11-15 00:28:00" },
+    { "id": "9", "user_id": "9", "user_type": "user", "parent_type": "post", "parent_id": "17", "content": "أضيفي فقرة عن متى يجب مراجعة الطبيب.", "created_at": "2025-11-15 00:29:00" },
+
+    { "id": "10", "user_id": "10", "user_type": "user", "parent_type": "project", "parent_id": "20", "content": "افضل اختيار شجيرات محلية لتقليل الري.", "created_at": "2025-11-15 00:30:00" },
+    { "id": "11", "user_id": "6", "user_type": "company", "parent_type": "project", "parent_id": "11", "content": "نجرب التتبيلة الجديدة في يوم التجربة.", "created_at": "2025-11-15 00:31:00" },
+
+    { "id": "12", "user_id": "4", "user_type": "user", "parent_type": "post", "parent_id": "7", "content": "أرفق نسخة قابلة للطباعة للنموذج.", "created_at": "2025-11-15 00:32:00" },
+    { "id": "13", "user_id": "7", "user_type": "user", "parent_type": "project", "parent_id": "13", "content": "أضيفت مقاييس CTR وConversion في التقرير.", "created_at": "2025-11-15 00:33:00" },
+
+    { "id": "14", "user_id": "2", "user_type": "user", "parent_type": "post", "parent_id": "12", "content": "عرض جيد — ممكن نتعاون للترويج؟", "created_at": "2025-11-15 00:34:00" },
+    { "id": "15", "user_id": "1", "user_type": "user", "parent_type": "post", "parent_id": "2", "content": "تضمين lazy loading خفّض الـ LCP.", "created_at": "2025-11-15 00:35:00" }
+  ],
+  "companyEmployees": [
+    { "id": 1, "company_id": 1, "user_id": 1, "position": "Frontend Engineer", "hired_at": "2025-10-08 09:15:00" },
+    { "id": 2, "company_id": 1, "user_id": 7, "position": "Data Scientist", "hired_at": "2025-10-08 09:15:00" },
+    { "id": 3, "company_id": 2, "user_id": 3, "position": "Senior Designer", "hired_at": "2025-10-08 09:15:00" },
+    { "id": 4, "company_id": 3, "user_id": 4, "position": "Senior Accountant", "hired_at": "2025-10-08 09:15:00" },
+    { "id": 5, "company_id": 4, "user_id": 6, "position": "Head Chef", "hired_at": "2025-10-08 09:15:00" }
+  ],
+  "jobs": [
+    { "id": "1", "company_id": "1", "title": "AI Engineer — Recommendation Systems", "description": "تصميم وتطوير نماذج توصية، تجهيز البيانات، ونشر النماذج للعمل.", "publish_date": "2025-11-10 09:00:00", "updated_date": "2025-11-10 09:00:00", "status": "active", "job_type": "full_time", "work_mode": "hybrid", "salary": 8000.00, "currency": "SAR", "hours_per_week": 40, "country": "Saudi Arabia", "img": null },
+    { "id": "2", "company_id": "2", "title": "Senior Visual Designer", "description": "قيادة فرق التصميم وبناء هويات بصرية وحملات تسويقية.", "publish_date": "2025-11-11 10:00:00", "updated_date": "2025-11-11 10:00:00", "status": "active", "job_type": "contract", "work_mode": "on_site", "salary": 5000.00, "currency": "USD", "hours_per_week": 40, "country": "Yemen", "img": null },
+    { "id": "3", "company_id": "3", "title": "Payroll & Tax Specialist", "description": "إدارة الرواتب، تنظيم المستندات، وضمان الالتزام المالي للشركات الصغيرة.", "publish_date": "2025-11-12 11:00:00", "updated_date": "2025-11-12 11:00:00", "status": "active", "job_type": "full_time", "work_mode": "on_site", "salary": 4500.00, "currency": "USD", "hours_per_week": 40, "country": "Yemen", "img": null }
+  ],
+  "job_skills": [
+    { "id": 1, "job_id": 1, "skill_id": 6, "required_level": "senior", "created_at": "2025-11-10 09:05:00" },
+    { "id": 2, "job_id": 1, "skill_id": 4, "required_level": "senior", "created_at": "2025-11-10 09:05:00" },
+    { "id": 3, "job_id": 1, "skill_id": 9, "required_level": "intermediate", "created_at": "2025-11-10 09:05:00" },
+    { "id": 4, "job_id": 2, "skill_id": 8, "required_level": "senior", "created_at": "2025-11-11 10:05:00" },
+    { "id": 5, "job_id": 2, "skill_id": 7, "required_level": "senior", "created_at": "2025-11-11 10:05:00" },
+    { "id": 6, "job_id": 3, "skill_id": 11, "required_level": "senior", "created_at": "2025-11-12 11:05:00" },
+    { "id": 7, "job_id": 3, "skill_id": 12, "required_level": "intermediate", "created_at": "2025-11-12 11:05:00" }
+  ],
+  "job_applications": [
+    { "id": 1, "job_id": 1, "user_id": 7, "message": "أمتلك خبرة في تحليل البيانات وبناء نماذج تجريبية، مهتم بالمساهمة في محركات التوصية.", "status": "applied", "applied_at": "2025-11-13 12:00:00" },
+    { "id": 2, "job_id": 2, "user_id": 3, "message": "مصممة بخبرة في بناء هويات بصرية وحملات رقمية — أرفق أمثلة في المحفظة.", "status": "applied", "applied_at": "2025-11-13 12:30:00" }
+  ],
+  "chats": [
+    { "id": "1", "user_id": "1", "the_target_id": "7", "text": "مرحبًا ليلى، هل تستطيعين مراجعة البيانات قبل التجربة؟", "dete": "2025-11-14", "taim": "10:00:00" },
+    { "id": "2", "user_id": "7", "the_target_id": "1", "text": "أكيد فاطمة، أرسلِ العينة وسأراجع الأنماط.", "dete": "2025-11-14", "taim": "10:01:00" },
+    { "id": "3", "user_id": "1", "the_target_id": "7", "text": "أرسلت CSV — توجد أعمدة متكررة أريد تنظيفها.", "dete": "2025-11-14", "taim": "10:02:00" },
+    { "id": "4", "user_id": "7", "the_target_id": "1", "text": "شاهدتها. سأجهز dashboard مبسّط وارسله لك.", "dete": "2025-11-14", "taim": "10:05:00" },
+    { "id": "5", "user_id": "1", "the_target_id": "7", "text": "هل تضيفين CTR وConversion كمؤشرات؟", "dete": "2025-11-14", "taim": "10:06:00" },
+    { "id": "6", "user_id": "7", "the_target_id": "1", "text": "نعم، CTR وAverage Session جاهزان.", "dete": "2025-11-14", "taim": "10:07:00" },
+    { "id": "7", "user_id": "1", "the_target_id": "7", "text": "ممتاز، شكرًا — سأجرب على مجموعة الاختبار.", "dete": "2025-11-14", "taim": "10:08:00" },
+    { "id": "8", "user_id": "7", "the_target_id": "1", "text": "بالتوفيق — اخبريني بالنتائج.", "dete": "2025-11-14", "taim": "10:09:00" },
+
+    { "id": "9", "user_id": "1", "the_target_id": "3", "text": "ريم، ممكن تصميم واجهة سريعة للـ dashboard؟", "dete": "2025-11-14", "taim": "11:00:00" },
+    { "id": "10", "user_id": "3", "the_target_id": "1", "text": "أجل، ارسل لي مقياس الألوان المطلوب.", "dete": "2025-11-14", "taim": "11:01:00" },
+    { "id": "11", "user_id": "1", "the_target_id": "3", "text": "أريد تدرجات زرقاء وخط واضح وبسيط.", "dete": "2025-11-14", "taim": "11:02:00" },
+    { "id": "12", "user_id": "3", "the_target_id": "1", "text": "حسنًا، أجهز نموذج خلال ساعتين.", "dete": "2025-11-14", "taim": "11:03:00" },
+    { "id": "13", "user_id": "1", "the_target_id": "3", "text": "تمام، سأعطي الملاحظات بعد المراجعة.", "dete": "2025-11-14", "taim": "11:04:00" },
+    { "id": "14", "user_id": "3", "the_target_id": "1", "text": "أضفت أيضاً أيقونات مختصرة لقراءة سريعة.", "dete": "2025-11-14", "taim": "13:05:00" },
+    { "id": "15", "user_id": "1", "the_target_id": "3", "text": "ممتاز — الإيقونات واضحة.", "dete": "2025-11-14", "taim": "13:10:00" },
+    { "id": "16", "user_id": "3", "the_target_id": "1", "text": "على الرحب.", "dete": "2025-11-14", "taim": "13:12:00" },
+
+    { "id": "17", "user_id": "2", "the_target_id": "6", "text": "يا ماجد، كيف استقبلت آخر حملة الترويج؟", "dete": "2025-11-14", "taim": "12:00:00" },
+    { "id": "18", "user_id": "6", "the_target_id": "2", "text": "الطلب ارتفع 30% يوم الخميس — أعدت طبقًا جديدًا.", "dete": "2025-11-14", "taim": "12:01:00" },
+    { "id": "19", "user_id": "2", "the_target_id": "6", "text": "أحتاج عرض لمجموعات كبيرة — هل يمكنك؟", "dete": "2025-11-14", "taim": "12:02:00" },
+    { "id": "20", "user_id": "6", "the_target_id": "2", "text": "أعطيك خصمًا خاصًا لو جلبت 5 طاولات.", "dete": "2025-11-14", "taim": "12:03:00" },
+    { "id": "21", "user_id": "2", "the_target_id": "6", "text": "اتفقنا — أوزع الحملة اليوم.", "dete": "2025-11-14", "taim": "12:04:00" },
+    { "id": "22", "user_id": "6", "the_target_id": "2", "text": "أرسل لي ملاحظات عن الأذواق لاحقًا.", "dete": "2025-11-14", "taim": "12:05:00" },
+    { "id": "23", "user_id": "2", "the_target_id": "6", "text": "سأرسل تقريرًا بسيطًا عن الاستجابة.", "dete": "2025-11-14", "taim": "12:10:00" },
+    { "id": "24", "user_id": "6", "the_target_id": "2", "text": "ممتاز — بالتوفيق.", "dete": "2025-11-14", "taim": "12:15:00" },
+
+    { "id": "25", "user_id": "2", "the_target_id": "4", "text": "سلمان، أحتاج رقمك لفاتورة المورد.", "dete": "2025-11-14", "taim": "12:10:00" },
+    { "id": "26", "user_id": "4", "the_target_id": "2", "text": "أرسلته عبر البريد — راجعها قبل الدفع.", "dete": "2025-11-14", "taim": "12:11:00" },
+    { "id": "27", "user_id": "2", "the_target_id": "4", "text": "شكراً — هل اضفت بند الضمان؟", "dete": "2025-11-14", "taim": "12:12:00" },
+    { "id": "28", "user_id": "4", "the_target_id": "2", "text": "نعم، والبند واضح في الوثيقة.", "dete": "2025-11-14", "taim": "12:13:00" },
+    { "id": "29", "user_id": "2", "the_target_id": "4", "text": "تمام — سأعتمد الفاتورة الآن.", "dete": "2025-11-14", "taim": "12:14:00" },
+    { "id": "30", "user_id": "4", "the_target_id": "2", "text": "راجعتها، كل شيء مضبوط.", "dete": "2025-11-14", "taim": "12:15:00" },
+    { "id": "31", "user_id": "2", "the_target_id": "4", "text": "أقدر سرعة تعاونك.", "dete": "2025-11-14", "taim": "12:16:00" },
+
+    { "id": "32", "user_id": "5", "the_target_id": "9", "text": "نورا، هل يمكنك حضور دورة الإسعاف في المدرسة؟", "dete": "2025-11-14", "taim": "13:00:00" },
+    { "id": "33", "user_id": "9", "the_target_id": "5", "text": "أكيد هدى، أقدر أعطي ورشة صغيرة الأسبوع القادم.", "dete": "2025-11-14", "taim": "13:01:00" },
+    { "id": "34", "user_id": "5", "the_target_id": "9", "text": "ممتاز — سنجهز الدعوات والمواد.", "dete": "2025-11-14", "taim": "13:05:00" },
+    { "id": "35", "user_id": "9", "the_target_id": "5", "text": "حسناً، سأحضر عرضًا عمليًا.", "dete": "2025-11-14", "taim": "13:10:00" },
+    { "id": "36", "user_id": "5", "the_target_id": "9", "text": "أحتاج قائمة بالنقاط الأساسية.", "dete": "2025-11-14", "taim": "13:12:00" },
+    { "id": "37", "user_id": "9", "the_target_id": "5", "text": "أرسلها غدًا وسأحضر المعاينات.", "dete": "2025-11-14", "taim": "13:15:00" },
+    { "id": "38", "user_id": "5", "the_target_id": "9", "text": "شكرًا لكِ — الأطفال سيستفيدون.", "dete": "2025-11-14", "taim": "13:20:00" },
+
+    { "id": "39", "user_id": "8", "the_target_id": "10", "text": "يوصف، وصلني مقطع عن صيانة المحرك — صحيح الأجزاء؟", "dete": "2025-11-14", "taim": "14:00:00" },
+    { "id": "40", "user_id": "10", "the_target_id": "8", "text": "خالد، لا تتهور — افحص الزيت والفلتر أولًا.", "dete": "2025-11-14", "taim": "14:02:00" },
+    { "id": "41", "user_id": "8", "the_target_id": "10", "text": "حاضر يا يوسف — كيف أقيّم التسريب؟", "dete": "2025-11-14", "taim": "14:03:00" },
+    { "id": "42", "user_id": "10", "the_target_id": "8", "text": "انظر للون الزيت ورائحة المحرك أولًا.", "dete": "2025-11-14", "taim": "14:05:00" },
+    { "id": "43", "user_id": "8", "the_target_id": "10", "text": "سأفحص غدًا وأخبرك.", "dete": "2025-11-14", "taim": "14:06:00" },
+    { "id": "44", "user_id": "10", "the_target_id": "8", "text": "لا تنسى فحص مستوى الماء أيضًا.", "dete": "2025-11-14", "taim": "14:07:00" },
+    { "id": "45", "user_id": "8", "the_target_id": "10", "text": "تمام — شكراً نصيحتك.", "dete": "2025-11-14", "taim": "14:09:00" }
+  ],
+  "notification": [
+    { "id": 1, "user_id": "3", "user_type": "user", "reactant_id": "12", "reactant_type": "company", "interaction_type": "post", "interaction_id": "23", "title": "تم نشر عمل جديد", "message": "Norva Design نشرت مواد تعليمية — اطلع عليها.", "date": "14 نوفمبر 2025", "icon": "bi-bookmark-check-fill" },
+    { "id": 2, "user_id": "7", "user_type": "user", "reactant_id": "1", "reactant_type": "user", "interaction_type": "project", "interaction_id": "1", "title": "طلب مراجعة", "message": "فاطمة طلبت مراجعة لوحة الأداء — تفقد المشروع.", "date": "14 نوفمبر 2025", "icon": "bi-heart-fill" },
+    { "id": 3, "user_id": "6", "user_type": "user", "reactant_id": "2", "reactant_type": "user", "interaction_type": "post", "interaction_id": "11", "title": "تعليق جديد", "message": "ماجد علق على منشورك — اطلع على رأيه.", "date": "15 نوفمبر 2025", "icon": "bi-heart-fill" },
+    { "id": 4, "user_id": "4", "user_type": "user", "reactant_id": "13", "reactant_type": "company", "interaction_type": "job_applications", "interaction_id": "3", "title": "طلب توظيف", "message": "مرشح جديد لوظيفة Payroll — تفقد الطلب.", "date": "15 نوفمبر 2025", "icon": "bi-bookmark-check-fill" }
+  ]
+}
