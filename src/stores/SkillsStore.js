@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import axios from "axios";
 
 export const useSkillsStore = defineStore("SkillsStore", () => {
   const skills = ref([]);
@@ -8,22 +7,38 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
   const loading = ref(false);
   const error = ref(null);
 
-  const apiURL = "http://localhost:3000/skills";
-  const USapiURL = "http://localhost:3000/user_skills";
-  const JSapiURL = "http://localhost:3000/job_skills";
+  let _cache = null;
 
   const skillCache = {};
+
+  const loadJSON = async () => {
+    if (_cache) return _cache;
+    const res = await fetch("/data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to load /data.json (status ${res.status})`);
+    const data = await res.json();
+    _cache = data;
+    return data;
+  };
+
+  const forceReloadJSON = async () => {
+    _cache = null;
+    return await loadJSON();
+  };
 
   const fetchSkills = async () => {
     loading.value = true;
     error.value = null;
-
     try {
-      const res = await axios.get(apiURL);
-      skills.value = res.data;
+      const data = await loadJSON();
+
+      const list = Array.isArray(data) ? data : data.skills ?? [];
+
+      skills.value = list;
+      return skills.value;
     } catch (err) {
-      console.error("Error fetching skills:", err);
-      error.value = "Error fetching skill list";
+      console.error("Error fetching skills (from data.json):", err);
+      error.value = "فشل في تحميل قائمة المهارات.";
+      return [];
     } finally {
       loading.value = false;
     }
@@ -33,12 +48,15 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
     try {
       if (skillCache[skillId]) return skillCache[skillId];
 
-      const res = await axios.get(`${apiURL}/${skillId}`);
-      skillCache[skillId] = res.data;
-      return res.data;
+      const data = await loadJSON();
+      const list = Array.isArray(data) ? data : data.skills ?? [];
 
+      const skill = list.find(s => String(s.id) === String(skillId)) || null;
+      if (skill) skillCache[skillId] = skill;
+      return skill;
     } catch (err) {
-      console.error(`Error fetching skill ${skillId}:`, err);
+      console.error(`Error fetching skill ${skillId} (from data.json):`, err);
+      error.value = "فشل في تحميل بيانات المهارة.";
       return null;
     }
   };
@@ -49,22 +67,18 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
     filteredSkills.value = [];
 
     try {
-      const userSkillsRes = await axios.get(USapiURL, {
-        params: { user_id: userId },
-      });
+      const data = await loadJSON();
+      const userSkills = data.user_skills ?? [];
+      const list = Array.isArray(userSkills) ? userSkills.filter(us => String(us.user_id) === String(userId)) : [];
 
-      const skillIds = userSkillsRes.data.map((us) => us.skill_id);
+      const skillIds = list.map(us => us.skill_id);
 
-      const skillResults = await Promise.all(
-        skillIds.map((id) => fetchSkillById(id))
-      );
-
-      filteredSkills.value = skillResults.filter((s) => s !== null);
+      const skillResults = await Promise.all(skillIds.map(id => fetchSkillById(id)));
+      filteredSkills.value = skillResults.filter(s => s !== null);
       return filteredSkills.value;
-
     } catch (err) {
-      console.error(`Error fetching user skills for ${userId}:`, err);
-      error.value = "Error fetching user skills";
+      console.error(`Error fetching user skills for ${userId} (from data.json):`, err);
+      error.value = "فشل في تحميل مهارات المستخدم.";
       return [];
     } finally {
       loading.value = false;
@@ -77,22 +91,18 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
     filteredSkills.value = [];
 
     try {
-      const jobSkillsRes = await axios.get(JSapiURL, {
-        params: { job_id: jobId },
-      });
+      const data = await loadJSON();
+      const jobSkills = data.job_skills ?? [];
+      const list = Array.isArray(jobSkills) ? jobSkills.filter(js => String(js.job_id) === String(jobId)) : [];
 
-      const skillIds = jobSkillsRes.data.map((js) => js.skill_id);
+      const skillIds = list.map(js => js.skill_id);
 
-      const skillResults = await Promise.all(
-        skillIds.map((id) => fetchSkillById(id))
-      );
-
-      filteredSkills.value = skillResults.filter((s) => s !== null);
+      const skillResults = await Promise.all(skillIds.map(id => fetchSkillById(id)));
+      filteredSkills.value = skillResults.filter(s => s !== null);
       return filteredSkills.value;
-
     } catch (err) {
-      console.error(`Error fetching job skills for ${jobId}:`, err);
-      error.value = "Error fetching job skills";
+      console.error(`Error fetching job skills for ${jobId} (from data.json):`, err);
+      error.value = "فشل في تحميل مهارات الوظيفة.";
       return [];
     } finally {
       loading.value = false;
@@ -103,16 +113,15 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
     try {
       if (the === "user") {
         const list = await filterSkillsByUserId(theId);
-        return list.length;
+        return Array.isArray(list) ? list.length : 0;
       }
 
       if (the === "job") {
         const list = await filterSkillsByJobId(theId);
-        return list.length;
+        return Array.isArray(list) ? list.length : 0;
       }
 
       return 0;
-
     } catch (err) {
       console.error(`Error counting skills for ${the} ${theId}:`, err);
       return 0;
@@ -129,5 +138,6 @@ export const useSkillsStore = defineStore("SkillsStore", () => {
     filterSkillsByUserId,
     filterSkillsByJobId,
     countSkillsById,
+    forceReloadJSON
   };
 });
