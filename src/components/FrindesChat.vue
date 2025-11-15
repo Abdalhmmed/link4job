@@ -3,16 +3,21 @@ import { useUserStore } from '@/stores/UserStore'
 import { inject, onMounted, ref, computed } from 'vue'
 
 const ChatId = inject('ChatId')
-
 const UsersStore = useUserStore()
 
 const user = ref(null)
-const loading = ref(true) 
+const loading = ref(true)
+const error = ref(null)
 
 const props = defineProps({
-  user_id: {
+  user: {
     type: Object,
-    default: () => ({ target_id: 0 })
+    default: () => ({
+      id: 0,
+      name: "error",
+      img: "error",
+      status: "error"
+    })
   }
 })
 
@@ -23,47 +28,38 @@ function OpenChat(id) {
 }
 
 onMounted(async () => {
-  if (props.user_id?.id) {
-    try {
-      loading.value = true
-      user.value = await UsersStore.fetchUserById(props.user_id.friend_id)
-      console.log("frind3: ",props.user_id)
-    } catch (err) {
-      console.error(" خطأ أثناء جلب بيانات المستخدم:", err)
-    } finally {
-      loading.value = false
-    }
-  } else {
+  loading.value = true
+  error.value = null
+  try {
+    user.value = await UsersStore.fetchUserById(props.user?.id)
+  } catch (err) {
+    console.error("خطأ أثناء جلب بيانات المستخدم:", err)
+    error.value = "فشل في تحميل بيانات المستخدم."
+  } finally {
     loading.value = false
   }
 })
 
-const isActive = computed(() => ChatId?.value === user.value?.id)
+const isActive = computed(() => ChatId && ChatId.value === user.value?.id)
 </script>
 
 <template>
-  <div
-    v-if="user && !loading"
+  <div v-if="user"
     class="friend-item"
     @click="OpenChat(user.id)"
     :class="{ active: isActive }"
   >
-    <img :src="`https://picsum.photos/seed/${user.id}/45/45`" alt="صورة المستخدم" />
-
+    <img
+      :src="user.avatar_url || `https://picsum.photos/seed/${user.id}/45/45`"
+      alt="صورة المستخدم"
+    />
     <div class="friend-info">
       <strong class="friend-name">{{ user.name }}</strong>
       <span class="friend-status">متصل الآن</span>
     </div>
   </div>
-
-  <div v-else class="friend-item loading">
-    <div class="avatar-skeleton"></div>
-    <div class="skeleton-info">
-      <div class="line short"></div>
-      <div class="line long"></div>
-    </div>
-  </div>
 </template>
+
 
 <style scoped>
 .friend-item {
@@ -104,7 +100,6 @@ const isActive = computed(() => ChatId?.value === user.value?.id)
   color: #4a4a4a;
 }
 
-/* 🩶 تأثير التحميل */
 .friend-item.loading {
   opacity: 0.7;
   pointer-events: none;

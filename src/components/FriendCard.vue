@@ -7,20 +7,20 @@ const router = useRouter();
 const ChatId = inject('ChatId');
 
 const props = defineProps({
-  friend: {
+  user: {
     type: Object,
     default: () => ({
-      id: '0',
-      name: 'غير معروف',
-      img: 'https://cdn-icons-png.flaticon.com/512/847/847969.png',
-      status: 'غير متصل'
+      id: 0,
+      name: "error",
+      img: "error",
+      status: "error"
     })
   }
 });
 
 function OpenChat() {
   if (ChatId && typeof ChatId === 'object' && 'value' in ChatId) {
-    ChatId.value = props.friend.id;
+    ChatId.value = props.user.id;
   }
   router.push({ name: 'ChatPage' });
 }
@@ -30,14 +30,14 @@ function OpenChat() {
 <template>
   <div class="friend-item">
     <router-link
-      :to="{ name: 'ProfilePage', params: { id: friend.id } }"
+      :to="{ name: 'ProfilePage', params: { id: user.id } }"
       class="d-flex align-items-center flex-grow-1 text-decoration-none text-dark"
     >
-      <img :src="friend.img" :alt="friend.name" class="friend-img" loading="lazy" />
+      <img :src="user.img" :alt="user.name" class="friend-img" loading="lazy" />
 
       <div class="friend-body ms-2">
-        <strong>{{ friend.name }}</strong>
-        <div class="text-secondary small">{{ friend.status }}</div>
+        <strong>{{ user.name }}</strong>
+        <div class="text-secondary small">{{ user.status }}</div>
       </div>
     </router-link>
 

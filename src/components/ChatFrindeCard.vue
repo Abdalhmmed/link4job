@@ -1,48 +1,55 @@
 <script setup>
-import { useRouter } from 'vue-router';
-import FrindesChat from './FrindesChat.vue';
-import { inject } from 'vue';
+import { useRouter } from 'vue-router'
+import FrindesChat from './FrindesChat.vue'
+import { inject, ref, onMounted } from 'vue'
+import { useFollowersStore } from '@/stores/FollowersStore'
 
-const router = useRouter();
-const ChatId = inject('ChatId');
+const router = useRouter()
+const ChatId = inject('ChatId')
+const FollowersStore = useFollowersStore()
 
+const friends = ref([])  
 
-const props = defineProps({
-    frindesId: {
-        type: Object,
-        default: () => ({
-            id: 0,
-            frinde_id: 0,
-            type: 'user'
-        })
-    }
+onMounted(async () => {
+  const id = localStorage.getItem('userId')  
+  friends.value = await FollowersStore.fetchFriendsByUserId(id)
 })
 
 function goBack() {
   ChatId.value = null
-  router.back(); 
+  router.back()
 }
 </script>
 
 <template>
- <div class="friends-list">
+  <div class="friends-list">
     <div class="friends-header">
-      <button class="btn btn-light" @click="goBack()"><i class="bi bi-arrow-left"></i></button>
+      <button class="btn btn-light" @click="goBack"><i class="bi bi-arrow-left"></i></button>
       <h6 class="m-0">الأصدقاء</h6>
     </div>
     <div class="friend-search-wrapper">
       <input type="text" class="form-control" id="friendSearch" placeholder="ابحث عن صديق...">
       <button id="friendSearchBtn"><i class="bi bi-search"></i></button>
     </div>
-    
-    
-    <FrindesChat v-for="frinde in frindesId" :key="frinde.id" :user_id="frinde"/>
 
+    <div v-if="loading" class="friend-item loading">
+      <div class="avatar-skeleton"></div>
+      <div class="skeleton-info">
+        <div class="line short"></div>
+        <div class="line long"></div>
+      </div>
+    </div>
+
+    <FrindesChat v-else-if="friends && !loading"
+      v-for="friend in friends"
+      :key="friend.id"
+      :user="friend" 
+    />
   </div>
 </template>
 
-<style scoped>
 
+<style scoped>
     .friends-list {
       background: #fff;
       box-shadow: 0 0 12px rgba(0,0,0,0.05);

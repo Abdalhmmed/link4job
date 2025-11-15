@@ -175,47 +175,14 @@
     { "id": "3", "parent_type": "project", "parent_id": "11", "url": "https://picsum.photos/400/400?project11", "mime_type": "image/jpeg", "created_at": "2025-11-14 23:55:00" }
   ],
   "followers": [
-    { "id": 1, "user_id": 7, "user_type": "user", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-14 23:56:00" },
-    { "id": 2, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "7", "status": "active", "created_at": "2025-11-14 23:57:00" },
+    { "id": 1, "user_id": 3, "user_type": "user", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-14 23:56:00" },
+    { "id": 2, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "3", "status": "active", "created_at": "2025-11-14 23:57:00" },
+    
+    { "id": 1, "user_id": 2, "user_type": "user", "target_type": "user", "target_id": "3", "status": "active", "created_at": "2025-11-14 23:56:00" },
+    { "id": 2, "user_id": 3, "user_type": "user", "target_type": "user", "target_id": "2", "status": "active", "created_at": "2025-11-14 23:57:00" },
 
-    { "id": 3, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "3", "status": "active", "created_at": "2025-11-14 23:58:00" },
-    { "id": 4, "user_id": 3, "user_type": "user", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-14 23:58:30" },
-
-    { "id": 5, "user_id": 2, "user_type": "user", "target_type": "user", "target_id": "6", "status": "active", "created_at": "2025-11-14 23:59:00" },
-    { "id": 6, "user_id": 6, "user_type": "user", "target_type": "user", "target_id": "2", "status": "active", "created_at": "2025-11-14 23:59:30" },
-
-    { "id": 7, "user_id": 2, "user_type": "user", "target_type": "user", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:00:00" },
-    { "id": 8, "user_id": 4, "user_type": "user", "target_type": "user", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:00:30" },
-
-    { "id": 9, "user_id": 5, "user_type": "user", "target_type": "user", "target_id": "9", "status": "active", "created_at": "2025-11-15 00:01:00" },
-    { "id": 10, "user_id": 9, "user_type": "user", "target_type": "user", "target_id": "5", "status": "active", "created_at": "2025-11-15 00:01:30" },
-
-    { "id": 11, "user_id": 8, "user_type": "user", "target_type": "user", "target_id": "10", "status": "active", "created_at": "2025-11-15 00:02:00" },
-    { "id": 12, "user_id": 10, "user_type": "user", "target_type": "user", "target_id": "8", "status": "active", "created_at": "2025-11-15 00:02:30" },
-
-    { "id": 13, "user_id": 3, "user_type": "user", "target_type": "company", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:03:00" },
-    { "id": 14, "user_id": 1, "user_type": "user", "target_type": "company", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:03:30" },
-
-    { "id": 15, "user_id": 2, "user_type": "user", "target_type": "company", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:04:00" },
-    { "id": 16, "user_id": 6, "user_type": "user", "target_type": "company", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:04:30" },
-
-    { "id": 17, "user_id": 7, "user_type": "user", "target_type": "company", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:05:00" },
-    { "id": 18, "user_id": 11, "user_type": "company", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:05:30" },
-
-    { "id": 19, "user_id": 13, "user_type": "company", "target_type": "user", "target_id": "4", "status": "active", "created_at": "2025-11-15 00:06:00" },
-    { "id": 20, "user_id": 14, "user_type": "company", "target_type": "user", "target_id": "6", "status": "active", "created_at": "2025-11-15 00:06:30" },
-
-    { "id": 21, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "11", "status": "active", "created_at": "2025-11-15 00:07:00" },
-    { "id": 22, "user_id": 11, "user_type": "company", "target_type": "user", "target_id": "7", "status": "active", "created_at": "2025-11-15 00:07:30" },
-
-    { "id": 23, "user_id": 3, "user_type": "user", "target_type": "user", "target_id": "5", "status": "active", "created_at": "2025-11-15 00:08:00" },
-    { "id": 24, "user_id": 5, "user_type": "user", "target_type": "user", "target_id": "3", "status": "active", "created_at": "2025-11-15 00:08:30" },
-
-    { "id": 25, "user_id": 2, "user_type": "user", "target_type": "user", "target_id": "1", "status": "active", "created_at": "2025-11-15 00:09:00" },
-    { "id": 26, "user_id": 1, "user_type": "user", "target_type": "user", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:09:30" },
-
-    { "id": 27, "user_id": 9, "user_type": "user", "target_type": "company", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:10:00" },
-    { "id": 28, "user_id": 5, "user_type": "user", "target_type": "company", "target_id": "2", "status": "active", "created_at": "2025-11-15 00:10:30" }
+    { "id": 2, "user_id": 4, "user_type": "user", "target_type": "user", "target_id": "3", "status": "active", "created_at": "2025-11-14 23:57:00" },
+    { "id": 2, "user_id": 3, "user_type": "user", "target_type": "user", "target_id": "5", "status": "active", "created_at": "2025-11-14 23:57:00" }
   ],
   "likes": [
     { "id": "1", "target_type": "post", "target_id": "1", "user_id": "7", "user_type": "user", "value": "1", "created_at": "2025-11-15 00:05:00" },

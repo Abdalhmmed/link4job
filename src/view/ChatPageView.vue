@@ -2,16 +2,7 @@
 import ChatCard from '@/components/ChatCard.vue';
 import ChatFrindeCard from '@/components/ChatFrindeCard.vue';
 import ChatNotification from '@/components/ChatNotification.vue';
-import { useFollowersStore } from '@/stores/FollowersStore';
-import { onMounted, ref } from 'vue';
 
-const FollowersStore = useFollowersStore()
-const frindes = ref();
-
-onMounted( async () => {
-  frindes.value = await FollowersStore.fetchFriendsByUserId(2);
-   console.log('friend1: ', frindes.value);
-})
 
 </script>
 
@@ -23,7 +14,7 @@ onMounted( async () => {
 
   <ChatCard />
 
-  <ChatFrindeCard :frindesId="frindes"/>
+  <ChatFrindeCard/>
 
 </div>
 

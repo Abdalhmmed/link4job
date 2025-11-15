@@ -6,37 +6,26 @@ import { useFollowersStore } from '@/stores/FollowersStore'
 
 const FollowersStore = useFollowersStore()
 const UsersStore = useUserStore()
-const id = localStorage.getItem("userId")
 
-const maxVisible = 6 
+const maxVisible = 6
 const friends = ref([])
+const fullFriends = ref([])
+const showAll = ref(false)
 
 onMounted(async () => {
-  friends.value = await FollowersStore.fetchFriendsByUserId(id);
-});
-
-const showAll = ref(false)
-const fullFriends = ref([]) 
-
-const visibleFriends = computed(() => {
-  return fullFriends.value && fullFriends.value.length
-    ? showAll.value
-      ? fullFriends.value
-      : fullFriends.value.slice(0, maxVisible)
-    : []
+  const id = localStorage.getItem("userId")
+  friends.value = await FollowersStore.fetchFriendsByUserId(id)
+  await fetchFullFriends()
 })
 
-function toggleFriends() {
-  showAll.value = !showAll.value
-}
-
 const fetchFullFriends = async () => {
-  if (!friends.value || !friends.value.length) return
+  if (!friends.value?.length) return
 
   fullFriends.value = await Promise.all(
     friends.value.map(async (f) => {
       try {
         const user = await UsersStore.fetchUserById(f.friend_id)
+
         return {
           id: user.id,
           name: user.name || 'غير معروف',
@@ -56,43 +45,51 @@ const fetchFullFriends = async () => {
   )
 }
 
-onMounted(() => fetchFullFriends())
-
 watch(
   () => friends.value,
-  () => {
-    fetchFullFriends()
-  },
+  () => fetchFullFriends(),
   { deep: true }
 )
+
+const visibleFriends = computed(() => {
+  if (!fullFriends.value.length) return []
+  return showAll.value
+    ? fullFriends.value
+    : fullFriends.value.slice(0, maxVisible)
+})
+
+function toggleFriends() {
+  showAll.value = !showAll.value
+}
 </script>
 
 <template>
   <div class="friends-component" role="region" aria-label="قائمة الأصدقاء">
     <main class="main-wrap">
       <aside class="friends-card" aria-labelledby="friends-title">
+
         <div class="header d-flex justify-content-between align-items-center mb-2">
           <h6 id="friends-title" class="mb-0">أصدقاؤك</h6>
           <small class="small-muted">{{ friends.length }} عدد الأصدقاء </small>
         </div>
 
         <div id="friendsList" class="friends-list">
+
           <template v-if="FollowersStore.loading" v-for="f in 3" :key="f">
-            <div class="loading-friend shimmer" ></div>
+            <div class="loading-friend shimmer"></div>
           </template>
 
-          <template v-else-if="!FollowersStore.loading && visibleFriends.length <= 0 ">
+          <template v-else-if="!FollowersStore.loading && visibleFriends.length === 0 ">
             قم بالتعرف على بعض الاصدقاء من اجل الدردشة
           </template>
 
           <template v-else v-for="friend in visibleFriends" :key="friend.id">
-            <FriendCard :friend="friend" />
+            <FriendCard :user="friend" />
           </template>
 
         </div>
-        
 
-        <div v-if="fullFriends.value && fullFriends.value.length > maxVisible" class="text-center mt-2">
+        <div v-if="fullFriends.length > maxVisible" class="text-center mt-2">
           <button
             id="toggleFriends"
             class="btn btn-sm btn-outline-primary btn-toggle"
@@ -102,10 +99,12 @@ watch(
             {{ showAll ? 'عرض أقل' : 'عرض المزيد' }}
           </button>
         </div>
+
       </aside>
     </main>
   </div>
 </template>
+
 
 <style scoped>
 .loading-friend{
