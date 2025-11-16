@@ -29,7 +29,6 @@ const company = ref([])
 const user =ref([])
 const MyFollowers = ref([])
 const MyLikes = ref([])
-const MySkills = ref([])
 const MyProject = ref([])
 const MyPost = ref([])
 const MyJob = ref([])
@@ -220,7 +219,6 @@ console.log('route.params.id:', route.params.id)
   -webkit-text-fill-color: transparent;
 }
 
-/* ألوان الأقسام */
 .btn-outline-projects {
   color: #6a11cb;
   border-color: #6a11cb;
@@ -248,7 +246,6 @@ console.log('route.params.id:', route.params.id)
   color: white;
 }
 
-/* بطاقات المشاريع */
 .project-card {
   background: #fafaff;
   border: 1px solid #ececff;
@@ -259,7 +256,6 @@ console.log('route.params.id:', route.params.id)
   box-shadow: 0 0 10px rgba(106,17,203,0.15);
 }
 
-/* بطاقات المنشورات */
 .post-card {
   background: #f8f9ff;
   border: 1px solid #e6e9ff;

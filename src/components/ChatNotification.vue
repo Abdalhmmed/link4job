@@ -222,7 +222,7 @@ onMounted(async () => {
 
 .icon-system { color: #f5c518; font-size: 1.4rem; }
 .icon-user { color: #2196f3; font-size: 1.4rem; }
-.icon-company { color: #ff4d4f; font-size: 1.4rem; }
+.icon-company { color: #52c41a; font-size: 1.4rem; }
 .icon-security { color: #ff4d4f; font-size: 1.4rem; }
 
 .no-notifications {

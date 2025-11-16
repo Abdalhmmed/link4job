@@ -131,11 +131,10 @@ onMounted( async () => {
 .notification-card .content span { font-size: 0.85rem; }
 .notification-card .date { font-size: 0.75rem; }
 
-/* ألوان الأيقونات */
-.icon-system { color: #f5c518; }   /* أصفر */
-.icon-user { color: #1890ff; }     /* أزرق */
-.icon-security { color: #ff4d4f; } /* أحمر */
-.icon-company { color: #52c41a; }  /* أخضر */
+.icon-system { color: #f5c518; }   
+.icon-user { color: #1890ff; }     
+.icon-security { color: #ff4d4f; } 
+.icon-company { color: #52c41a; }  
 
 .notifications-list::-webkit-scrollbar { width: 6px; }
 .notifications-list::-webkit-scrollbar-thumb {

@@ -211,7 +211,8 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
                   @click="toggleLike(post.id)"
                   :aria-pressed="post.liked.toString()"
                 >
-                  <i class="bi bi-heart"></i> <span>{{ post.likes }}</span>
+                  <i :class="post.liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'" class="m-1"></i>
+                  <span>{{ post.likes }}</span>
                 </button>
                 <button class="btn btn-sm btn-light" style="margin: 0px 6px;" @click="toggleComments(post.id)">
                   <i class="bi bi-chat"></i> <span>{{ post.comments.length }}</span>

@@ -1,13 +1,7 @@
 <script setup>
-import { useUserStore } from '@/stores/UserStore'
-import { inject, onMounted, ref, computed } from 'vue'
+import { inject, computed } from 'vue'
 
 const ChatId = inject('ChatId')
-const UsersStore = useUserStore()
-
-const user = ref(null)
-const loading = ref(true)
-const error = ref(null)
 
 const props = defineProps({
   user: {
@@ -27,38 +21,27 @@ function OpenChat(id) {
   }
 }
 
-onMounted(async () => {
-  loading.value = true
-  error.value = null
-  try {
-    user.value = await UsersStore.fetchUserById(props.user?.id)
-  } catch (err) {
-    console.error("خطأ أثناء جلب بيانات المستخدم:", err)
-    error.value = "فشل في تحميل بيانات المستخدم."
-  } finally {
-    loading.value = false
-  }
-})
-
-const isActive = computed(() => ChatId && ChatId.value === user.value?.id)
+const isActive = computed(() => ChatId && ChatId.value === props.user.id)
 </script>
 
 <template>
-  <div v-if="user"
+  <div
+    v-if="user"
     class="friend-item"
-    @click="OpenChat(user.id)"
+    @click="OpenChat(props.user.id)"
     :class="{ active: isActive }"
   >
     <img
-      :src="user.avatar_url || `https://picsum.photos/seed/${user.id}/45/45`"
+      :src="props.user.avatar_url || `https://picsum.photos/seed/${props.user.id}/45/45`"
       alt="صورة المستخدم"
     />
     <div class="friend-info">
-      <strong class="friend-name">{{ user.name }}</strong>
+      <strong class="friend-name">{{ props.user.name }}</strong>
       <span class="friend-status">متصل الآن</span>
     </div>
   </div>
 </template>
+
 
 
 <style scoped>

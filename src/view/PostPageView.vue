@@ -42,29 +42,35 @@ async function fetchPostData() {
     author.value = user;
     likes.value = likeData || [];
     commentsCount.value = count;
+
+    // تجهيز قلب الإعجاب
+    post.value.liked = likes.value.some(
+      (l) => l.user_id === UserStore.currentUser?.id
+    );
+    post.value.likes = likes.value.length;
   } finally {
     loading.value = false;
   }
 }
 
-async function sendComment() {
-  if (!newComment.value.trim()) return;
-  if (!UserStore.currentUser) {
-    alert("الرجاء تسجيل الدخول لإضافة تعليق");
-    return;
-  }
+function toggleLike() {
+  if (!post.value) return;
 
-  sending.value = true;
-  try {
-    await CommentsStore.addComment({
+  if (post.value.liked) {
+    // إزالة لايك
+    post.value.liked = false;
+    post.value.likes = Math.max(0, post.value.likes - 1);
+
+    LikesStore.removeLike(post.value.id, UserStore.currentUser.id);
+  } else {
+    // إضافة لايك
+    post.value.liked = true;
+    post.value.likes++;
+
+    LikesStore.addLike({
       post_id: post.value.id,
       user_id: UserStore.currentUser.id,
-      content: newComment.value.trim(),
     });
-    newComment.value = "";
-    commentsCount.value++;
-  } finally {
-    sending.value = false;
   }
 }
 
@@ -81,10 +87,10 @@ onMounted(fetchPostData);
 
     <div style="width: 45%; margin-top: 1.6rem;">
       <div class="d-flex justify-content-between">
-        <button class="beak-arrow" @click="goBack()">
+        <button class="beak-arrow" @click="goBack">
           <i class="bi bi-arrow-90deg-right"></i>
         </button>
-            
+
         <button class="beak-arrow">
           <i class="bi bi-share-fill"></i>
         </button>
@@ -95,7 +101,10 @@ onMounted(fetchPostData);
       </div>
 
       <div v-else-if="post" class="post">
-        <router-link :to="{ name: 'ProfilePage', params: { id: author?.id } }" class="post-header mb-3">
+        <router-link
+          :to="{ name: 'ProfilePage', params: { id: author?.id } }"
+          class="post-header mb-3"
+        >
           <img
             :src="author?.avatar_url || 'https://picsum.photos/200'"
             alt="صورة المستخدم"
@@ -119,9 +128,19 @@ onMounted(fetchPostData);
 
         <div class="like-comment">
           <div>
-            <i class="bi bi-heart text-danger me-1"></i>
-            <strong>{{ likes.length }}</strong> إعجاب
+            <button
+              class="btn btn-sm btn-light btn-like"
+              :class="{ active: post.liked }"
+              @click="toggleLike"
+              :aria-pressed="post.liked.toString()"
+            >
+              <i :class="post.liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'" class="m-1"></i>
+              
+              <strong>{{ post.likes }}</strong>
+            </button> 
+            الاعجابات
           </div>
+
           <div>
             <i class="bi bi-chat text-secondary me-1"></i>
             <strong>{{ commentsCount }}</strong> تعليقات
@@ -154,6 +173,7 @@ onMounted(fetchPostData);
     <FriendsCard />
   </div>
 </template>
+
 
 <style scoped>
 .post-page {

@@ -1,19 +1,47 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import FrindesChat from './FrindesChat.vue'
-import { inject, ref, onMounted } from 'vue'
+import { inject, ref, onMounted, watch } from 'vue'
 import { useFollowersStore } from '@/stores/FollowersStore'
+import { useUserStore } from '@/stores/UserStore'
 
 const router = useRouter()
 const ChatId = inject('ChatId')
 const FollowersStore = useFollowersStore()
+const UsersStore = useUserStore()
 
 const friends = ref([])  
+const users = ref([])
+const friendSearch = ref('')
+const filtered = ref([])  
 
 onMounted(async () => {
-  const id = localStorage.getItem('userId')  
-  friends.value = await FollowersStore.fetchFriendsByUserId(id)
-})
+  const id = localStorage.getItem('userId');
+  friends.value = await FollowersStore.fetchFriendsByUserId(id);
+
+  if (friends.value && friends.value.length > 0) {
+    users.value = [];
+    for (const f of friends.value) {
+      const u = await UsersStore.fetchUserById(f.friend_id);
+      users.value.push(u);
+    }
+    filtered.value = [...users.value];  
+  }
+});
+
+const filterUsersByName = () => {
+  if (friendSearch.value.trim() === "") {
+    filtered.value = [...users.value]; 
+    return;
+  }
+
+  filtered.value = users.value.filter(user =>
+   user.name.toLowerCase().includes(friendSearch.value.toLowerCase()));
+};
+
+watch(friendSearch, () => {
+  filterUsersByName();
+});
 
 function goBack() {
   ChatId.value = null
@@ -27,26 +55,34 @@ function goBack() {
       <button class="btn btn-light" @click="goBack"><i class="bi bi-arrow-left"></i></button>
       <h6 class="m-0">الأصدقاء</h6>
     </div>
+
     <div class="friend-search-wrapper">
-      <input type="text" class="form-control" id="friendSearch" placeholder="ابحث عن صديق...">
-      <button id="friendSearchBtn"><i class="bi bi-search"></i></button>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="ابحث عن صديق..." 
+        v-model="friendSearch" 
+      />
     </div>
 
-    <div v-if="loading" class="friend-item loading">
-      <div class="avatar-skeleton"></div>
-      <div class="skeleton-info">
-        <div class="line short"></div>
-        <div class="line long"></div>
-      </div>
+    <div v-if="filtered.length === 0 && friendSearch !== ''" class="no-results">
+      لا يوجد نتيجة
     </div>
 
-    <FrindesChat v-else-if="friends && !loading"
-      v-for="friend in friends"
-      :key="friend.id"
-      :user="friend" 
+    <div v-else-if="filtered.length === 0 && friendSearch === ''">
+      لا يوجد أصدقاء
+    </div>
+
+    <FrindesChat
+      v-else
+      v-for="user in filtered"
+      :key="user.id"
+      :user="user"
     />
   </div>
 </template>
+
+
 
 
 <style scoped>

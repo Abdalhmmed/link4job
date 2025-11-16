@@ -58,6 +58,28 @@ export const useUserStore = defineStore("UserStore", () => {
     }
   };
 
+  const fetchUsersByname = async (name) => { 
+    loading.value = true;
+    error.value = null;
+    try {
+      const data = await loadJSON();
+      const users = Array.isArray(data) ? data : data.users ?? [];
+
+      const filteredUsers = users.filter(u =>
+        u.name.toLowerCase().includes(name.toLowerCase())
+      );
+
+      return filteredUsers;  
+    } catch (err) {
+      console.error("Error fetching user by name (from data.json):", err);
+      error.value = "فشل في تحميل بيانات المستخدم.";
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
+
+
   const fetchUserByLogin = async (email, passwordHash) => {
     loading.value = true;
     error.value = null;
@@ -105,6 +127,7 @@ export const useUserStore = defineStore("UserStore", () => {
     fetchUserById,
     fetchUserByLogin,
     countUserByUserId,
+    fetchUsersByname,
     forceReloadJSON
   };
 });
