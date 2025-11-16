@@ -111,17 +111,6 @@ function goBack() {
       padding: 8px 12px;
     }
 
-    #friendSearchBtn {
-      background: var(--brand);
-      color: #fff;
-      border: none;
-      border-radius: 25px;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     #friendSearch {
       flex-grow: 1;
       border-radius: 25px;
