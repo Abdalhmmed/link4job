@@ -22,7 +22,7 @@
               <div class="accordion-item">
                 <h2 class="accordion-header" id="q1">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true" aria-controls="a1">
-                    هلا من الممكن ايجاد وضيفه عن عبد؟
+                    هلا من الممكن ايجاد وضيفه عن بعد؟
                   </button>
                 </h2>
                 <div id="a1" class="accordion-collapse collapse show" aria-labelledby="q1" data-bs-parent="#faq">
