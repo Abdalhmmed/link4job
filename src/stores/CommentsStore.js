@@ -131,8 +131,9 @@ export const useCommentsStore = defineStore("CommentsStore", () => {
       } else if (the === "project") {
         const list = await filterCommentsByProjectId(theId);
         return list.length;
+      } else {
+        return 0;
       }
-      return 0;
     } catch (err) {
       console.error(`Error count comments for the ${the} ${theId}:`, err);
       return 0;

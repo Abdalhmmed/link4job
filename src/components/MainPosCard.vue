@@ -1,99 +1,25 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { usePostsStore } from "@/stores/PostsStore";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "@/stores/UserStore";
-import { useLikesStore } from "@/stores/LikesStore";
-import { useCommentsStore } from "@/stores/CommentsStore";
-import CommentCard from "./CommentCard.vue";
+import { usePostsStore } from "@/stores/PostsStore";
+import PostsCard from "./PostsCard.vue";
 
-const postsStore = usePostsStore();
+
 const UserStore = useUserStore();
-const likesStore = useLikesStore();
-const commentsStore = useCommentsStore();
+const PostsStore = usePostsStore();
 
-const user = ref('')
+const user = ref('');
+const posts = ref('');
 
-const postsState = ref([]);
-const loading = ref(true);
 const error = ref(null);
 
-const findPost = (id) => postsState.value.find((p) => p.id === id);
 
-function toggleLike(id) {
-  const p = findPost(id);
-  if (!p) return;
-  p.liked = !p.liked;
-  p.likes = p.liked ? p.likes + 1 : Math.max(0, p.likes - 1);
-}
-
-function toggleComments(id) {
-  const p = findPost(id);
-  if (p) p.commentsVisible = !p.commentsVisible;
-}
-
-function closeAllPanels() {
-  postsState.value.forEach((p) => {
-    p.commentsVisible = false;
-    p.detailsVisible = false;
-  });
-}
-
-function onKeyDown(e) {
-  if (e.key === "Escape") closeAllPanels();
-}
-
-onMounted(async () => {
-  window.addEventListener("keydown", onKeyDown);
-  try {
-    loading.value = true;
-    const posts = await postsStore.fetchPosts();
-
-    const enrichedPosts = await Promise.all(
-      posts.map(async (post) => {
-        const [user, likes, comments] = await Promise.all([
-          UserStore.fetchUserById(post.user_id),
-          likesStore.filterLikesByPostId(post.id),
-          commentsStore.filterCommentsByPostId(post.id),
-        ]);
-
-        return {
-          ...post,
-          author: user?.name || "مستخدم غير معروف",
-          avatar: user?.avatar_url || "https://picsum.photos/200/200",
-          date: new Date(post.created_at).toLocaleDateString("ar-EG", {
-            day: "numeric",
-            month: "short",
-          }),
-          likes: likes?.length || 0,
-          comments:
-            comments?.map((c) => ({
-              author: c.user_id,
-              text: c.content,
-              avatar: "https://picsum.photos/40/40?random=" + c.user_id,
-            })) || [],
-          liked: false,
-          commentsVisible: false,
-          detailsVisible: false,
-          details: post.title || "",
-          images: post.images || [],
-          group: user?.account_type === "company" ? "منشور شركة" : "منشور مستخدم",
-          content: post.content,
-        };
-      })
-    );
-
-    postsState.value = enrichedPosts;
-  } catch (err) {
-    console.error("Error loading feed:", err);
-    error.value = "حدث خطأ أثناء تحميل المنشورات.";
-  } finally {
-    loading.value = false;
-  }
-
-  user.value = await UserStore.fetchUserById(localStorage.getItem("userId")) 
-});
-
-onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
+onMounted( async () => {
+  const id = localStorage.getItem("userId")
+  user.value = await UserStore.fetchUserById(id)
+  posts.value = await PostsStore.fetchPosts()
+  
+})
 </script>
 
 <template>
@@ -152,93 +78,13 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
     </section>
 
 
-    <section v-if="loading" class="feed-wrapper">
-      <article v-for="n in 4" :key="n" class="post skeleton">
-        <div class="skeleton-line shimmer"></div>
+    <PostsCard v-for="post in posts" :post="post" :key="post.id"/>
 
-        <div class="meta">
-          <div class="skeleton-avatar shimmer"></div>
-          <div class="meta-body">
-            <div class="skeleton-text shimmer" style="width: 40%; height: 14px"></div>
-            <div class="skeleton-text shimmer" style="width: 60%; height: 12px"></div>
-          </div>
-        </div>
-
-        <div class="skeleton-text shimmer" style="width: 90%; height: 12px; margin-top: 14px"></div>
-        <div class="skeleton-text shimmer" style="width: 80%; height: 12px"></div>
-        <div class="skeleton-image shimmer" style="margin-top: 14px"></div>
-      </article>
-    </section>
-
-
-    <section class="feed-wrapper" v-else-if="!loading && !error">
-      <article
-        v-for="post in postsState"
-        :key="post.id"
-        class="post"
-        :aria-label="`منشور ${post.author}`"
-      >
-        <div class="post-color-line"></div>
-
-        <div class="meta">
-          <img :src="post.avatar" :alt="`صورة ${post.author}`" loading="lazy" />
-          <div class="meta-body">
-            <div class="d-flex justify-content-between" style="width: 40rem;">
-              <div>
-                <strong>{{ post.author }}</strong>
-                <div class="text-secondary small">{{ post.date }}</div>
-              </div>
-              <small class="text-secondary">{{ post.group }}</small>
-            </div>
-
-            <p class="content">{{ post.content }}</p>
-
-            <div v-if="post.images?.length" class="images">
-              <img
-                v-for="(img, i) in post.images"
-                :key="i"
-                :src="img"
-                :alt="`صورة ${i + 1}`"
-                loading="lazy"
-              />
-            </div>
-
-            <div class="actions">
-              <div class="left-actions">
-                <button
-                  class="btn btn-sm btn-light btn-like"
-                  :class="{ active: post.liked }"
-                  @click="toggleLike(post.id)"
-                  :aria-pressed="post.liked.toString()"
-                >
-                  <i :class="post.liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'" class="m-1"></i>
-                  <span>{{ post.likes }}</span>
-                </button>
-                <button class="btn btn-sm btn-light" style="margin: 0px 6px;" @click="toggleComments(post.id)">
-                  <i class="bi bi-chat"></i> <span>{{ post.comments.length }}</span>
-                </button>
-                <router-link :to="{ name: 'PostPage', params: { id: post.id}}" class="btn btn-sm btn-light">
-                  <i class="bi bi-info-circle"></i> تفاصيل
-                </router-link>
-              </div>
-              <div class="ms-auto small text-secondary">شارك · حفظ</div>
-            </div>
-
-            <CommentCard  v-if="post.commentsVisible" :post="post.id" />
-
-          </div>
-        </div>
-      </article>
-    </section>
   </div>
 </template>
 
 <style scoped>
-:root {
-  --brand: #4f46e5;
-  --accent: #22c55e;
-  --muted: #6b7280;
-}
+
 
 .feed-component {
   display: flex;
@@ -373,61 +219,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeyDown));
   .composer-avatar {
     width: 48px;
     height: 48px;
-  }
-}
-
-.skeleton {
-  background: #f4f4f4;
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 6px 18px rgba(18, 24, 40, 0.04);
-  margin-bottom: 18px;
-  overflow: hidden;
-}
-.skeleton-avatar,
-.skeleton-text,
-.skeleton-line,
-.skeleton-image {
-  background: #e3e3e3;
-  border-radius: 6px;
-}
-.skeleton-avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-}
-.skeleton-text {
-  height: 12px;
-  margin: 6px 0;
-}
-.skeleton-image {
-  width: 100%;
-  height: 140px;
-  border-radius: 8px;
-  margin-top: 14px;
-}
-.shimmer {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -150px;
-  width: 100px;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.6) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  animation: shimmer 1.5s infinite;
-}
-@keyframes shimmer {
-  100% {
-    transform: translateX(900%);
   }
 }
 </style>
