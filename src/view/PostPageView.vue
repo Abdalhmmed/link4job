@@ -22,7 +22,6 @@ const commentsCount = ref(0);
 const author = ref(null);
 const loading = ref(true);
 const newComment = ref("");
-const sending = ref(false);
 
 async function fetchPostData() {
   const id = Number(route.params.id);
@@ -43,7 +42,6 @@ async function fetchPostData() {
     likes.value = likeData || [];
     commentsCount.value = count;
 
-    // تجهيز قلب الإعجاب
     post.value.liked = likes.value.some(
       (l) => l.user_id === UserStore.currentUser?.id
     );
@@ -57,13 +55,11 @@ function toggleLike() {
   if (!post.value) return;
 
   if (post.value.liked) {
-    // إزالة لايك
     post.value.liked = false;
     post.value.likes = Math.max(0, post.value.likes - 1);
 
     LikesStore.removeLike(post.value.id, UserStore.currentUser.id);
   } else {
-    // إضافة لايك
     post.value.liked = true;
     post.value.likes++;
 

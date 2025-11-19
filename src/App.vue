@@ -3,6 +3,7 @@ import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue';
 import { RouterView } from 'vue-router';
 import { provide, ref } from 'vue';
+import MainCard from "@/components/MainCard.vue"
 
 const ChatId = ref(null)
 provide('ChatId', ChatId)
@@ -15,6 +16,8 @@ provide('ChatId', ChatId)
 <template>
   <div id="app" class="bg-light" dir="rtl">
     <Navbar />
+
+    <MainCard />
 
     <RouterView/>
 
