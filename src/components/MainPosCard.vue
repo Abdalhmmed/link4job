@@ -4,47 +4,55 @@ import { useUserStore } from "@/stores/UserStore";
 import { usePostsStore } from "@/stores/PostsStore";
 import PostsCard from "./PostsCard.vue";
 
-
 const UserStore = useUserStore();
 const PostsStore = usePostsStore();
 
-const user = ref('');
-const posts = ref('');
-
+const user = ref(null);
+const posts = ref([]);
 const error = ref(null);
+const loadingUser = ref(true);
+const loadingPosts = ref(true);
 
+onMounted(async () => {
+  try {
+    loadingUser.value = true;
+    const id = localStorage.getItem("userId");
+    if (!id) throw new Error("لم يتم العثور على معرف المستخدم");
 
-onMounted( async () => {
-  const id = localStorage.getItem("userId")
-  user.value = await UserStore.fetchUserById(id)
-  posts.value = await PostsStore.fetchPosts()
-  
-})
+    user.value = await UserStore.fetchUserById(id);
+    loadingUser.value = false;
+  } catch (e) {
+    error.value = `خطأ في تحميل بيانات المستخدم: ${e.message}`;
+    loadingUser.value = false;
+  }
+
+  try {
+    loadingPosts.value = true;
+    posts.value = await PostsStore.fetchPosts();
+    loadingPosts.value = false;
+  } catch (e) {
+    error.value = `خطأ في تحميل المنشورات: ${e.message}`;
+    loadingPosts.value = false;
+  }
+});
 </script>
 
 <template>
   <div class="feed-component" role="region">
+
     <section v-if="error" class="text-center py-4 text-danger">{{ error }}</section>
 
-    <section v-if="UserStore.loading" class="composer">
+    <section v-else-if="loadingUser || loadingPosts" class="composer">
       <div class="composer-inner">
         <div class="img-loading"></div>
         <div class="composer-body">
-          <strong></strong>
-          <div class="small text-secondary">جاري التحميل الرجاء الانتظار </div>
+          <strong>جارٍ التحميل، الرجاء الانتظار...</strong>
           <textarea
             class="form-control mt-2 composer-textarea"
             rows="3"
-            placeholder=" تحميل . . ."
+            placeholder="جارٍ التحميل..."
+            disabled
           ></textarea>
-          <div class="composer-actions mt-2">
-            <button class="btn btn-sm btn-outline-secondary">
-               تحميل
-            </button>
-            <button class="btn btn-sm btn-primary ms-auto">
-               انتظر
-            </button>
-          </div>
         </div>
       </div>
     </section>
@@ -54,16 +62,16 @@ onMounted( async () => {
         <img
           class="composer-avatar"
           :src="`https://picsum.photos/40/40?${user.id}`"
-          alt="`صورة`"
+          alt="صورة المستخدم"
           loading="lazy"
         />
         <div class="composer-body">
-          <strong>{{ user.name? user.name : '' }}</strong>
+          <strong>{{ user.name || '' }}</strong>
           <div class="small text-secondary">اكتب منشورًا</div>
           <textarea
             class="form-control mt-2 composer-textarea"
             rows="3"
-            placeholder="بماذا تفكر اليوم يا"
+            placeholder="بماذا تفكر اليوم؟"
           ></textarea>
           <div class="composer-actions mt-2">
             <button class="btn btn-sm btn-outline-secondary">
@@ -77,11 +85,14 @@ onMounted( async () => {
       </div>
     </section>
 
+    <section v-if="posts.length === 0" class="text-center py-4 text-muted">
+      لا توجد منشورات حتى الآن
+    </section>
 
-    <PostsCard v-for="post in posts" :post="post" :key="post.id"/>
-
+    <PostsCard v-for="post in posts" :post="post" :key="post.id" />
   </div>
 </template>
+
 
 <style scoped>
 

@@ -33,7 +33,7 @@ onMounted( async () => {
 </script>
 
 <template>
-  <div class="col-12 col-md-6 col-lg-4 mb-4">
+  <div class="col-12 col-md-6 col-lg-4 mb-4" style="width: 24rem;">
     <div class="card h-100 rounded-3 shadow-sm border-0 jobGridCard">
       <div class="card-body d-flex flex-column">
 

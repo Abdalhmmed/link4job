@@ -40,8 +40,6 @@ const showAllEmployees = ref(false)
 
 const owner = localStorage.getItem("userid")
 
-
-
 onMounted( async () =>{
   const id = Number(route.params.id);
 
@@ -59,16 +57,13 @@ onMounted( async () =>{
     route.path = {name: 'not-found'}
   }
 })
-
-console.log('route.params.id:', route.params.id)
-
 </script>
 
 
 <template>
 <section class="py-5">
   <div class="container">
-    <div class="bg-white rounded-3 shadow-soft p-0 mb-4">
+    <div class="bg-white rounded-3 shadow-soft p-0 mb-4" style="border: 1rem solid white;">
       <div class="profile-banner" style="background-image: url('https://picsum.photos/1200/400?company');"></div>
 
       <div class="p-4 d-flex align-items-center justify-content-between flex-wrap">

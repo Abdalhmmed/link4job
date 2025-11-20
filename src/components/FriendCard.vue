@@ -33,7 +33,7 @@ function OpenChat() {
       :to="{ name: 'ProfilePage', params: { id: user.id } }"
       class="d-flex align-items-center flex-grow-1 text-decoration-none text-dark"
     >
-      <img :src="user.img" :alt="user.name" class="friend-img" loading="lazy" />
+      <img :src="`https://picsum.photos/200/200?${user.id}`" :alt="user.name" class="friend-img" />
 
       <div class="friend-body ms-2">
         <strong>{{ user.name }}</strong>

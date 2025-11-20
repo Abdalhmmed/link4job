@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, watch, onMounted, ref } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useRouter } from "vue-router";
-import CommentCard from "./CommentCard.vue"; 
 import { useCommentsStore } from "@/stores/CommentsStore";
 import { useLikesStore } from "@/stores/LikesStore";
 import { useUserStore } from "@/stores/UserStore";
+
+const router = useRouter();
 
 const CommentsStore = useCommentsStore();
 const LikesStore = useLikesStore();
@@ -19,136 +20,154 @@ const props = defineProps({
       author: "error",
       avatar: "error",
       date: "error",
-      group: "error",
       content: "error",
-      image: "error",
-      images: [''],
       liked: false,
       commentsVisible: false,
+      likes: 0,
+      user_id: null,
     }),
   },
 });
 
-const router = useRouter();
 const placeholderAvatar = "https://picsum.photos/80";
 
-const postState = reactive({
-  ...props.post,
-  commentsVisible: props.post.commentsVisible ?? false,
-  likes: props.post.likes ?? 0,
-  liked: !!props.post.liked,
-});
-
+const commentsVisible = ref(props.post.commentsVisible);
+const liked = ref(!!props.post.liked);
+const likesCount = ref(props.post.likes || 0);
 const commentsCount = ref(0);
-const likesCount = ref(0);
-const userPosting = ref('')
+const userPosting = ref({ name: props.post.author, role: "عضو" });
+
+const comments = ref([]);
+const users = ref({});
+
+async function refreshData() {
+  commentsCount.value = await CommentsStore.countCommentsById(props.post.id, "post");
+  likesCount.value = await LikesStore.countLikesById(props.post.id, "post");
+
+  if (props.post.user_id) {
+    const user = await UserStore.fetchUserById(props.post.user_id);
+    userPosting.value = user || { name: props.post.author, role: "عضو" };
+  }
+}
+
+async function loadCommentsAndUsers() {
+  try {
+    comments.value = await CommentsStore.filterCommentsByPostId(props.post.id);
+
+    if (comments.value.length > 0) {
+      const allUsers = await UserStore.fetchUsers();
+      const commentUserIds = new Set(comments.value.map(c => c.user_id));
+      const filteredUsers = allUsers.filter(u => commentUserIds.has(u.id));
+
+      const userMap = {};
+      filteredUsers.forEach(u => {
+        userMap[u.id] = u;
+      });
+      users.value = userMap;
+    } else {
+      users.value = {};
+    }
+  } catch (error) {
+    console.error('Failed loading comments or users:', error);
+    comments.value = [];
+    users.value = {};
+  }
+}
 
 onMounted(async () => {
-  commentsCount.value = await CommentsStore.countCommentsById(postState.id, "post");
-  likesCount.value = await LikesStore.countLikesById(postState.id, "post");
-  userPosting.value = await UserStore.fetchUserById(postState.user_id);
+  await refreshData();
+  if (commentsVisible.value) {
+    await loadCommentsAndUsers();
+  }
 });
 
-watch(
-  () => props.post,
-  (newP) => {
-    Object.assign(postState, {
-      ...newP,
-      commentsVisible: newP.commentsVisible ?? postState.commentsVisible,
-    });
-  },
-  { deep: true }
-);
+watch(commentsVisible, async (newVal) => {
+  if (newVal) {
+    await loadCommentsAndUsers();
+  }
+});
 
 function toggleComments() {
-  postState.commentsVisible = !postState.commentsVisible;
+  commentsVisible.value = !commentsVisible.value;
 }
 
 function goToDetails() {
-  router.push({ name: "PostPage", params: { id: postState.id } }).catch(() => {});
+  router.push({ name: "PostPage", params: { id: props.post.id } }).catch(() => {});
 }
 
 function openAuthorProfile() {
-  if (postState.user_id) {
-    router.push({ name: "ProfilePage", params: { id: postState.user_id } }).catch(() => {});
+  if (props.post.user_id) {
+    router.push({ name: "ProfilePage", params: { id: props.post.user_id } }).catch(() => {});
   }
 }
 
 async function toggleLike() {
-  postState.liked = !postState.liked;
-
-  await LikesStore.toggleLike(postState.id, "post");
-
-  likesCount.value = await LikesStore.countLikesById(postState.id, "post");
+  if (liked.value) {
+    liked.value = false;
+    likesCount.value = Math.max(0, likesCount.value - 1);
+    await LikesStore.removeLike(props.post.id, "post");
+  } else {
+    liked.value = true;
+    likesCount.value++;
+    await LikesStore.addLike(props.post.id, "post");
+  }
 }
 
-function shareClicked() {
-  console.log("share clicked");
-}
+
+const loading = computed(() => CommentsStore.loading);
+
 </script>
 
 <template>
-    <section v-if="CommentsStore.loading" class="feed-wrapper">
-      <article v-for="n in 4" :key="n" class="post skeleton">
-        <div class="skeleton-line shimmer"></div>
-
-        <div class="meta">
-          <div class="skeleton-avatar shimmer"></div>
-          <div class="meta-body">
-            <div class="skeleton-text shimmer" style="width: 40%; height: 14px"></div>
-            <div class="skeleton-text shimmer" style="width: 60%; height: 12px"></div>
-          </div>
+  <section v-if="loading" class="feed-wrapper">
+    <article v-for="n in 4" :key="n" class="post skeleton">
+      <div class="skeleton-line shimmer"></div>
+      <div class="meta">
+        <div class="skeleton-avatar shimmer"></div>
+        <div class="meta-body">
+          <div class="skeleton-text shimmer" style="width: 40%; height: 14px"></div>
+          <div class="skeleton-text shimmer" style="width: 60%; height: 12px"></div>
         </div>
-
-        <div class="skeleton-text shimmer" style="width: 90%; height: 12px; margin-top: 14px"></div>
-        <div class="skeleton-text shimmer" style="width: 80%; height: 12px"></div>
-        <div class="skeleton-image shimmer" style="margin-top: 14px"></div>
-      </article>
-    </section>
+      </div>
+      <div class="skeleton-text shimmer" style="width: 90%; height: 12px; margin-top: 14px"></div>
+      <div class="skeleton-text shimmer" style="width: 80%; height: 12px"></div>
+      <div class="skeleton-image shimmer" style="margin-top: 14px"></div>
+    </article>
+  </section>
 
   <main v-else class="post-wrapper">
-    
     <div class="controls d-flex justify-content-between">
-      <div class="small-muted">{{ postState.date }}</div>
+      <div class="small-muted">{{ props.post.date }}</div>
     </div>
 
-    <div class="post card">
-
-      <div class="post-header" @click="openAuthorProfile">
-        <img :src="postState.avatar || placeholderAvatar" alt="صورة المستخدم" class="avatar" />
+    <div class="post">
+      <div class="post-header" @click="openAuthorProfile" style="cursor: pointer;">
+        <img :src="`https://picsum.photos/44/44?${userPosting.id}`" alt="صورة المستخدم" class="avatar" />
         <div>
           <strong>{{ userPosting.name }}</strong>
-          <div class="small-muted">{{ userPosting.role || 'عضو' }}</div>
+          <div class="small-muted">{{ userPosting.role }}</div>
         </div>
       </div>
 
-      <h4 v-if="postState.title" class="fw-bold mb-2">{{ postState.title }}</h4>
-      <p class="text-secondary">{{ postState.content }}</p>
-
-      <img
-        v-if="postState.image || (postState.images && postState.images[0])"
-        :src="postState.image || postState.images[0]"
-        alt="صورة المنشور"
-        class="post-img mb-3"
-      />
+      <h4 v-if="props.post.title" class="fw-bold mb-2">{{ props.post.title }}</h4>
+      <p class="text-secondary">{{ props.post.content }}</p>
 
       <div class="like-comment">
-
         <div class="d-flex align-items-center gap-2">
           <button
             class="btn btn-sm btn-light btn-like"
-            :class="{ active: postState.liked }"
+            :class="{ active: liked }"
             @click="toggleLike"
-            :aria-pressed="String(postState.liked)"
+            :aria-pressed="String(liked)"
             title="إعجاب"
           >
-            <i :class="postState.liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
+            <i :class="liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'"></i>
             <strong class="ms-1">{{ likesCount }}</strong>
           </button>
           <span class="text-muted">الإعجابات</span>
 
-          <button class="btn btn-sm btn-light" title="مشاركة" @click.prevent="shareClicked">
-              <i class="bi bi-share-fill"></i>
+          <button class="btn btn-sm btn-light" title="مشاركة">
+            <i class="bi bi-share-fill"></i>
           </button>
         </div>
 
@@ -164,237 +183,291 @@ function shareClicked() {
             <i class="bi bi-info-circle"></i> تفاصيل
           </button>
         </div>
+      </div>
+    </div>
 
+    
+
+    <div v-if="commentsVisible" class="comments-list mt-4">
+      <hr>
+      <div v-if="loading" class="text-center text-muted py-3">
+        <i class="bi bi-arrow-repeat spin"></i>
       </div>
 
-      <CommentCard v-if="postState.commentsVisible" :post="postState.id" />
+      <div v-else-if="comments.length === 0" class="text-center text-muted py-3">
+        لا توجد تعليقات بعد، كن أول من يشارك رأيه
+      </div>
 
+      <div v-else>
+        <div v-for="comment in comments" :key="comment.id" class="comment d-flex gap-2 mb-3">
+          <img
+            :src="users[comment.user_id]?.avatar_url || `https://picsum.photos/44/44?${comment.user_id}`"
+            alt="avatar"
+            class="avatar rounded-circle"
+            width="44"
+            height="44"
+          />
+          <div class="comment-body flex-grow-1">
+            <router-link
+              :to="{ name: 'ProfilePage', params: { id: comment.user_id } }"
+              class="comment-user d-block"
+            >
+              <strong>{{ users[comment.user_id]?.name || 'مستخدم مجهول' }}</strong>
+              <div class="small-muted">{{ users[comment.user_id]?.role || 'عضو' }}</div>
+            </router-link>
+
+            <p class="comment-text mb-0">{{ comment.content }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </template>
 
-
 <style scoped>
-.post-page {
-  display: grid;
-  grid-template-columns: 18rem 1fr 16rem;
-  gap: 20px;
-  font-family: "Noto Sans Arabic", sans-serif;
-  align-items: start;
-  padding: 2rem;
-  direction: rtl;
-}
-
-.left-col,
-.right-col {
-  min-height: 100px;
-}
-
-.user-card {
-  background: #fff;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(18, 24, 40, 0.04);
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.friends-card {
-  background: #fff;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(18, 24, 40, 0.04);
-  min-height: 200px;
-}
-
 .post-wrapper {
-  width: 100%;
-}
-
-.controls {
-  margin-bottom: 1rem;
-}
-
-.beak-arrow {
-  border: none;
-  border-radius: 11px;
-  width: 3rem;
-  height: 3rem;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.beak-arrow:hover{
-
-}
-
-.post.card {
+  font-family: "Noto Sans Arabic", sans-serif;
   background: #fff;
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 8px 24px rgba(18, 24, 40, 0.08);
-  transition: 0.3s;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgb(0 0 0 / 0.05);
+}
+
+.post {
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .post-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  border-radius: 10px;
-  padding: 6px 8px;
+  gap: 14px;
+  margin-bottom: 16px;
   cursor: pointer;
-}
-.post-header:hover {
-  background: #f8fafc;
+  padding-bottom: 0.5rem;
 }
 
 .avatar {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  flex-shrink: 0;
 }
 
-.post-img {
-  width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
-  border-radius: 10px;
+.post-header div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.post-header strong {
+  font-size: 1.1rem;
+  color: #222;
+}
+
+.small-muted {
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 2px;
+  user-select: none;
+}
+
+h4 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.text-secondary {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  white-space: pre-wrap;
 }
 
 .like-comment {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid #eee;
-  padding-top: 10px;
-  color: #555;
-  font-size: 14px;
-  margin-top: 10px;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.like-comment > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .btn-like {
-  display: inline-flex;
+  background-color: transparent;
+  border: none;
+  color: #666;
+  font-weight: 600;
+  display: flex;
   align-items: center;
   gap: 6px;
-  border: none;
-  background: transparent;
   cursor: pointer;
-}
-.btn-like.active i {
-  color: #e11d48; 
-}
-
-.comment-input {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  border-top: 1px solid #eee;
-  padding-top: 12px;
-  margin-top: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.comment-input .input-area {
-  flex-grow: 1;
+.btn-like i {
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
 }
 
-.comment-input textarea {
-  width: 100%;
-  resize: none;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  padding: 8px 10px;
-  font-size: 0.95rem;
+.btn-sm.btn-light {
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
-.send-btn {
-  background-color: #4f46e5;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.comments-panel {
-  margin-top: 12px;
-  border-top: 1px solid #eef2f7;
-  padding-top: 10px;
+.btn-sm.btn-light:hover {
+  background-color: #f0f0f0;
+}
+
+.controls {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 12px;
+  text-align: right;
+  user-select: none;
+}
+
+.comments-list {
+  font-family: "Noto Sans Arabic", sans-serif;
+  margin-top: 1.25rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgb(0 0 0 / 0.05);
+  padding: 1rem 1.25rem;
 }
 
 .comment {
   display: flex;
-  gap: 10px;
   align-items: flex-start;
-  background: #f9fafb;
-  padding: 10px;
+  gap: 14px;
+  padding: 14px 12px;
+  border-radius: 12px;
+  background-color: #f5f7fa;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.03);
+}
+
+.avatar.rounded-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+
+.comment-body {
+  flex: 1;
+}
+
+.comment-user {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: #222 !important;
   border-radius: 10px;
+  user-select: none;
+}
+
+.comment-user strong {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.comment-text {
+  margin-top: 6px;
+  font-size: 0.97rem;
+  color: #333;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+.small-muted {
+  color: #666;
+  font-size: 0.82rem;
+}
+
+.text-center.text-muted.py-3 {
+  font-size: 1rem;
+  color: #999;
+  padding: 1rem 0;
+}
+
+.spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  color: #888;
+  font-size: 1.4rem;
+  user-select: none;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* skeleton loading */
+.skeleton-line,
+.skeleton-text,
+.skeleton-avatar,
+.skeleton-image {
+  background: #eee;
+  border-radius: 6px;
+}
+
+.skeleton-line {
+  height: 12px;
   margin-bottom: 10px;
 }
 
-.comment-content { flex: 1; }
-.small-muted { color: #777; font-size: 0.85rem; }
-
-.skeleton {
-  background: #f4f4f4;
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 6px 18px rgba(18, 24, 40, 0.04);
-  margin-bottom: 18px;
-  overflow: hidden;
-}
-.skeleton-avatar,
-.skeleton-text,
-.skeleton-line,
-.skeleton-image {
-  background: #e3e3e3;
-  border-radius: 6px;
-}
 .skeleton-avatar {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
 }
+
 .skeleton-text {
-  height: 12px;
-  margin: 6px 0;
+  height: 14px;
+  margin-bottom: 8px;
 }
+
 .skeleton-image {
   width: 100%;
-  height: 140px;
-  border-radius: 8px;
-  margin-top: 14px;
+  height: 160px;
+  border-radius: 12px;
 }
 
 .shimmer {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -150px;
-  width: 100px;
-  height: 100%;
+  animation: shimmer 1.5s infinite linear;
   background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.6) 50%,
-    rgba(255, 255, 255, 0) 100%
+    to right,
+    #eeeeee 0%,
+    #dddddd 50%,
+    #eeeeee 100%
   );
-  animation: shimmer 1.5s infinite;
+  background-size: 200% 100%;
 }
+
 @keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
   100% {
-    transform: translateX(900%);
+    background-position: 200% 0;
   }
 }
 </style>

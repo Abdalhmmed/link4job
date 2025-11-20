@@ -36,7 +36,7 @@ onMounted( async () => {
     <div class="card h-100 rounded-3 shadow-sm border-0 jobListCard">
       <div class="card-body d-flex align-items-center">
 
-        <div class="ms-3" style="width: 180px; flex-shrink: 0;">
+        <div class="m-3" style="width: 180px; flex-shrink: 0;">
           <img
             :src="company.avatar_url"
             alt="Job Image"
@@ -67,7 +67,7 @@ onMounted( async () => {
           </p>
 
           <button class="btn btn-primary px-4 rounded-pill" @click="JobStore.fetchJobById(job.id)">
-            <i class="bi bi-info-circle me-1"></i>Details
+            <i class="bi bi-info-circle me-1"></i>تفاصيل
           </button>
         </div>
 

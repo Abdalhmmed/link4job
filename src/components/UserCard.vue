@@ -30,16 +30,19 @@ function removeNotification(n) {
 onMounted(async () => {
   try {
     user.value = await UsersStore.fetchUserById(id)
-    like.value = await LikesStore.countLikesById(id, 'user')
-    follow.value = await FollowersStore.countFollowersById(id, 'user')
-    const raw = await NotificationsStore.fetchNotificationByUserId(id)
-    notifications.value = raw.map((n) => ({
-      ...n,
-      message: truncateMessage(n.message),
-      date: dayjs(n.created_at || new Date()).format('DD MMM YYYY - hh:mm A'),
-    }))
+    if (user.value) {
+      like.value = await LikesStore.countLikesById(id, 'user')
+      follow.value = await FollowersStore.countFollowersById(id, 'user')
+      const raw = await NotificationsStore.fetchNotificationByUserId(id)
+
+      notifications.value = raw.map((n) => ({
+        ...n,
+        message: truncateMessage(n.message),
+        date: dayjs(n.created_at || new Date()).format('DD MMM YYYY - hh:mm A'),
+      }))
+    }
   } catch (error) {
-    console.error('خطأ أثناء تحميل الإشعارات:', error)
+    console.error('error message: ', error)
   }
 })
 </script>
@@ -54,7 +57,7 @@ onMounted(async () => {
       </div>
 
       <div class="profile-body">
-        <div class="header" v-if="loading">
+        <div class="header" v-if="UsersStore.loading">
           <div class="skeleton skeleton-title mb-2"></div>
           <div class="skeleton skeleton-text mb-1"></div>
           <div class="skeleton skeleton-small"></div>

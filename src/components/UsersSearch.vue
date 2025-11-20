@@ -14,7 +14,7 @@ const maxUsers = 3
 
 onMounted(async () => {
   const allUsers = await UsersStore.fetchUsers()
-  ff.value = allUsers.slice(0, maxUsers)   // أول 3 مستخدمين فقط
+  ff.value = allUsers.slice(0, maxUsers)   
   users.value = ff.value
 })
 

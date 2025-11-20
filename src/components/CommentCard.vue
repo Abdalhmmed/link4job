@@ -1,78 +1,89 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import { useCommentsStore } from '@/stores/CommentsStore';
 import { useUserStore } from '@/stores/UserStore';
-import { onMounted, ref } from 'vue';
 
 const CommentsStore = useCommentsStore();
 const UserStore = useUserStore();
 
-const comments = ref([]);
-const users = ref({});
-const loading = ref(true);
-
 const props = defineProps({
   post: {
-    type: [Object, Number],
+    type: Number,
     required: true,
   },
 });
 
-async function loadComments() {
+const comments = ref([]);
+const users = ref({});
+
+onMounted(async () => {
   try {
-    loading.value = true;
-    const postId = typeof props.post === 'object' ? props.post.id : props.post;
+    comments.value = await CommentsStore.filterCommentsByPostId(props.post);
 
-    comments.value = await CommentsStore.filterCommentsByPostId(postId);
+    if (comments.value.length > 0) {
+      const allUsers = await UserStore.fetchUsers();
 
-    const uniqueUserIds = [...new Set(comments.value.map(c => c.user_id))];
-    const userPromises = uniqueUserIds.map(async (id) => {
-      const user = await UserStore.fetchUserById(id);
-      users.value[id] = user;
-    });
+      const commentUserIds = new Set(comments.value.map(c => c.user_id));
 
-    await Promise.all(userPromises);
-  } finally {
-    loading.value = false;
+      const filteredUsers = allUsers.filter(u => commentUserIds.has(u.id));
+
+      const userMap = {};
+      filteredUsers.forEach(u => {
+        userMap[u.id] = u;
+      });
+
+      users.value = userMap;
+    } else {
+      users.value = {};
+    }
+  } catch (error) {
+    console.error('Failed loading comments or users:', error);
+    comments.value = [];
+    users.value = {};
   }
-}
-
-onMounted(loadComments);
+});
 </script>
+
 
 <template>
   <div class="comments-list mt-4">
-    <div v-if="loading" class="text-center text-muted py-3">
+    <div v-if="CommentsStore.loading" class="text-center text-muted py-3">
       <i class="bi bi-arrow-repeat spin"></i>
     </div>
 
     <div v-else-if="comments.length === 0" class="text-center text-muted py-3">
-      لا توجد تعليقات بعد، كن أول من يشارك رأيه 
+      لا توجد تعليقات بعد، كن أول من يشارك رأيه
     </div>
 
     <div v-else>
-      <div v-for="comment in comments" :key="comment.id" class="comment">
+      <div v-for="comment in comments" :key="comment.id" class="comment d-flex gap-2 mb-3">
         <img
           :src="users[comment.user_id]?.avatar_url || `https://picsum.photos/44/44?${comment.user_id}`"
           alt="avatar"
-          class="avatar"
+          class="avatar rounded-circle"
+          width="44"
+          height="44"
         />
-        <div class="comment-body">
+        <div class="comment-body flex-grow-1">
           <router-link
             :to="{ name: 'ProfilePage', params: { id: comment.user_id } }"
-            class="comment-user"
+            class="comment-user d-block"
           >
             <strong>{{ users[comment.user_id]?.name || 'مستخدم مجهول' }}</strong>
             <div class="small-muted">{{ users[comment.user_id]?.role || 'عضو' }}</div>
           </router-link>
 
-          <p class="comment-text">{{ comment.content }}</p>
+          <p class="comment-text mb-0">{{ comment.content }}</p>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+
 <style scoped>
+
+
 .comments-list {
   width: 100%;
   margin-top: 1rem;

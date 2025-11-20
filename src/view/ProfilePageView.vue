@@ -117,7 +117,7 @@ onMounted(async () => {
 
       <div class="row g-4">
         <div class="col-lg-4">
-          <div class="bg-white rounded-2xl shadow-soft p-4" style="max-height: 900px;">
+          <div class="bg-white rounded-2xl shadow-soft p-4" style="max-height: 955px;">
             <h5 class="fw-bold mb-3">بيانات الحساب</h5>
             <ul class="list-unstyled d-grid gap-3 text-secondary">
               <li><i class="bi bi-envelope text-primary ms-2"></i> {{ user?.email }}</li>
@@ -190,6 +190,10 @@ onMounted(async () => {
                     </div>
                   </router-link>
                 </li>
+
+                <router-link  :to="{name: 'CompanyPage',  params: { id: MyCompany.id }}" class="btn btn-gradient w-100 mt-3">
+                  <i class="bi bi-buildings ms-1"></i> تفقد حساب الشركة
+                </router-link>
               </ul>
             </div>
           </div>
