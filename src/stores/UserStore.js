@@ -10,9 +10,11 @@ export const useUserStore = defineStore("UserStore", () => {
 
   const loadJSON = async () => {
     if (_cache) return _cache;
+    
     const res = await fetch("/data.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`Failed to load /data.json (status ${res.status})`);
     const data = await res.json();
+    
     _cache = data;
     return data;
   };
@@ -66,7 +68,6 @@ export const useUserStore = defineStore("UserStore", () => {
       const data = await loadJSON();
       const users = Array.isArray(data) ? data : data.users ?? [];
 
-      // لو name فاضي → رجّع كل المستخدمين
       if (!name || !name.trim()) {
         return users;
       }

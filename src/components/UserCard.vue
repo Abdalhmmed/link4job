@@ -34,7 +34,6 @@ onMounted(async () => {
       like.value = await LikesStore.countLikesById(id, 'user')
       follow.value = await FollowersStore.countFollowersById(id, 'user')
       const raw = await NotificationsStore.fetchNotificationByUserId(id)
-
       notifications.value = raw.map((n) => ({
         ...n,
         message: truncateMessage(n.message),
@@ -51,18 +50,15 @@ onMounted(async () => {
   <div class="profile-wrapper">
     <article class="profile-card">
       <div class="profile-banner" style="background-image:url('https://picsum.photos/1000/1000')"></div>
-
       <div class="avatar-wrap">
         <img class="avatar" :src="`https://picsum.photos/500/500/?${user.id}`" alt="صورة المستخدم" />
       </div>
-
       <div class="profile-body">
         <div class="header" v-if="UsersStore.loading">
           <div class="skeleton skeleton-title mb-2"></div>
           <div class="skeleton skeleton-text mb-1"></div>
           <div class="skeleton skeleton-small"></div>
         </div>
-
         <div class="header" v-else>
           <div>
             <h4>{{ user.name }}</h4>
@@ -71,7 +67,6 @@ onMounted(async () => {
           </div>
           <span class="badge bg-success-subtle text-success">مؤكد</span>
         </div>
-
         <div class="profile-stats">
           <div class="stat">
             <div v-if="LikesStore.loading" class="skeleton skeleton-number"></div>
@@ -84,18 +79,14 @@ onMounted(async () => {
             <small>متابعون</small>
           </div>
         </div>
-
         <hr class="divider" />
-
         <div class="notifications">
           <div class="header mb-2 d-flex justify-content-between align-items-center">
             <samp>الإشعارات</samp>
           </div>
-
           <div v-if="NotificationsStore.loading" class="notifications-loading">
             <div class="skeleton skeleton-notification mb-2" v-for="i in 3" :key="i"></div>
           </div>
-
           <transition-group name="fade" tag="div" class="notifications-list p-2" v-else>
             <div
               v-for="n in notifications.slice(0, 10)"
@@ -115,18 +106,13 @@ onMounted(async () => {
                 <button class="remove-btn fs-4" @click="removeNotification(n)">&times;</button>
               </div>
             </div>
-
-            <div v-if="notifications && notifications.length === 0"
-              class="notification-card p-3 mb-2 text-center text-muted">
+            <div v-if="notifications && notifications.length === 0" class="notification-card p-3 mb-2 text-center text-muted">
               لا توجد إشعارات
             </div>
           </transition-group>
-
           <div class="footer mt-2">
             <button class="btn btn-outline-primary w-100 position-relative">
-              <span
-                v-if="notifications && notifications.length > 3"
-                class="notifications-count-badge">
+              <span v-if="notifications && notifications.length > 3" class="notifications-count-badge">
                 {{ notifications.length > 99 ? '99+' : notifications.length }}
               </span>
               <i class="bi bi-list-check"></i> عرض جميع الإشعارات
@@ -146,7 +132,6 @@ onMounted(async () => {
   --text-muted: #6b7280;
   --bg-light: #f9fafb;
 }
-
 .profile-wrapper {
   display: flex;
   justify-content: center;
@@ -154,7 +139,6 @@ onMounted(async () => {
   padding: 2rem;
   background: var(--bg-light);
 }
-
 .profile-card {
   width: 25rem;
   max-width: 340px;
@@ -167,7 +151,6 @@ onMounted(async () => {
   transition: transform 0.3s ease;
   scrollbar-width: thin;
 }
-
 .profile-card::-webkit-scrollbar {
   width: 6px;
 }
@@ -175,14 +158,12 @@ onMounted(async () => {
   background-color: #cfcfcf;
   border-radius: 10px;
 }
-
 .profile-banner {
   height: 140px;
   background-size: cover;
   background-position: center;
   border: 7px solid #ffffff;
 }
-
 .avatar-wrap {
   position: absolute;
   top: 80px;
@@ -197,7 +178,6 @@ onMounted(async () => {
   object-fit: cover;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
 }
-
 .profile-body {
   padding: 80px 20px 25px;
   text-align: center;
@@ -216,7 +196,6 @@ onMounted(async () => {
   border-top: 1px solid #eee;
   margin: 1rem 0;
 }
-
 .profile-stats {
   display: flex;
   justify-content: space-around;
@@ -229,7 +208,6 @@ onMounted(async () => {
 .stat small {
   color: var(--text-muted);
 }
-
 .notifications {
   text-align: right;
   direction: rtl;
@@ -254,17 +232,14 @@ onMounted(async () => {
 .icon-company {
   font-size: 1rem !important;
 }
-
 .notification-system { background-color: #fff8e1; }
 .notification-user { background-color: #e7f1ff; }
 .notification-security { background-color: #ffe5e5; }
 .notification-company { background-color: #e6f7e6; }
-
 .icon-system { color: #f5c518; }
 .icon-user { color: #1890ff; }
 .icon-security { color: #ff4d4f; }
 .icon-company { color: #52c41a; }
-
 .remove-btn {
   background: none;
   border: none;
@@ -274,7 +249,6 @@ onMounted(async () => {
 .remove-btn:hover {
   color: #000;
 }
-
 .notifications-count-badge {
   position: absolute;
   background-color: #ff3b30;
@@ -289,7 +263,6 @@ onMounted(async () => {
   justify-content: center;
   top: 5px;
 }
-
 @media (max-width: 520px) {
   .profile-card {
     max-width: 100%;
