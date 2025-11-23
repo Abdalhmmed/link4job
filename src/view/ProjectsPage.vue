@@ -1,7 +1,9 @@
-<script>
+<script setup>
+import Construction from '@/components/Construction.vue';
+
 
 </script>
 
 <template>
-    hi (/-_-?\)
+    <Construction  class="mt-4"/>
 </template>

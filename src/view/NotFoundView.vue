@@ -20,7 +20,6 @@
 
                   <div class="d-flex flex-column flex-sm-row gap-2 mb-3">
                     <router-link :to="{ name: 'HomePage' }" class="btn btn-primary btn-lg"><i class="bi bi-house-door ms-1"></i> العودة للرئيسية</router-link>
-                    <!-- <router-link href="/sitemap" class="btn btn-outline-secondary btn-lg">عرض الخريطة</router-link> -->
                   </div>
 
                   <form class="d-flex gap-2" role="search" action="/search" method="get">

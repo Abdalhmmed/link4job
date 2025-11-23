@@ -1,136 +1,192 @@
 <script setup>
-import { useRouter } from 'vue-router'
-import FrindesChat from './FrindesChat.vue'
-import { inject, ref, onMounted, watch } from 'vue'
-import { useFollowersStore } from '@/stores/FollowersStore'
-import { useUserStore } from '@/stores/UserStore'
+import { ref, provide } from 'vue';
+import ChatCard from '@/components/ChatCard.vue';
+import ChatFrindeCard from '@/components/ChatFrindeCard.vue';
+import ChatNotification from '@/components/ChatNotification.vue';
 
-const router = useRouter()
-const ChatId = inject('ChatId')
-const FollowersStore = useFollowersStore()
-const UsersStore = useUserStore()
+const ChatId = ref(null);
+const Notification = ref(false);
 
-const friends = ref([])  
-const users = ref([])
-const friendSearch = ref('')
-const filtered = ref([])  
+provide('ChatId', ChatId);
+provide('Notification', Notification);
 
-onMounted(async () => {
-  const id = localStorage.getItem('userId');
-  friends.value = await FollowersStore.fetchFriendsByUserId(id);
+const showFriends = ref(false);
+const showNotifications = ref(false);
 
-  if (friends.value && friends.value.length > 0) {
-    users.value = [];
-    for (const f of friends.value) {
-      const u = await UsersStore.fetchUserById(f.friend_id);
-      users.value.push(u);
-    }
-    filtered.value = [...users.value];  
-  }
-});
+function closeAllDrawers() {
+  showFriends.value = false;
+  showNotifications.value = false;
+}
 
-const filterUsersByName = () => {
-  if (friendSearch.value.trim() === "") {
-    filtered.value = [...users.value]; 
-    return;
-  }
+function toggleFriends() {
+  showNotifications.value = false;
+  showFriends.value = !showFriends.value;
+}
 
-  filtered.value = users.value.filter(user =>
-   user.name.toLowerCase().includes(friendSearch.value.toLowerCase()));
-};
-
-watch(friendSearch, () => {
-  filterUsersByName();
-});
-
-function goBack() {
-  ChatId.value = null
-  router.back()
+function toggleNotifications() {
+  showFriends.value = false;
+  showNotifications.value = !showNotifications.value;
 }
 </script>
 
 <template>
-  <div class="friends-list">
-    <div class="friends-header">
-      <button class="btn btn-light" @click="goBack"><i class="bi bi-arrow-left"></i></button>
-      <h6 class="m-0">الأصدقاء</h6>
-    </div>
+  <div class="chat-layout">
+    <div v-if="showFriends || showNotifications" class="mobile-overlay" @click="closeAllDrawers"></div>
 
-    <div class="friend-search-wrapper">
-      <input 
-        type="text" 
-        class="form-control" 
-        placeholder="ابحث عن صديق..." 
-        v-model="friendSearch" 
-      />
-    </div>
+    <ChatNotification class="panel notifications-panel" :class="[{ 'drawer-right': true, active: showNotifications }]"/>
 
-    <div v-if="filtered.length === 0 && friendSearch !== ''" class="no-results">
-      لا يوجد نتيجة
-    </div>
+    <ChatCard class="panel chat-panel" />
 
-    <div v-else-if="filtered.length === 0 && friendSearch === ''">
-      لا يوجد أصدقاء
-    </div>
+    <ChatFrindeCard class="panel friends-panel" :class="[{ 'drawer-left': true, active: showFriends }]"/>
 
-    <FrindesChat
-      v-else
-      v-for="user in filtered"
-      :key="user.id"
-      :user="user"
-    />
+    <div class="mobile-fab d-md-none">
+      <button class="fab-btn" @click="toggleFriends">
+        <i class="bi bi-people"></i>
+      </button>
+
+      <button class="fab-btn" @click="toggleNotifications">
+        <i class="bi bi-bell"></i>
+      </button>
+    </div>
   </div>
 </template>
 
-
-
-
 <style scoped>
-    .friends-list {
-      background: #fff;
-      box-shadow: 0 0 12px rgba(0,0,0,0.05);
-      overflow-y: auto;
-      height: 90vh; 
-      border-radius: 12px;
-      transition: transform .3s ease;
-      z-index: 10;
-    }
+.chat-layout {
+  display: grid;
+  grid-template-columns: 16% 64% 20%;
+  min-height: 100vh;
+  gap: 10px;
+  margin: 1rem 0;
+  align-items: start;
+  position: relative;
+}
 
-    .friends-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid #eee;
-      font-weight: bold;
-    }
+.panel {
+  background: transparent;
+}
 
-    .friend-search-wrapper {
-      display: flex;
-      gap: 8px;
-      padding: 8px 12px;
-    }
+.chat-panel {
+  overflow: visible;
+}
 
-    #friendSearch {
-      flex-grow: 1;
-      border-radius: 25px;
-      padding: 8px 16px;
-      border: 1px solid #ddd;
-    }
-    
-    #friendSearch:focus {
-      outline: none;
-      border-color: var(--brand);
-      box-shadow: 0 0 8px rgba(79,70,229,0.2);
-    }
+.friends-panel,
+.notifications-panel {
+  background: #fff;
+  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+  overflow-y: auto;
+  height: 90vh;
+  border-radius: 12px;
+  transition: transform .35s ease;
+  z-index: 10;
+}
 
-    @media(max-width:991px){
-      .friends-list, .notifications-panel { 
-        width: 80%; 
-        transform: translateX(100%);
-        z-index: 1050;
-      }
-      .friends-list.active, .notifications-panel.active { transform: translateX(0); }
-    }
+.chat-topbar {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #ffffff;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+}
 
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 50;
+}
+
+.mobile-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 60;
+}
+
+.fab-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  border: none;
+  box-shadow: 0 6px 18px rgba(79,70,229,0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.drawer-left,
+.drawer-right {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 82%;
+  height: 100vh;
+  max-width: 420px;
+  z-index: 55;
+  transition: transform .35s ease;
+  background: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.12);
+  transform: translateX(-122%);
+}
+
+.drawer-right {
+  right: 0;
+  left: auto;
+  transform: translateX(122%);
+}
+
+.drawer-left.active {
+  transform: translateX(-22%);
+}
+
+.drawer-right.active {
+  transform: translateX(0);
+}
+
+@media (max-width: 991.98px) {
+  .chat-layout {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 12px;
+  }
+
+  .friends-panel,
+  .notifications-panel {
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .friends-panel.active,
+  .notifications-panel.active {
+    box-shadow: 0 0 30px rgba(0,0,0,0.25);
+  }
+
+  .mobile-fab { display: flex; }
+}
+
+@media (min-width: 992px) {
+  .drawer-left,
+  .drawer-right {
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: none;
+    height: auto;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .mobile-overlay { display: none; }
+  .mobile-fab { display: none; }
+  .chat-topbar { display: none; }
+}
 </style>

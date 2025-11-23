@@ -183,22 +183,7 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="mt-3">
-              <div v-if="!showDetails">
-                <div class="more-toggle" role="button" @click="showDetails = true">
-                  <span class="more-text">المزيد</span>
-                  <i class="bi bi-chevron-down ms-2"></i>
-                </div>
-              </div>
-
-              <div v-else>
-                <div class="d-flex justify-content-between align-items-center">
-                  <h6 class="fw-bold mb-2">المزيد</h6>
-                  <div class="more-toggle" role="button" @click="showDetails = false">
-                    <span class="more-text">أقل</span>
-                    <i class="bi bi-chevron-up ms-2"></i>
-                  </div>
-                </div>
-
+              <div v-if="showDetails">
                 <div v-if="MySkills && MySkills.length" class="skills-section mb-3">
                   <h5 class="fw-bold mb-2">المهارات التقنية</h5>
                   <div class="d-flex flex-wrap gap-2">
@@ -246,6 +231,13 @@ onBeforeUnmount(() => {
                     </router-link>
                   </ul>
                 </div>
+
+              </div>
+                <div v-if="!showDetails" class="text-center mt-2">
+                  <button class="btn btn-outline-primary btn-xs rounded-pill px-3 py-1" @click="showDetails = true">عرض المزيد</button>
+                </div>
+                <div v-if="showDetails" class="text-center mt-2">
+                  <button class="btn btn-outline-secondary btn-xs rounded-pill px-3 py-1" @click="showDetails = false">إغلاق</button>
               </div>
             </div>
 

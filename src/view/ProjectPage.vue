@@ -1,7 +1,11 @@
-<script>
+<script setup>
+import Construction from '@/components/Construction.vue';
+
 
 </script>
 
 <template>
-    hi (/-_-?\)
+
+    <Construction />
+
 </template>

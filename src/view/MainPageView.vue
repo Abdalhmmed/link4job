@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
   gap: 1.25rem;
   align-items: flex-start;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 5rem;
 }
 
 .left-col {
@@ -277,7 +277,7 @@ onBeforeUnmount(() => {
   }
 
   .drawer.active {
-    right: 4%;
+    top: 53%;
   }
 }
 
