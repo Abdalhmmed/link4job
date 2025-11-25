@@ -35,19 +35,84 @@ const checkUserIdChange = async () => {
 
 let intervalId;
 
+const isMobile = ref(window.innerWidth <= 991);
+
+function handleResize() {
+  isMobile.value = window.innerWidth <= 991;
+  if (!isMobile.value) document.body.style.overflow = '';
+}
+
 onMounted(async () => {
   await loadUser();
   window.addEventListener("storage", loadUser);
   intervalId = setInterval(checkUserIdChange, 1000);
+  window.addEventListener('resize', handleResize);
+
+  // اذا ضغط المستخدم على زر الـ navbar (فتح/اغلاق القائمه) اغلق لوح الاشعارات لو كان مفتوحًا
+  const toggler = document.querySelector('.navbar-toggler');
+  if (toggler) {
+    toggler.addEventListener('click', navTogglerListener);
+  }
+
+  // إذا كانت هناك أحداث كولابس من Bootstrap، استمع لحدث show.bs.collapse كي تغلق الاشعارات عند فتح الناف بار
+  const collapseEl = document.getElementById('mainNav');
+  if (collapseEl) {
+    // حماية في حال لم يكن Bootstrap موجوداً
+    try {
+      collapseEl.addEventListener('show.bs.collapse', () => {
+        if (Notification.value) {
+          Notification.value = false;
+          document.body.style.overflow = '';
+        }
+      });
+    } catch (e) {
+      // تجاهل إذا لم تتوفر أحداث bootstrap
+    }
+  }
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("storage", loadUser);
   clearInterval(intervalId);
+  window.removeEventListener('resize', handleResize);
+
+  const toggler = document.querySelector('.navbar-toggler');
+  if (toggler) {
+    toggler.removeEventListener('click', navTogglerListener);
+  }
+
+  const collapseEl = document.getElementById('mainNav');
+  if (collapseEl) {
+    try {
+      collapseEl.removeEventListener('show.bs.collapse', () => {
+        if (Notification.value) {
+          Notification.value = false;
+          document.body.style.overflow = '';
+        }
+      });
+    } catch (e) {}
+  }
 });
 
+function navTogglerListener() {
+  if (isMobile.value && Notification.value) {
+    Notification.value = false;
+    document.body.style.overflow = '';
+  }
+}
+
 function ObenNotification() {
-  Notification.value = true;
+  // اضغط مرتين يغلق ويعيد الفتح — سلوك تبديل
+  if (Notification.value) {
+    Notification.value = false;
+    document.body.style.overflow = '';
+  } else {
+    Notification.value = true;
+    if (isMobile.value) {
+      // عند فتح اللوح في الهاتف امنع التمرير بالخلفية
+      document.body.style.overflow = 'hidden';
+    }
+  }
 }
 
 function ObenAuthModal() {
@@ -88,12 +153,21 @@ function ObenAuthModal() {
         </button>
       </div>
 
-      <div v-else-if="user.account_type === 'user'" class="d-flex gap-2 align-items-center">
-        <button @click="ObenNotification" class="btn btn-outline-secondary position-relative" type="button">
+      <div v-else-if="user.account_type === 'user'" class="d-flex gap-2 align-items-center position-relative">
+        <button
+          @click="ObenNotification"
+          class="btn btn-outline-secondary position-relative"
+          type="button"
+          :aria-expanded="Notification"
+        >
           <i class="bi bi-bell"></i>
         </button>
 
-        <NotificationsCard v-if="Notification" />
+        <NotificationsCard
+          v-if="Notification"
+          :mobile="isMobile"
+          @close="Notification.value = false; document.body.style.overflow = ''"
+        />
 
         <router-link :to="{ name: 'ProfilePage', params: { id: user.id } }">
           <button class="btn btn-primary">
@@ -102,12 +176,21 @@ function ObenAuthModal() {
         </router-link>
       </div>
 
-      <div v-else-if="user.account_type === 'adminAccount'" class="d-flex gap-2 align-items-center">
-        <button @click="ObenNotification" class="btn btn-outline-secondary position-relative" type="button">
+      <div v-else-if="user.account_type === 'adminAccount'" class="d-flex gap-2 align-items-center position-relative">
+        <button
+          @click="ObenNotification"
+          class="btn btn-outline-secondary position-relative"
+          type="button"
+          :aria-expanded="Notification"
+        >
           <i class="bi bi-bell"></i>
         </button>
 
-        <NotificationsCard v-if="Notification" />
+        <NotificationsCard
+          v-if="Notification"
+          :mobile="isMobile"
+          @close="Notification.value = false; document.body.style.overflow = ''"
+        />
 
         <router-link :to="{ name: 'CompanyPage', params: { id: user.id } }">
           <button class="btn btn-outline-primary">
@@ -127,3 +210,6 @@ function ObenAuthModal() {
   </div>
 </nav>
 </template>
+
+<style scoped>
+</style>

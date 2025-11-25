@@ -4,7 +4,6 @@ import { ref, inject, onMounted } from 'vue'
 
 const NotificationsStore = useNotificationsStore()
 const Notification = inject("Notification")
-
 const notifications = ref([])
 
 function closeNotificationCard() {
@@ -17,7 +16,11 @@ function removeNotification(n) {
 }
 
 onMounted(async () => {
-  notifications.value = await NotificationsStore.fetchNotificationByUserId(localStorage.getItem("userId"))
+  try {
+    notifications.value = await NotificationsStore.fetchNotificationByUserId(localStorage.getItem("userId"))
+  } catch (e) {
+    notifications.value = []
+  }
 })
 </script>
 
@@ -29,21 +32,11 @@ onMounted(async () => {
     </div>
 
     <div v-if="NotificationsStore.loading">
-      <div
-        v-for="n in 3"
-        :key="`skeleton-${n}`"
-        class="notification-loading shimmer"
-      >
-      </div>
+      <div v-for="n in 3" :key="`skeleton-${n}`" class="notification-loading shimmer"></div>
     </div>
 
     <div v-else>
-      <div
-        v-for="n in notifications"
-        :key="n.id"
-        class="notification-item"
-        :class="'notification-' + n.reactant_type"
-      >
+      <div v-for="n in notifications" :key="n.id" class="notification-item" :class="'notification-' + n.reactant_type">
         <i :class="'bi ' + n.icon + ' icon-' + n.reactant_type"></i>
         <div class="notification-text">
           <strong>{{ n.title }}</strong>
@@ -54,7 +47,7 @@ onMounted(async () => {
       </div>
 
       <div v-if="notifications.length === 0" class="no-notifications">
-        لا توجد إشعارات حالياً 
+        لا توجد إشعارات حالياً
       </div>
     </div>
   </div>
@@ -74,47 +67,22 @@ onMounted(async () => {
   height: 6rem;
 }
 
-.skeleton-icon {
-  width: 50px;
-  height: 50px;
-  background: #e0e0e0;
-  border-radius: 50%;
-  flex-shrink: 0;
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #d1d5db;
 }
-
-.skeleton-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.line {
-  height: 12px;
-  border-radius: 6px;
-  background: #ddd;
-  width: 100%;
-}
-.line.short { width: 60%; }
-.line.light { width: 40%; opacity: 0.8; }
-
-.shimmer::before {
-  content: "";
+.shimmer::after {
+  content: '';
   position: absolute;
   top: 0;
   left: -150px;
+  width: 100px;
   height: 100%;
-  width: 150px;
-  background: linear-gradient(
-    100deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.6) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
   animation: shimmer 1.6s infinite;
 }
 @keyframes shimmer {
-  0% { left: -150px; }
   100% { left: 100%; }
 }
 
@@ -122,10 +90,11 @@ onMounted(async () => {
   background: #fff;
   box-shadow: 0 0 12px rgba(0,0,0,0.05);
   overflow-y: auto;
-  height: 90vh; 
+  height: 90vh;
   border-radius: 12px;
   transition: transform .3s ease;
   z-index: 10;
+  padding-bottom: 12px;
 }
 
 .notifications-header {
@@ -207,18 +176,10 @@ onMounted(async () => {
   color: #444;
 }
 
-.notification-system {
-  background-color: #fffceb;
-}
-.notification-user {
-  background-color: #f1f7ff;
-}
-.notification-company {
-  background-color: #f3fff3;
-}
-.notification-security {
-  background-color: #ffe5e5;
-}
+.notification-system { background-color: #fffceb; }
+.notification-user { background-color: #f1f7ff; }
+.notification-company { background-color: #f3fff3; }
+.notification-security { background-color: #ffe5e5; }
 
 .icon-system { color: #f5c518; font-size: 1.4rem; }
 .icon-user { color: #2196f3; font-size: 1.4rem; }
@@ -230,5 +191,9 @@ onMounted(async () => {
   color: #888;
   font-size: 0.9rem;
   padding: 2rem 0;
+}
+
+@media (min-width: 992px) {
+  .notifications-panel { height: calc(100vh - 32px); border-radius: 12px; }
 }
 </style>

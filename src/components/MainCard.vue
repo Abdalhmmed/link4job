@@ -112,8 +112,8 @@ const user = {
 
 <style scoped>
 :root {
-  --brand: #4f46e5; /* indigo-600 */
-  --brand-2: #22c55e; /* green-500 */
+  --brand: #4f46e5; 
+  --brand-2: #22c55e; 
 }
 
 .gradient-text {

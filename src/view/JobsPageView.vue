@@ -1,9 +1,9 @@
+```vue
 <script setup>
 import JobsGridCard from '@/components/JobsGridCard.vue';
 import JobsListCard from '@/components/JobsListCard.vue';
-
 import { useJobsStore } from '@/stores/JobsStore';
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, onBeforeUnmount, ref, computed } from 'vue';
 
 const JobStore = useJobsStore();
 
@@ -20,7 +20,27 @@ const jobs = ref([]);
 const loading = computed(() => JobStore.loading);
 const jobsNon = computed(() => !loading.value && (!jobs.value || jobs.value.length === 0));
 
+const isMobile = ref(window.innerWidth <= 600.98);
+
+function handleResize() {
+  isMobile.value = window.innerWidth <= 600.98;
+  if (isMobile.value) {
+    status.value = 'grid';
+  }
+}
+
+onMounted(async () => {
+  window.addEventListener('resize', handleResize);
+  handleResize();
+  jobs.value = (await JobStore.fetchJobs()) || [];
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
+
 const changeView = (mode) => {
+  if (isMobile.value) return;
   status.value = mode;
 };
 
@@ -42,10 +62,6 @@ const resetFilter = async () => {
   jobs.value = (await JobStore.fetchJobs()) || [];
   showMobileFilter.value = false;
 };
-
-onMounted(async () => {
-  jobs.value = (await JobStore.fetchJobs()) || [];
-});
 </script>
 
 <template>
@@ -56,20 +72,6 @@ onMounted(async () => {
 
         <div class="d-flex justify-content-between align-items-center mb-4 header-row">
           <h4 class="m-0">منشورات التوظيف</h4>
-
-          <div class="d-flex gap-2 align-items-center">
-            <button class="btn btn-primary d-lg-none" @click="showMobileFilter = true">
-              <i class="bi bi-funnel"></i>
-            </button>
-
-            <button class="btn btn-outline-secondary" :class="{ active: status === 'list' }" @click="changeView('list')">
-              <i class="bi bi-list"></i>
-            </button>
-
-            <button class="btn btn-outline-secondary" :class="{ active: status === 'grid' }" @click="changeView('grid')">
-              <i class="bi bi-grid"></i>
-            </button>
-          </div>
         </div>
 
         <div v-if="loading" class="loading-area">
@@ -255,7 +257,6 @@ onMounted(async () => {
   .content-area { width: 100%; }
 }
 
-
 .filter-aside { width: 340px; }
 .filter-card { width: 100%; box-sizing: border-box; }
 .brand { margin-bottom: 1rem; }
@@ -295,3 +296,4 @@ onMounted(async () => {
 .gradient-text { background: linear-gradient(90deg,#4f46e5,#06b6d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .btn.active { box-shadow: inset 0 0 0 2px rgba(0,0,0,0.06); }
 </style>
+```

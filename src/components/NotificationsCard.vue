@@ -1,37 +1,63 @@
 <script setup>
 import { useNotificationsStore } from '@/stores/NotificationsStore';
-import { ref, inject, onMounted } from 'vue';
+import { ref, inject, onMounted, onBeforeUnmount, watch, defineProps, defineEmits } from 'vue';
 
-const NotificationsStore = useNotificationsStore()
+const props = defineProps({ mobile: { type: Boolean, default: false } });
+const emit = defineEmits(['close', 'viewAll']);
 
-const Notification = inject("Notification");
+const NotificationsStore = useNotificationsStore();
+const Notification = inject('Notification');
 
-const notifications = ref([])
+const notifications = ref([]);
+const isMobile = ref(window.innerWidth <= 991);
+
+function handleResize() {
+  isMobile.value = window.innerWidth <= 991;
+}
+
+onMounted(async () => {
+  try {
+    notifications.value = (await NotificationsStore.fetchNotificationByUserId(localStorage.getItem("userId"))) || [];
+  } catch (e) {
+    notifications.value = [];
+  }
+  window.addEventListener('resize', handleResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
 
 function closeNotificationCard() {
-  Notification.value = false;
+  if (Notification && typeof Notification === 'object') Notification.value = false;
+  document.body.style.overflow = '';
+  emit('close');
 }
 
 function removeNotification(n) {
-  const index = notifications.indexOf(n);
-  if(index > -1) notifications.splice(index, 1);
+  const index = notifications.value.findIndex(item => item.id === n.id);
+  if (index > -1) notifications.value.splice(index, 1);
 }
 
-
-onMounted( async () => {
-    notifications.value = await NotificationsStore.fetchNotificationByUserId(localStorage.getItem("userId"))
-    console.log("notifications: ", notifications.value)
-})
-
-
+function viewAllNotifications() {
+  emit('viewAll');
+}
+  
+watch(() => Notification && Notification.value, (val) => {
+  if (!val) document.body.style.overflow = '';
+});
 </script>
 
 <template>
-  <div class="dropdown-notification shadow-lg" v-if="Notification">
-
+  <div
+    class="dropdown-notification"
+    :class="{ 'mobile-sheet': isMobile }"
+    role="dialog"
+    aria-modal="true"
+  >
     <div class="header">
-        <samp>الإشعارات</samp>    
-        <button class="close-btn fs-4" @click="closeNotificationCard">&times;</button>      
+        <samp>الإشعارات</samp>
+        <button class="close-btn fs-4" @click="closeNotificationCard">&times;</button>
     </div>
 
     <div class="notifications-list p-2">
@@ -55,11 +81,8 @@ onMounted( async () => {
     </div>
 
     <div class="footer">
-        <button class="btn btn-outline-primary w-100">
-          <div
-          v-if="notifications && notifications.length > 3"
-          class="notifications-count-badge"
-          >
+        <button class="btn btn-outline-primary w-100" @click="viewAllNotifications">
+          <div v-if="notifications && notifications.length > 3" class="notifications-count-badge">
             {{ notifications.length > 99 ? '99+' : notifications.length }}
           </div>
           <i class="bi bi-list-check"></i> عرض جميع الإشعارات 
@@ -91,19 +114,39 @@ onMounted( async () => {
   width: 22rem;
   max-height: 28rem;
   top: 4rem;
-  left: 16rem;
+  right: -8rem;
   border-radius: 12px;
   background-color: #ffffff;
   overflow: hidden;
   z-index: 1000;
   font-family: 'Tajawal', sans-serif;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.dropdown-notification.mobile-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  margin: 0;
+  width: 100%;
+  height: 60vh;
+  max-height: 80vh;
+  border-radius: 12px 12px 0 0;
+  padding-bottom: 0;
+  z-index: 2000;
+  overflow: hidden;
+  animation: slideUp 0.28s ease;
 }
 
 .header, .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
 .close-btn, .remove-btn {
@@ -120,6 +163,7 @@ onMounted( async () => {
 .notifications-list {
   flex: 1;
   overflow-y: auto;
+  padding: 0.75rem 0.6rem;
 }
 
 .notification-card.notification-system { background-color: #fff8e1; }
@@ -127,22 +171,27 @@ onMounted( async () => {
 .notification-card.notification-security { background-color: #ffe5e5; }
 .notification-card.notification-company { background-color: #e6f7e6; }
 
-.notification-card .content strong { font-weight: 600; font-size: 0.9rem; }
-.notification-card .content span { font-size: 0.85rem; }
-.notification-card .date { font-size: 0.75rem; }
+.notification-card .content strong { font-weight: 600; font-size: 0.95rem; }
+.notification-card .content span { font-size: 0.9rem; }
+.notification-card .date { font-size: 0.75rem; color: #6b7280; }
 
 .icon-system { color: #f5c518; }   
 .icon-user { color: #1890ff; }     
 .icon-security { color: #ff4d4f; } 
 .icon-company { color: #52c41a; }  
 
-.notifications-list::-webkit-scrollbar { width: 6px; }
+.notifications-list::-webkit-scrollbar { width: 8px; }
 .notifications-list::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 3px;
+  background-color: rgba(0,0,0,0.12);
+  border-radius: 6px;
 }
 
-/* fade animation */
-.fade-enter-active, .fade-leave-active { transition: all 0.3s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-10px); }
+@keyframes slideUp {
+  from { transform: translateY(12%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 991px) {
+  .dropdown-notification { width: 100%; right: 0; top: auto; left: 0; }
+}
 </style>

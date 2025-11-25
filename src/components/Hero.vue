@@ -8,7 +8,6 @@ import router from '@/router';
       <div class="container">
         <div class="row align-items-center g-4">
 
-          <!-- النص الرئيسي -->
           <div class="col-lg-6">
             <span class="badge badge-soft rounded-pill px-3 py-2 mb-3">نصنع لكم الفرص</span>
             <h1 class="display-5 fw-extrabold mb-3">
@@ -25,7 +24,6 @@ import router from '@/router';
             </div>
           </div>
 
-          <!-- الإحصائيات -->
           <div class="col-lg-6">
             <div class="bg-white shadow-soft rounded-2xl p-4 p-lg-5">
               <div class="row g-3 text-center">

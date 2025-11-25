@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/UserStore'
 import { inject, onMounted, ref, watch } from 'vue'
 
 const ChatId = inject('ChatId')
-const myId = localStorage.getItem("userId") 
+const myId = localStorage.getItem("userId")
 
 const UsersStore = useUserStore()
 const ChatsStore = useChatsStore()
@@ -17,9 +17,9 @@ async function loadChatData() {
   try {
     friend.value = await UsersStore.fetchUserById(ChatId.value)
     chats.value = await ChatsStore.filterChatBetweenUsers(myId, ChatId.value)
-    console.log("تم تحميل بيانات المحادثة:", ChatId.value)
   } catch (err) {
-    console.error("خطأ أثناء تحميل البيانات:", err)
+    friend.value = null
+    chats.value = []
   }
 }
 
@@ -28,13 +28,10 @@ watch(ChatId, async (newVal, oldVal) => {
 }, { immediate: true })
 
 onMounted(loadChatData)
-
 </script>
 
 <template>
-
   <div class="chat-window" v-if="UsersStore.loading && ChatsStore.loading">
-
     <div class="chat-header">
       <div class="img-loading shimmer"></div>
       <div class="text shimmer" style="width: 100px; height: 14px; border-radius: 8px;"></div>
@@ -46,7 +43,6 @@ onMounted(loadChatData)
       </div>
     </div>
   </div>
-
 
   <div class="chat-window" v-else-if="friend">
     <div class="chat-header">
@@ -69,13 +65,7 @@ onMounted(loadChatData)
     <div class="chat-input">
       <label for="fileInput"><i class="bi bi-paperclip"></i></label>
       <input type="file" id="fileInput" hidden />
-      <input
-        type="text"
-        class="form-control"
-        id="chatMessageInput"
-        placeholder="اكتب رسالتك..."
-        disabled
-      />
+      <input type="text" class="form-control" id="chatMessageInput" placeholder="اكتب رسالتك..." disabled />
       <button class="btn btn-primary" id="sendMessageBtn">
         <i class="bi bi-send-fill"></i>
       </button>
@@ -83,32 +73,26 @@ onMounted(loadChatData)
   </div>
 
   <div class="chat-window" v-else>
-  <div class="chat-header">
-    <div>
-      <strong></strong>
-      <div class="text-secondary small"></div>
+    <div class="chat-header">
+      <div>
+        <strong></strong>
+        <div class="text-secondary small"></div>
+      </div>
+    </div>
+
+    <div class="empty-chat">
+      <div class="empty-card">
+        <i class="bi bi-chat-dots-fill"></i>
+        <h5>ابدأ محادثة جديدة 💬</h5>
+        <p>يمكنك الآن التواصل مع أصدقائك ومشاركة اللحظات الجميلة ✨</p>
+      </div>
     </div>
   </div>
-
-  <div class="empty-chat">
-    <div class="empty-card">
-      <i class="bi bi-chat-dots-fill"></i>
-      <h5>ابدأ محادثة جديدة 💬</h5>
-      <p>يمكنك الآن التواصل مع أصدقائك ومشاركة اللحظات الجميلة ✨</p>
-    </div>
-  </div>
-</div>
-
-
 </template>
 
 <style scoped>
-.tiem.user{
-  align-self: flex-start;
-}
-.tiem.me{
-  align-self: flex-end;
-}
+.tiem.user{ align-self: flex-start; }
+.tiem.me{ align-self: flex-end; }
 
 .empty-chat {
   flex-grow: 1;
@@ -155,42 +139,13 @@ onMounted(loadChatData)
   font-family: 'Tajawal', sans-serif;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+.shimmer { position: relative; overflow: hidden; background: #d1d5db; }
+.shimmer::after { content: ''; position: absolute; top: 0; left: -150px; width: 100px; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shimmer 1.6s infinite; }
+@keyframes shimmer { 100% { left: 100%; } }
 
-.shimmer {
-  position: relative;
-  overflow: hidden;
-  background: #d1d5db;
-}
-.shimmer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150px;
-  width: 100px;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  animation: shimmer 1.6s infinite;
-}
-@keyframes shimmer {
-  100% { left: 100%; }
-}
-
-.img-loading {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
+.img-loading { width: 50px; height: 50px; border-radius: 50%; }
 
 .message-loading {
   max-width: 70%;
@@ -201,15 +156,8 @@ onMounted(loadChatData)
   width: 7rem;
 }
 
-.message-loading.me {
-  align-self: flex-end;
-  border-radius: 4px 18px 18px 18px;
-}
-
-.message-loading.user {
-  align-self: flex-start;
-  border-radius: 18px 4px 18px 18px;
-}
+.message-loading.me { align-self: flex-end; border-radius: 4px 18px 18px 18px; }
+.message-loading.user { align-self: flex-start; border-radius: 18px 4px 18px 18px; }
 
 .chat-loading {
   padding: 18px;
@@ -219,9 +167,7 @@ onMounted(loadChatData)
   background: #f8fafc;
 }
 
-:root {
-  --chat-bg: #faf9f7;
-}
+:root { --chat-bg: #faf9f7; }
 
 .chat-window {
   display: flex;
@@ -251,10 +197,7 @@ onMounted(loadChatData)
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
 
-.chat-messages {
-  display: flex;
-  flex-direction: column;
-}
+.chat-messages { display: flex; flex-direction: column; }
 
 .message {
   max-width: 70%;
@@ -267,14 +210,14 @@ onMounted(loadChatData)
 
 .message.me {
   align-self: flex-end;
-  border-radius: 4px 20px 20px 20px;;
+  border-radius: 4px 20px 20px 20px;
   background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: #fff;
 }
 
 .message.user {
   align-self: flex-start;
-  border-radius: 20px 4px 20px 20px;;
+  border-radius: 20px 4px 20px 20px;
   background: linear-gradient(135deg, #10b981, #34d399);
   color: #fff;
 }
