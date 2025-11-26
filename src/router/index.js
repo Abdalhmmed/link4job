@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import HomePageView from "@/view/HomePageView.vue";
 import PostsPageView from "@/view/PostsPageView.vue";
 import PostPageView from "@/view/PostPageView.vue";
@@ -14,9 +14,8 @@ import NotFoundView from "@/view/NotFoundView.vue";
 import MainPageView from "@/view/MainPageView.vue";
 import ChatPageView from "@/view/ChatPageView.vue";
 
-
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     { path: '/', name: 'HomePage', component: HomePageView },
     { path: '/Post/:id', name: 'PostPage', component: PostPageView },
@@ -32,8 +31,7 @@ const router = createRouter({
     { path: '/EditProfilPage', name: 'EditProfilPage', component: EditProfilPageView },
     { path: '/MainPage', name: 'MainPage', component: MainPageView },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundView },
-  ]
+  ],
 });
 
 export default router;
-  

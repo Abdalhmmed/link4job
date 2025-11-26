@@ -1,41 +1,45 @@
 <script setup>
-
 </script>
 
 <template>
-<footer class="pt-5 pb-4 bg-white border-top">
+  <footer class="pt-5 pb-4 bg-white border-top">
+    <div class="container">
+      <div class="row g-4 align-items-start">
 
-      <div class="container">
-        <div class="row g-4 align-items-start">
-
-          <div class="col-md-6">
-            <h5 class="fw-bold mb-3">معلومات الشركة</h5>
-            <ul class="list-unstyled gap-3 mb-4 text-secondary">
+        <div class="col-md-6">
+          <h5 class="fw-bold mb-3">معلومات المبرمج</h5>
+          <ul class="list-unstyled gap-3 mb-4 text-secondary">
             <li><i class="bi bi-geo-alt ms-2"></i>عدن, اليمن</li>
             <li><i class="bi bi-telephone ms-2"></i> 778-123-807</li>
-            <li><i class="bi bi-envelope ms-2"></i> link4job@gmail.com</li>
+            <li><i class="bi bi-envelope ms-2"></i> abudett65@gamil.com</li>
             <li><i class="bi bi-clock ms-2"></i> الأحد - الخميس: 9ص - 5م</li>
-            </ul>
-          </div>
-
-          <div class="col-md-6">
-            <div class="d-flex align-items-center gap-2">
-              <i class="bi bi-stars text-primary"></i>
-              <span class="fw-bold gradient-text">link 4 job</span>
-            </div>
-            <small class="text-secondary d-block mt-2">© <span id="year"></span> جميع الحقوق محفوظة. | <a href="#" class="link-secondary">الخصوصية</a> • <a href="#" class="link-secondary">الشروط</a></small>
-          
-
-            <ul class="nav justify-content-md-end gap-3">
-              <li class="nav-item"><a class="nav-link px-0" href="#about">من نحن</a></li>
-              <li class="nav-item"><a class="nav-link px-0" href="#goals">الأهداف</a></li>
-              <li class="nav-item"><a class="nav-link px-0" href="#achievements">الإنجازات</a></li>
-              <li class="nav-item"><a class="nav-link px-0" href="#contact">تواصل</a></li>
-            </ul>
+          </ul>
+          <div class="d-flex gap-3">
+            <a href="https://github.com/Abdalhmmed" target="_blank" rel="noopener" class="text-secondary fs-4">
+              <i class="bi bi-github"></i>
+            </a>
+            <a href="https://linkedin.com/in/abdulhmid" target="_blank" rel="noopener" class="text-secondary fs-4">
+              <i class="bi bi-linkedin"></i>
+            </a>
           </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-stars text-primary"></i>
+            <span class="fw-bold gradient-text">link 4 job</span>
+          </div>
+          <small class="text-secondary d-block mt-2">© <span id="year"></span> جميع الحقوق محفوظة. | <a href="#" class="link-secondary">الخصوصية</a> • <a href="#" class="link-secondary">الشروط</a></small>
+
+          <ul class="nav justify-content-md-end gap-3">
+            <li class="nav-item"><a class="nav-link px-0" href="#about">من نحن</a></li>
+            <li class="nav-item"><a class="nav-link px-0" href="#goals">الأهداف</a></li>
+            <li class="nav-item"><a class="nav-link px-0" href="#achievements">الإنجازات</a></li>
+            <li class="nav-item"><a class="nav-link px-0" href="#contact">تواصل</a></li>
+          </ul>
+        </div>
+
       </div>
-    </footer>
+    </div>
+  </footer>
 </template>
-
-
