@@ -54,6 +54,8 @@ const displayedPosts = computed(() => {
 
 function updateIsMobile() {
   isMobile.value = typeof window !== 'undefined' ? window.matchMedia('(max-width: 768px)').matches : false;
+  // If screen is large -> always show full details; if small -> collapse by default
+  showDetails.value = !isMobile.value;
 }
 
 onMounted(async () => {
@@ -155,6 +157,7 @@ onBeforeUnmount(() => {
         <div class="col-lg-4">
           <div class="bg-white rounded-2xl shadow-soft p-4" style="max-height: 955px;">
             <h5 class="fw-bold mb-3">بيانات الحساب</h5>
+            <!-- Always render the card contents; visibility controlled by `showDetails` which is synced to screen size -->
             <ul class="list-unstyled d-grid gap-3 text-secondary">
               <li><i class="bi bi-envelope text-primary ms-2"></i> {{ user?.email }}</li>
               <li><i class="bi bi-telephone text-success ms-2"></i> {{ user?.phone }} {{ user?.international_key }}</li>
@@ -183,6 +186,7 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="mt-3">
+              <!-- If showDetails is true (large screens by default) show full details; on small screens user can toggle -->
               <div v-if="showDetails">
                 <div v-if="MySkills && MySkills.length" class="skills-section mb-3">
                   <h5 class="fw-bold mb-2">المهارات التقنية</h5>
@@ -233,11 +237,13 @@ onBeforeUnmount(() => {
                 </div>
 
               </div>
-                <div v-if="!showDetails" class="text-center mt-2">
-                  <button class="btn btn-outline-primary btn-xs rounded-pill px-3 py-1" @click="showDetails = true">عرض المزيد</button>
-                </div>
-                <div v-if="showDetails" class="text-center mt-2">
-                  <button class="btn btn-outline-secondary btn-xs rounded-pill px-3 py-1" @click="showDetails = false">إغلاق</button>
+
+              <!-- Buttons only visible on mobile (isMobile === true) -->
+              <div v-if="isMobile && !showDetails" class="text-center mt-2">
+                <button class="btn btn-outline-primary btn-xs rounded-pill px-3 py-1" @click="showDetails = true">عرض المزيد</button>
+              </div>
+              <div v-if="isMobile && showDetails" class="text-center mt-2">
+                <button class="btn btn-outline-secondary btn-xs rounded-pill px-3 py-1" @click="showDetails = false">إغلاق</button>
               </div>
             </div>
 

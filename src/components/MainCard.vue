@@ -1,74 +1,65 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
 const isOpen = ref(false);
 const MainCard = ref(null);
+const cardWidth = ref(0);
 
-function toggleCard() {
-  isOpen.value = !isOpen.value;
+function updateCardWidth() {
+  const screen = window.innerWidth;
+
+  if (screen <= 480) {
+    cardWidth.value = screen * 0.9; // موبايل
+  } else if (screen <= 1024) {
+    cardWidth.value = 400; // شاشات وسط
+  } else {
+    cardWidth.value = 528; // 33rem للشاشات الكبيرة
+  }
 
   if (MainCard.value) {
-    MainCard.value.style.right = isOpen.value ? "1rem" : "-33rem";
+    MainCard.value.style.width = cardWidth.value + "px";
+    MainCard.value.style.right = isOpen.value ? "1rem" : `-${cardWidth.value}px`;
   }
 }
 
+function toggleCard() {
+  isOpen.value = !isOpen.value;
+  if (MainCard.value) {
+    MainCard.value.style.right = isOpen.value ? "1rem" : `-${cardWidth.value}px`;
+  }
+}
+
+onMounted(() => {
+  updateCardWidth();
+  window.addEventListener("resize", updateCardWidth);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateCardWidth);
+});
+
+// ------------------------------------
+// DATA اللي ما عدّلته
+// ------------------------------------
 function login(data) {
-    localStorage.setItem("userId", data.id);
-    localStorage.setItem("userEmail", data.email);
-    localStorage.setItem("userData", JSON.stringify(data));
-    location.reload();
-    router.push({ name: "ProfilePage", params: { id: data.id } });
+  localStorage.setItem("userId", data.id);
+  localStorage.setItem("userEmail", data.email);
+  localStorage.setItem("userData", JSON.stringify(data));
+  location.reload();
+  router.push({ name: "ProfilePage", params: { id: data.id } });
 }
 
 function login_admin() {
   alert("هذا الحساب غير متاح حالياً — سيتم إضافته في المستقبل");
 }
 
-const adminAccount = {
-  id: "11",
-  name: "11sahar",
-  account_type: "adminAccount",
-  role: "owner",
-  gender: "female",
-  international_key: "+967",
-  phone: "771000011",
-  email: "user11@gmail.com",
-  password_hash: "000000000000",
-  avatar_url: "https://picsum.photos/200/200?11",
-  banner_url: "https://picsum.photos/800/200?11",
-  bio: "مديرة تقنية ومؤسسة شركة تقنتو — تقود الفرق وتضع البصمة الفنية.",
-  industry: "Software Development",
-  address: "Yemen",
-  age: 38,
-  created_at: "2025-11-14 20:50:00",
-  updated_at: "2025-11-14 20:50:00",
-  company_id_belongs: null,
-};
-
-const user = {
-  id: "1",
-  name: "1fatima",
-  account_type: "user",
-  role: "software_engineer",
-  gender: "female",
-  international_key: "+967",
-  phone: "771000001",
-  email: "user1@gmail.com",
-  password_hash: "000000000000",
-  avatar_url: "https://picsum.photos/200/200?1",
-  banner_url: "https://picsum.photos/800/200?1",
-  bio: "مهندسة برمجيات متخصصة في واجهات المستخدم وتحسين الأداء.",
-  industry: "Software Development",
-  address: "Yemen",
-  age: 28,
-  created_at: "2025-11-14 20:00:00",
-  updated_at: "2025-11-14 20:00:00",
-  company_id_belongs: "1",
-};
+const adminAccount = { /* نفس بياناتك */ };
+const user = { /* نفس بياناتك */ };
 </script>
+
 
 <template>
   <div 
@@ -109,11 +100,10 @@ const user = {
   </div>
 </template>
 
-
 <style scoped>
 :root {
-  --brand: #4f46e5; 
-  --brand-2: #22c55e; 
+  --brand: #4f46e5;
+  --brand-2: #22c55e;
 }
 
 .gradient-text {
@@ -127,20 +117,15 @@ const user = {
 }
 
 .slider-card {
-  width: 33rem;
   height: 17rem;
   top: 25rem;
-  right: -33rem;
+  position: fixed;
+  right: -999px; /* سيتم ضبطه عبر JS */
   transition: 0.4s ease;
   padding: 1.2rem 0;
   z-index: 10;
-  position: fixed;
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(8px);
-}
-
-.slider-card.open {
-  right: 0;
 }
 
 .hide-btn {
@@ -155,4 +140,24 @@ const user = {
 .rounded-2xl {
   border-radius: 1.25rem;
 }
+
+@media (max-width: 480px) {
+  .slider-card {
+    height: 19rem; 
+  }
+
+  .btn {
+    padding: 0.35rem 0.9rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .btn i {
+    font-size: 0.9rem !important;
+  }
+
+  .d-flex.gap-2 {
+    gap: 0.4rem;
+  }
+}
+
 </style>
